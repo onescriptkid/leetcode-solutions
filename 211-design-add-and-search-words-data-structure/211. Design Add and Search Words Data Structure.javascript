@@ -4,67 +4,79 @@ class TrieNode {
     this.end = false
   }
 }
-
 var WordDictionary = function() {
-  this.root = new TrieNode() 
+  this.root = new TrieNode()
 };
 
 /** 
  * @param {string} word
  * @return {void}
  */
-WordDictionary.prototype.addWord = function (word) {
+WordDictionary.prototype.addWord = function(word) {
   let curr = this.root
-  for (let c of word) {
-    if (curr.children[c] === undefined) {
+  for(let c of word) {
+    if(curr.children[c] === undefined) {
       curr.children[c] = new TrieNode()
     }
     curr = curr.children[c]
   }
   curr.end = true
+
 };
 
 /** 
  * @param {string} word
  * @return {boolean}
  */
-WordDictionary.prototype.search = function (word) {
+WordDictionary.prototype.search = function(word) {
   let curr = this.root
+  // console.log('search', 'curr', Object.keys(curr.children), word)
   for(let i = 0; i < word.length; i++) {
     let c = word[i]
-
     if(c !== '.') {
-      if(curr.children[c] === undefined) return false
+      if(curr.children[c] === undefined) {
+        return false
+      }
+      curr = curr.children[c]
     } else {
-      return this.searchdot(curr, word.slice(i))
-    }
-    curr = curr.children[c]
-  }
-  return curr.end
-};
-
-WordDictionary.prototype.searchdot = function(curr, word) {
-  // console.log('curr', Object.keys(curr.children), 'word', word)
-  for(let i = 0; i < word.length; i++) {
-    let c = word[i]
-    //                
-    //       [b  p         m]
-    //       a    a       a
-    //      d      d     d
-
-    if(c !== '.') {
-      if(curr.children[c] === undefined) return false
-    } else {
-      let chars = Object.keys(curr.children)
-      for(let char of chars) {
-        let search = this.searchdot(curr.children[char], word.substring(i+1))
-        if(search) return search    
+      let children = Object.keys(curr.children)
+      let valid = false
+      for(let child of children) {
+        let search = this.searchHelper(curr.children[child], word.slice(i+1))
+        if(search) {
+          return true
+        }
       }
       return false
     }
-    curr = curr.children[c]
   }
   return curr.end
+    
+};
+
+WordDictionary.prototype.searchHelper = function(curr, word) {
+  // console.log('  helper', 'curr', Object.keys(curr.children), word)
+  for (let i = 0; i < word.length; i++) {
+    let c = word[i]
+    if (c !== '.') {
+      if (curr.children[c] === undefined) {
+        return false
+      }
+      curr = curr.children[c]
+    } else {
+      let children = Object.keys(curr.children)
+      let valid = false
+      for (let child of children) {
+        let search = this.searchHelper(curr.children[child], word.slice(i + 1))
+        if (search) {
+          return true
+        }
+      }
+      return false
+    }
+  }
+  return curr.end
+
 }
 
 /** 
