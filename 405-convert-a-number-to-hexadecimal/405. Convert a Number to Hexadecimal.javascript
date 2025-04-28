@@ -4,21 +4,36 @@
  */
 var toHex = function(num) {
   if(num === 0) return "0"
-  if(num < 0) num = 2 **32 + num
-  let letters = "0123456789abcdef"
-  // let lmap = {}
-  // for(let i = 0; i < letters.length; i++) {
-  //   let letter = letters[i]
-  //   lmap[letter] = i
-  // }
+  //        
+  let hex = '0123456789abcdef'
 
-  let tmp = num
-  let str = ""
-  while(tmp > 0) {
-    let digit = tmp % 16
-    let letter = letters[digit]
-    str = letter + str
-    tmp = Math.floor(tmp / 16)
-  } 
-  return str
+  if(num >= 0) {
+    let out = ""
+    let tmp = num
+    // 26 % 16 => 10 (a)
+    // 26 / 16 =>  1
+
+    while(tmp > 0) {
+      let digit = tmp % 16 
+      let hdigit = hex[digit]
+
+      out = hdigit + out
+      tmp = Math.floor(tmp / 16)
+    }
+    return out
+  } else {
+    let out = ""
+    let tmp = 2 ** 32 + num
+    // 26 % 16 => 10 (a)
+    // 26 / 16 =>  1
+
+    while(tmp > 0) {
+      let digit = tmp % 16 
+      let hdigit = hex[digit]
+
+      out = hdigit + out
+      tmp = Math.floor(tmp / 16)
+    }
+    return out   
+  }
 };
