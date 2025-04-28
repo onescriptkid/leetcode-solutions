@@ -5,34 +5,42 @@
 var eraseOverlapIntervals = function(intervals) {
 
   // 1 2 3 4 5 6 7 8 9
-  // 1 2
-  //   2 3
-  //     3 4
-  // 1   3
+  // x x
+  // x   x
+  //   x x
+  //     x x
   
   // 1 2 3 4 5 6 7 8 9
-  // 1   3
-  //  2    4
-  //         5   7
-  // 1 2
-  //   2 3
-  //     3 4
+  // x               x
+  //   x         x
+  //             x x
+  //               x x
+
   intervals.sort((a,b) => a[0] > b[0] ? 1 : -1)
 
-  // console.log('intervals', intervals)
-  let prevEnd = intervals[0][1]
-
-  let removals = 0
-  for(let i = 1; i < intervals.length; i++) {
-    let curr = intervals[i]
-    let [start, end] = curr
-    // overlapping
-    if(start < prevEnd) {
-      removals++
-      prevEnd = Math.min(end, prevEnd)
-    } else {
-      prevEnd = end
+  function isOverlapping(a,b) {
+    // a0    a1
+    //    b0    b1
+    if(b[0] < a[1] && a[0] < b[1]) {
+      return true
     }
+    return false
+  }
+
+  let curr = intervals[0]
+  let i = 1
+  let removals = 0
+  while(i < intervals.length) {
+    let inc = intervals[i]
+    if(!isOverlapping(inc, curr)) {
+      curr = inc
+    } else {
+      removals++
+      if(curr[1] >= inc[1]) {
+        curr = inc
+      }
+    }
+    i++
   }
   return removals
 
