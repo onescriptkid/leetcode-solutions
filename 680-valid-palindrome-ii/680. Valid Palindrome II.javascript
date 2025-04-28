@@ -4,40 +4,58 @@
  */
 var validPalindrome = function(s) {
 
-  function isPalindrome(l, r) {
-    while(l < r) {
-      if(s[l] !== s[r]) return [l, r]
-      l++
-      r--
-    }
-    return true
-  }
-
-  let first = isPalindrome(0, s.length - 1)
-  if(first === true) return true
-
-  let [l, r] = first
-
-  if(isPalindrome(l+1, r) === true) return true
-  if(isPalindrome(l, r-1) === true) return true
-
-  // if(isPalindrome(0, s))
-  // let l = 0
-  // let r = s.length - 1
-  // xayyyx
-  //  l  r
-  // xayyyx
-  //  l r
-  // xayyyx
+  // abca
+  // l  r
+  
+  // aaxbaaaa
+  //   l r
+  
+  // aaabxaaa
+  //   l r
+  
+  // aaxbaaaa
   //   l r
 
-  // while(l )
-  // for(let i = 0; i < s.length; i++) {
-  //   let test = s.substring(0, i) + s.substring(i+1)
-  //   if(isPalindrome(test)) {
-  //     return true
-  //   }
-  // }
-  return false
+  // cbbcc
+  //  l r
+
+  let flag = false
+  let l = 0
+  let r = s.length - 1
     
+  while(l < r) {
+    if(s[l] !== s[r]) {
+      // try l+1
+      let ol = l+1
+      let or = r
+      let valid = true
+      while(ol < or) {
+        if(s[ol] !== s[or]) {
+          valid = false
+          break;
+        }
+        ol++
+        or--
+      }
+      if(valid) return true
+
+      // try r-1
+      ol = l
+      or = r -1
+      // console.log('ol or', ol, or, s[ol], s[or])
+      while(ol < or) {
+        if(s[ol] !== s[or]) {
+          return false
+        }
+        ol++
+        or--
+      }
+      return true
+
+    }
+    l++
+    r--
+  }
+
+  return true
 };
