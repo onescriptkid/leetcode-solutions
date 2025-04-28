@@ -4,38 +4,27 @@
  * @return {number}
  */
 var uniquePaths = function(m, n) {
+
   let memo = {}
 
-  function dfs(x,y) {
-    let key = `${x},${y}`
-    // console.log(x, y, memo)
-    if(x === m && n === y) {
-      return 1
-    }
-    if(x > m || y > n) {
+  function dfs(r, c) {
+    let key = `${r},${c}`
+    if(r >= m || c >= n) {
       return 0
     }
+    if(r === m-1 && c === n-1) {
+      return 1
+    }
     if(memo[key] !== undefined) {
-      return memo[key] 
+      return memo[key]
     }
 
-    let right = dfs(x+1, y)
-    let down = dfs(x, y+1)
-    // if(right === -1 && down === -1) {
-    //   memo[key] = -1
-    //   return memo[key]
-    // }
-    // if(right === -1 && down !== -1) {
-    //   memo[key] = 1 + down
-    //   return memo[key]
-    // }
-    // if(right !== -1 && down === -1) {
-    //   memo[key] = 1 + right
-    //   return memo[key]
-    // }
-    memo[key] = right + down
+    let opt1 = dfs(r+1,c)
+    let opt2 = dfs(r,c+1)
+
+    let sum = opt1 + opt2
+    memo[key] = sum
     return memo[key]
   }
-  return dfs(1, 1)
-
+  return dfs(0,0)
 };
