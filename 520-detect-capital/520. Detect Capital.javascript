@@ -3,36 +3,29 @@
  * @return {boolean}
  */
 var detectCapitalUse = function(word) {
+  let lower = new Set('abcdefghijklmnopqrstuvwxyz')
+  let upper = new Set('abcdefghijklmnopqrstuvwxyz'.toUpperCase())
 
-  let allCaps = true
-  for(let c of word) {
-    if(c !== c.toUpperCase()) {
-      allCaps = false
-      break;
-    }
-  }
-
+  let allCapitals = true
   let allLower = true
   for(let c of word) {
-    if(c !== c.toLowerCase()) {
+    if(lower.has(c)) {
+      allCapitals = false
+    }
+
+    if(upper.has(c)) {
       allLower = false
-      break;
     }
   }
 
-  let onlyFirst = word[0] === word[0].toUpperCase()
-  if(onlyFirst) {
-    for(let i = 1; i < word.length; i++) {
-      let c = word[i]
-      if(c === c.toUpperCase()) {
-        onlyFirst = false
-        break;
-      }
+  let first = upper.has(word[0])
+  for(let i = 1; i < word.length; i++) {
+    let c = word[i]
+    if(upper.has(c)) {
+      first = false
     }
   }
-  // console.log(allCaps, allLower, onlyFirst)
 
-  return allCaps || allLower || onlyFirst
-
+  return allCapitals || allLower || first
 
 };
