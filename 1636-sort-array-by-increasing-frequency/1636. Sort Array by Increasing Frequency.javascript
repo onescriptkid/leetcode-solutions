@@ -4,27 +4,23 @@
  */
 var frequencySort = function(nums) {
 
-  let counts = {}
-  for(let i = 0; i < nums.length; i++) {
-    let num = nums[i]
-    if(counts[num] === undefined) {
-      counts[num] = 1
-    } else {
-      counts[num]++
-    }
+  let freq = {}
+  for(let num of nums) {
+    freq[num] = (freq[num] || 0) + 1
   }
 
   nums.sort((a,b) => {
-    if(counts[a] > counts[b]) {
+
+    if(freq[a] > freq[b]) {
       return 1
-    } else if(counts[a] === counts[b]) {
+    } else if(freq[a] < freq[b]) {
+      return -1
+    } else {
       if(a < b) {
         return 1
       } else {
         return -1
       }
-    } else {
-      return -1
     }
   })
   return nums
