@@ -11,26 +11,26 @@
  * @return {number}
  */
 var minDiffInBST = function(root) {
-
-  // 0 1 
-  let out = []
+  let gmin
+  let prev
   function dfs(curr) {
-    if(curr === null) return
-    dfs(curr.left)
-    out.push(curr.val)
-    dfs(curr.right)
-  }
-  dfs(root)
-  let min = undefined
-  for(let i = 0 ; i < out.length - 1; i++) {
-    let curr = out[i]
-    let next = out[i+1]
-    let diff = Math.abs(curr - next)
-    if(min === undefined) {
-      min = diff
-    } else if(diff < min) {
-      min = diff
+    if(curr === null) {
+      return
     }
-  }
-  return min
+    dfs(curr.left)
+    if(prev !== undefined) {
+      let min = Math.min(curr.val, curr.val - prev)
+      if(gmin === undefined) {
+        gmin = min
+      } else if(min < gmin){
+        gmin = min
+      }
+    }
+
+    prev = curr.val
+    dfs(curr.right)
+  }   
+
+  dfs(root)
+  return gmin
 };
