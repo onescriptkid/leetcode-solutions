@@ -4,7 +4,7 @@
  * @return {boolean}
  */
 var canConstruct = function(ransomNote, magazine) {
-
+  
   let freq = {}
   for(let c of magazine) {
     freq[c] = (freq[c] || 0) + 1
@@ -20,4 +20,5 @@ var canConstruct = function(ransomNote, magazine) {
     freq[c]--
   }
   return true
+
 };
