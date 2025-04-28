@@ -4,11 +4,12 @@
  * @return {number}
  */
 var search = function(nums, target) {
+
   let l = 0
   let r = nums.length - 1
 
   while(l <= r) {
-    let m = Math.floor((l + r) /2)
+    let m = Math.floor((l + r) / 2)
     let mid = nums[m]
 
     if(mid === target) {
