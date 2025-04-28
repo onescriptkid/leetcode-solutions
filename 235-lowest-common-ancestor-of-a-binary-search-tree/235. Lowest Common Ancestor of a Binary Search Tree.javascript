@@ -14,17 +14,19 @@
  */
 var lowestCommonAncestor = function(root, p, q) {
   if(root === null || p === null || q === null) {
-    return
+    return null
   }
+
   let min = Math.min(p.val, q.val)
   let max = Math.max(p.val, q.val)
+  // console.log('root', root.val, 'min', min, 'max', max)
 
-  if(min <= root.val && root.val <= max) {
+  if(root.val >= min && root.val <= max) {
     return root
-  } else if(min < root.val && root.val > max) {
-    return lowestCommonAncestor(root.left, p, q)
-  } else if(min > root.val && root.val < max) {
+  } else if(root.val <= min && root.val <= max) {
     return lowestCommonAncestor(root.right, p, q)
+  } else {
+    return lowestCommonAncestor(root.left, p, q)
   }
-
+  
 };
