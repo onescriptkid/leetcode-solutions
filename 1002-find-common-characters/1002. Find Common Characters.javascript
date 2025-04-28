@@ -3,39 +3,44 @@
  * @return {string[]}
  */
 var commonChars = function(words) {
-  
-  let out = words[0].split('')
+  let freq = {}
+  let first = words[0]
+  for(let c of first) {
+    freq[c] = (freq[c] || 0) + 1
+  }
+  // console.log('freq', freq)
 
-  let countsarr = []
-  for(let i = 0; i < words.length; i++) {
-    let word = words[i]
-    let counts = {}
-    for(let j = 0; j < word.length; j++) {
-      let c = word[j]
-      if(counts[c] === undefined) {
-        counts[c] = 1
-      } else {
-        counts[c]++
+  for(let word of words) {
+
+    let freqw = {}
+    for(let c of word) {
+      freqw[c] = (freqw[c] || 0) + 1
+    }
+
+    // console.log('word', word, 'freqw', freqw)
+
+    for(let char of Object.keys(freqw)) {
+      let count = freqw[char]
+      if(freq[char] !== undefined && freq[char] !== freqw[char]) {
+        freq[char] = Math.min(freq[char], freqw[char])
       }
     }
-    countsarr.push(counts)
+    for(let char of Object.keys(freq)) {
+      let count = freq[char]
+      if(freqw[char] === undefined){
+        delete freq[char]
+      }
+    }
+
   }
 
-  // bella
-  // {r: 2, o: 1, l:2, e: 1}
-  for(let i = 0; i < words.length; i++) {
-    // console.log('out', out)
-    // let word = words[i]
-    let counts = countsarr[i]
-    let next = []
-    for(let j = 0; j < out.length; j++) {
-      let c = out[j]
-      if(counts[c] !== undefined && counts[c] !== 0) {
-        counts[c]--
-        next.push(c)
-      }
-    } 
-    out = next
+  let out = []
+  for(let char of Object.keys(freq)) {
+
+    let count = freq[char]
+    for(let i = 0; i < count; i++) {
+      out.push(char)
+    }
   }
   return out
 };
