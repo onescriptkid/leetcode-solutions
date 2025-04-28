@@ -13,22 +13,22 @@
 var minDepth = function(root) {
 
   let min
-  function dfs(curr, depth) {
+  function dfs(curr, d) {
     if(curr === null) {
       return
     }
-    depth = depth + 1
-    if (curr.left === null && curr.right === null) {
-      if (min === undefined) {
-        min = depth
-      } else if (depth < min) {
-        min = depth
+    if(curr.left == null && curr.right === null) {
+      if(min === undefined) {
+        min = d
+      } else if(d < min) {
+        min = d
       }
     }
-    
-    dfs(curr.left, depth)
-    dfs(curr.right, depth)
+    dfs(curr.left, d+1)
+    dfs(curr.right, d+1)
   }
-  dfs(root, 0)
-  return min || 0
+  dfs(root, 1)
+  if(min === undefined) return 0
+  return min
+
 };
