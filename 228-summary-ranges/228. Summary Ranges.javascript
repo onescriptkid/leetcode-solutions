@@ -3,41 +3,41 @@
  * @return {string[]}
  */
 var summaryRanges = function(nums) {
-  if(nums.length === 0) return []
-  let l;
-  let r;
-  let prev;
-  // 0 1 2 
-  //     i
-  // l   
-  //     r 
-  //     p
+  //   0 2 3 4 6 8 9
+  // p c 
+  //   0,2---4,6,8-9
+
+  let prev
+  let range = []
   let out = []
-  for(let i = 0; i < nums.length; i++) {
-    let num = nums[i]
-    r = num
-
-    if(l === undefined) {
-      l = num
-    }
-
-    if(prev !== undefined) {
-      if((prev + 1) !== num) {
-        if(prev !== l) {
-          out.push(`${l}->${prev}`)
-          l = num
-        } else {
-          out.push(`${l}`)
-          l = num
-        }
+  for(let num of nums) {
+    // console.log('n', num, 'p', prev, 'r', range, 'out', out)
+    if(prev === undefined) {
+      range[0] = num
+    } else {
+      if((prev+1) !==num) {
+        out.push(rangeToStr(range))
+        range = [num]
+      } else {
+        range[1] = num
       }
     }
+
     prev = num
   }
-  if(l === r) {
-    out.push(`${l}`)
-  } else {
-    out.push(`${l}->${r}`)
+  if(range.length > 0) {
+    out.push(rangeToStr(range))
+  }
+
+  function rangeToStr(r) {
+    if(r.length === 2) {
+      return `${r[0]}->${r[1]}`
+    } else {
+      return `${r[0]}`
+    }
+    return ''
   }
   return out
+
+
 };
