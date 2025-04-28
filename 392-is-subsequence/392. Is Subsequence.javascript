@@ -4,15 +4,16 @@
  * @return {boolean}
  */
 var isSubsequence = function(s, t) {
-  if(t.length < s.length) return false
+  if(s.length > t.length) return false
 
-  let j = 0
-  for(let i = 0; i < t.length; i++) {
-    // console.log('t[i]', t[i], 's[j]', s[j])
-    let tc = t[i]
-    if(t[i] === s[j]) {
-      j++
+  let i = 0
+  for(let j = 0; j < t.length;j++) {
+    let c = t[j]
+    if(c === s[i]) {
+      i++
     }
+
+    if(i === s.length) return true
   }
-  return j === s.length
+  return i === s.length
 };
