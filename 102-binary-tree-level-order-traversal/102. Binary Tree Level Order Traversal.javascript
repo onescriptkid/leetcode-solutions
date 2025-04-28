@@ -12,21 +12,25 @@
  */
 var levelOrder = function(root) {
 
+  let queue = root ? [root] : []
+  let levels = 0
   let out = []
-  function recurse(curr, level) {
-    if(curr === null) return
-    console.log("curr.val", curr.val, "out", out)
-    if(out[level] === undefined) {
-      out[level] = [curr.val] 
-    } else {
-      out[level].push(curr.val)
+  while(queue.length > 0) {
+    let length = queue.length
+    // console.log('queue', queue)
+
+    for(let i = 0; i < length; i++) {
+      let curr = queue.shift()
+      // console.log('i', i, 'curr', curr?.val)
+      if(out[levels] === undefined) {
+        out[levels] = [curr.val]
+      } else {
+        out[levels].push(curr.val)
+      }
+      if(curr.left) queue.push(curr.left)
+      if(curr.right) queue.push(curr.right)
     }
-
-    recurse(curr.left, level+1)
-    recurse(curr.right, level+1)
-
+    levels++
   }
-  recurse(root, 0)
-  
   return out
 };
