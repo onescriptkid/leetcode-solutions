@@ -4,35 +4,28 @@
  * @return {number}
  */
 var minBitFlips = function(start, goal) {
+
   // 8421
-  // 1010
-  // 0111    
+  // 1010  = 10
+  // 0111  = 7
 
-  // 0010
-  // 0110
-  // 0111
-
-  // 011
-  // 100
-
-  // ""
-  let mstart = start.toString(2)
-  let mgoal  = goal.toString(2)
-
-  let i = mstart.length - 1;
-  let j = mgoal.length - 1;
   let count = 0
-  console.log(mstart, mgoal)
-  while(i >= 0 || j >= 0) {
-    let s = mstart[i] || "0"
-    let g = mgoal[j] || "0"
-    // console.log(i, j, '-', s, g)
-    if(s !== g) {
+  let a = start
+  let b = goal
+
+  while(a > 0 || b > 0) {
+    let abit = a & 1
+    let bbit = b & 1
+
+    if(abit !== bbit) {
       count++
-      // console.log('  count', count)
     }
-    i--
-    j--
+
+    a = a >>1
+    b = b >>1
   }
+
   return count
+
+
 };
