@@ -4,16 +4,23 @@
  */
 var minStartValue = function(nums) {
 
-  let mintotal = 0
-  let total = 0
-  for(let i = 0; i < nums.length; i++) {
-    let num = nums[i]
-    total+=num
-    if(mintotal === undefined) {
-      mintotal = total
-    } else if(total < mintotal) {
-      mintotal = total 
+  // -3  2 -3  4  2
+  // -3 -1 -4  0  2
+
+  let min = undefined
+  let step = 0
+  for(let num of nums) {
+    step+=num
+    if(min === undefined) {
+      min = step
+    } else if(step < min) {
+      min = step
     }
   }
-  return Math.abs(mintotal) + 1
+  if(min < 0) {
+    return -min + 1
+  } else {
+    return 1
+  }
+
 };
