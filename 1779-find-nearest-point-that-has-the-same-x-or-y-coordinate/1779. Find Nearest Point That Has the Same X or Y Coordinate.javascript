@@ -6,26 +6,23 @@
  */
 var nearestValidPoint = function(x, y, points) {
 
-  let min
-  let index = -1
-  for (let i = 0; i < points.length; i++) {
-    let point = points[i]
-    let [px, py] = point
+  let mini
+  let mindist
+  for(let i = 0; i < points.length; i++) {
 
-    let isValid = false
-    if(px === x || py === y) {
-      isValid = true
+    let dist = Math.abs(x - points[i][0]) + Math.abs(y - points[i][1])
+    if(x !== points[i][0] && y !== points[i][1]) {
+      continue
     }
-    if(isValid) {
-      let dist = Math.abs(x - px) + Math.abs(y - py)
-      if(min === undefined) {
-        min = dist
-        index = i
-      } else if(dist < min) {
-        min = dist
-        index = i
-      }
+
+    if(mindist === undefined) {
+      mindist = dist
+      mini = i
+    } else if(dist < mindist) {
+      mindist = dist
+      mini = i
     }
-  }   
-  return index
+  } 
+  if(mini === undefined) return -1
+  return mini
 };
