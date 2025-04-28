@@ -11,30 +11,35 @@
  * @return {number}
  */
 var diameterOfBinaryTree = function(root) {
-  let max;
-
-  function dfs(curr) {
+  let max
+  //        1
+  //     /     \
+  //    2       3
+  //   / \
+  //  4   5
+  function getDepth(curr) {
+    // 'level', level)
     if(curr === null) {
-      return 0 
+      return 0
     }
-    let left = 0
-    if(curr.left !== null) {
-      left = 1 + dfs(curr.left)
-    }
-    let right = 0
-    if(curr.right !== null) {
-      right =  1 + dfs(curr.right)
-    }
+    // console.log('curr', curr?.val) 
+    // if(curr.left === null && curr.right === null) {
+    //   return 1
+    // }
+
+    let left = getDepth(curr.left)
+    let right = getDepth(curr.right)
 
     let dia = left + right
     if(max === undefined) {
       max = dia
     } else if(dia > max) {
-      max = dia 
+      max = dia
     }
+    // console.log('  curr', curr?.val, 'return', 1+ Math.max(left, right), 'dia', dia) // 'level', level)
 
-    return Math.max(left, right)
-  } 
-  dfs(root)
+    return 1 + Math.max(left, right)
+  }
+  getDepth(root)
   return max
 };
