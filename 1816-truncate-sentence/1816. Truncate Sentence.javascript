@@ -5,11 +5,17 @@
  */
 var truncateSentence = function(s, k) {
 
-   let words = s.split(' ')
-
-  let newwords = []
-   for(let i = 0; i < k; i++)  {
-    newwords.push(words[i])
-   }
-   return newwords.join(' ')
+  let count = 0
+  let out = ''
+  for(let i = 0; i < s.length; i++) {
+    let c = s[i]
+    if(c === ' ') {
+      count++
+    }
+    if(count === k) {
+      return out
+    }
+    out+=c
+  }
+  return out
 };
