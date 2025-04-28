@@ -3,16 +3,23 @@
  * @return {number}
  */
 var diagonalSum = function(mat) {
-  let sum = 0
-  for(let r = 0; r < mat.length; r++) {
-    for(let c = 0; c < mat[0].length; c++) {
-      if(r === c) {
-        sum+=mat[r][c]
-      } else if(r === mat.length - 1 - c) {
-        sum+=mat[r][c]
-      }
+  let rows = mat.length
+  let cols = mat[0].length 
+  let out = 0
+  // 7 3 1 9
+  // 3 4 6 9
+  // 6 9 6 6
+  // 9 5 8 5
+  for(let i = 0; i < rows; i++) {
+    // console.log('i', i, rows-1-i, 'diag', mat[i][i], mat[rows-1-i][rows-1-i])
+
+    let diag = mat[i][i]
+    out+=diag
+    if((rows-1-i) !== i) {
+      let diag = mat[i][rows-1-i]
+      out+=diag
     }
   }
-  return sum
 
+  return out
 };
