@@ -5,18 +5,20 @@
  */
 var restoreString = function(s, indices) {
 
-  let obj = {}
-  let out = ""
-  for(let i = 0; i < indices.length; i++) {
-    let index = indices[i]
-    obj[index] = s[i] 
-  }
+  // 0 1 2 3 4 5 6 7
+  // c o d e l e e t
+
+  // 4 5 6 7 0 2 1 3
+  //         
+
+  let arr = new Array(s.length).fill('#')
 
   for(let i = 0; i < s.length; i++) {
-    let c = obj[i]
-    out+=c
-  }
+    let index = indices[i]
 
-  return out
+    arr[index] = s[i]
+  }
+  return arr.join('')
+
 
 };
