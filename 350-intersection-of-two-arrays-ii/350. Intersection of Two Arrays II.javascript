@@ -5,16 +5,25 @@
  */
 var intersect = function(nums1, nums2) {
   let freq1 = {}
-  for(let num of nums1) {
-    freq1[num] = (freq1[num] || 0) + 1
+  let freq2 = {}
+
+  // for(let num of nums1) {
+  //   freq1[num] = (freq1[num] || 0) + 1
+  // }
+  for(let num of nums2) {
+    freq2[num] = (freq2[num] || 0) + 1
   }
 
+
   let out = []
-  for(let num of nums2) {
-    if(freq1[num] !== undefined && freq1[num] > 0) {
-      freq1[num]--
+  for(let num of nums1) {
+    if(freq2[num] !== undefined && freq2[num] > 0) {
+      freq2[num]--
       out.push(num)
     }
   }
+
   return out
+
+
 };
