@@ -3,37 +3,16 @@
  * @return {number}
  */
 var heightChecker = function(heights) {
+  let orig = heights.slice()
 
-  // let out2 = 0
-  // for(let i = 1; i < heights.length; i++) {
-  //   let h = heights[i]
-  //   let p = heights[i-1]
-  //   if(p > h) {
-  //     out2++
-  //   }
-  // }
-  // return out2
+  heights.sort((a,b) => a > b ? 1 : -1)
 
-  let orig = heights.map(v => v)
-  heights.sort((a,b) => {
-    if(a > b) {
-      return 1
-    } else {
-      return -1
-    }
-  })
-
-  let out = 0
-  for(let i = 0; i < orig.length; i++) {
-    let ho = orig[i]
-    let hs = heights[i]
-
-    if(ho !== hs) {
-      out++
-    }
+  let count = 0
+  // console.log('orig', orig)
+  // console.log('heig', heights)
+  for(let i = 0; i < heights.length;i++) {
+    if(orig[i] !== heights[i]) count++
   }
+  return count
 
-
-  
-  return out
 };
