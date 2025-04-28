@@ -4,21 +4,33 @@
  * @return {number[][]}
  */
 var combinationSum = function(candidates, target) {
+  candidates.sort((a,b) => a > b ? 1 : -1)
+  let memo = {}
+  //                                  [] t=7
+  //                          /                   \
+  //                       [2]                     []
+  //                    /       \                 /    \
+  //              [2,2]          [2]           [3]      []
+  //            /     \         
+  //      [2,2,2]      [2,2]
   let out = []
-  function dfs(arr, j, total) {
-    if(total === target) {
-      out.push([...arr])
-    }
-    if(total > target) {
+  function dfs(i, left, arr) {
+    if(left === 0) {
+      out.push(arr.slice())
       return
     }
-    for(let i = j; i < candidates.length; i++) {
-      let candidate = candidates[i]
-      arr.push(candidate)
-      dfs(arr, i, total + candidate)
+    if(left < 0) {
+      return -1
+    }
+    for(let j = i; j < candidates.length; j++) {
+      let can = candidates[j]
+      arr.push(can)
+      dfs(j, left - can, arr)
       arr.pop()
     }
   }
-  dfs([], 0, 0)
+  dfs(0, target, [])
   return out
+
+
 };
