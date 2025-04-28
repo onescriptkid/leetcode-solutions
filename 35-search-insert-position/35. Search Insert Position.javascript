@@ -4,9 +4,20 @@
  * @return {number}
  */
 var searchInsert = function(nums, target) {
-
   let l = 0
   let r = nums.length - 1
+  //  0 1 2 3      t = 2
+  //  1 3 5 6      => (l + r) /2 => 0 + 3 / 2 => 1.5 => 1
+  //  l m   r
+  
+  //  0 1 2 3      t = 2
+  //  3 3 5 6      => (l + r) /2 => 0 + 3 / 2 => 1.5 => 1
+  //  l m   r
+
+  //  l
+  //  m
+  //  r
+
 
   while(l <= r) {
     let m = Math.floor((l + r) / 2)
@@ -21,23 +32,9 @@ var searchInsert = function(nums, target) {
       r = m - 1
     }
   }
-  //  0 1 2 3
-  //  1 3 5 6  3/2 => 1.5 => 1     target = 2
-  //  l     r
-  
-  //  0 1 2 3
-  //  1 3 5 6  3/2 => 1.5 => 1     target = 2
-  //    l 
-  //  r
 
-  //  0 1 2 3
-  //  1 3 5 6  3/2 => 1.5 => 1     target = 4
-  //    l          
-  //        r
-
-
-  // console.log('l, r', l, r) 
   return l
 
-  return -1
+
+    
 };
