@@ -4,44 +4,36 @@
  */
 var trap = function(height) {
 
+  // 0 1 0 2 1 0 1 3 2 1 2 1
+  
+  // 0 1 1 2 2 2 2 3 3 3 3 3
+  // 3 3 3 3 3 3 3 3 2 1 2 1
 
-  let maxl = 0;
-  let maxr = 0;
-  let ltor = [] 
-  let rtol = []
-
-  for(let i = 0; i < height.length; i++) {
-    let l = height[i]
-    let r = height[height.length - 1 - i]
-    ltor[i] = maxl 
-    rtol[height.length - 1 - i] = maxr
-
-    if(maxl === undefined) {
-      maxl = l
-    } else if(maxl < l) {
-      maxl = l
-    }
-
-    if(maxr === undefined) {
-      maxr = r
-    } else if(maxr < r) {
-      maxr = r
-    }
+  let maxlefts = []
+  let maxleft = 0
+  for(let h of height) {
+    maxleft = Math.max(h, maxleft)
+    maxlefts.push(maxleft)
   }
 
-  console.log(ltor)
-  console.log(rtol)
-
-  let total = 0
-  for(let i = 0; i < height.length; i++) {
-    let h = height[i]
-    let l = ltor[i]
-    let r = rtol[i]
-    let trap = Math.min(l, r) - h
-    if(trap > 0) {
-      total+=trap
-    }
+  let maxrights = new Array(height.length)
+  let maxright = 0
+  for(let i = height.length - 1; i>= 0; i--) {
+    maxright = Math.max(height[i], maxright)
+    maxrights[i] = maxright
   }
-  return total
+  let sum = 0
+  // console.log(maxlefts)
+  // console.log(maxrights)
+  for(let i = 0; i < height.length; i++) {
+    let min = Math.min(maxlefts[i], maxrights[i])
+
+    let diff = min - height[i]
+    // console.log('height', height[i], maxlefts[i], maxrights[i], 'diff', diff, 'mim', min)
+    sum+=diff
+
+  }
+  return sum 
+
 
 };
