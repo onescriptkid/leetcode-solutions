@@ -12,38 +12,26 @@
  */
 var isBalanced = function(root) {
 
-  // function getHeight(curr, height) {
-  //   if(curr === null) return height
-  //   let left = getHeight(curr.left, height+1)
-  //   let right = getHeight(curr.right, height+1)
-  //   return Math.max(left, right)
+  function dfs(curr) {
+    if(curr === null) return 0
 
-  // }
+    let left = dfs(curr.left)
+    let right = dfs(curr.right)
 
-  function dfs(curr, depth) {
-    if(curr === null) return depth
-
-    // get height of left or right
-    let lh = dfs(curr.left, depth+1)
-    let rh = dfs(curr.right,depth+1)
-
-    // left or right tree already imbalanced
-    if(lh === -1 || rh === -1) {
+    if(left === -1 || right === -1) {
       return -1
     }
 
-    // check if this tree is imbalanced 
-    let diff = Math.abs(lh - rh)
+    let diff = Math.abs(left - right)
     if(diff > 1) {
       return -1
     }
 
-    // return height
-    let height = Math.max(lh, rh)
-    return height
-
+    return Math.max(left, right) + 1
   }
-  let out = dfs(root, 0)
-  if(out === -1) return false
+  let out = dfs(root)
+  if(out === -1) {
+    return false
+  }
   return true
 };
