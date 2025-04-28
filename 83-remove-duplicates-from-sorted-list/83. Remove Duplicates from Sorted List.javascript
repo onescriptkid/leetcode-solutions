@@ -10,11 +10,12 @@
  * @return {ListNode}
  */
 var deleteDuplicates = function(head) {
+  //   1 1 2 3 3
+  //     p c n
 
-  //   1 1 2 2 3 3
-  //   p c
+  let prev = null
   let curr = head
-  let prev= null
+
   while(curr !== null) {
     if(prev !== null) {
       if(prev.val === curr.val) {
@@ -30,4 +31,5 @@ var deleteDuplicates = function(head) {
     }
   }
   return head
+
 };
