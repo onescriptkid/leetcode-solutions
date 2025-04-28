@@ -17,7 +17,7 @@ var LRUCache = function(capacity) {
   this.head = new Node()
   this.tail = new Node()
   this.head.next = this.tail
-  this.tail.prev = this.head 
+  this.tail.prev = this.head
 };
 
 LRUCache.prototype.remove = function(node) {
@@ -48,6 +48,7 @@ LRUCache.prototype.get = function(key) {
   this.remove(node)
   this.add(node)
   return node.value
+    
 };
 
 /** 
@@ -59,17 +60,18 @@ LRUCache.prototype.put = function(key, value) {
   if(this.kv[key] !== undefined) {
     this.remove(this.kv[key])
     this.size--
-  }    
+  }
   let node = new Node(key, value)
-  this.size++
   this.add(node)
+  this.size++
   this.kv[key] = node
   if(this.size > this.capacity) {
-    let lru = this.tail.prev 
+    let lru = this.tail.prev
     this.size--
     this.remove(lru)
     delete this.kv[lru.key]
   }
+  
 };
 
 /** 
