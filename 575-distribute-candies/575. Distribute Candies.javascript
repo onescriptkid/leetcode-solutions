@@ -4,15 +4,15 @@
  */
 var distributeCandies = function(candyType) {
 
-  // let total = 0
-  let set = new Set(candyType)
-  // for(let ct of candyType) {
-  //   total+=ct
-  // }
-  
-  // 12
+  // 1 1 2 2 3 3    
+  let set = new Set()
+  for(let ct of candyType) {
+    set.add(ct)
+  }
+
   let doctor = candyType.length / 2
 
   return Math.min(doctor, set.size)
+
 
 };
