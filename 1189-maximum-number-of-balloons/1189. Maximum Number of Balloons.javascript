@@ -3,31 +3,34 @@
  * @return {number}
  */
 var maxNumberOfBalloons = function(text) {
-  let bchars = {}
-  for(let i = 0; i < text.length; i++) {
-    let c = text[i]
-    if(bchars[c] === undefined) {
-      bchars[c] = 1
-    } else {
-      bchars[c]++
-    }
-  }  
 
-  let out = 0
+  // balloon {b:1, a:1, l:2, o:2, n:1}
+  let balloon = {b:1, a:1, l:2, o:2, n:1}
 
-  // b a ll oo n s
-  console.log(bchars)
-  while(true) {
-    if(bchars['b'] > 0 && bchars['a'] > 0 && bchars['l'] > 1 && bchars['o'] > 1 && bchars['n'] > 0) {
-      bchars['b']--
-      bchars['a']--
-      bchars['l'] = bchars['l'] - 2
-      bchars['o'] = bchars['o'] - 2
-      bchars['n']--
-      out++
-    } else {
-      break
-    }
+  let freq = {}
+  for(let c of text) {
+    freq[c] = (freq[c] || 0) + 1
   }
-  return out
+  let b = 0
+  let keys = Object.keys(balloon) 
+  while(true) {
+    // console.log('f', freq)
+
+    for(let key of keys) {
+      let count = balloon[key]
+      // console.log('  key', key, 'freq[key]', freq[key], 'count', count)
+
+      if(freq[key] === undefined) {
+        return b
+      }
+      if((freq[key] - count) < 0 ) {
+        return b
+      }
+      freq[key]-=count
+    }
+
+    b++
+  }
+
+
 };
