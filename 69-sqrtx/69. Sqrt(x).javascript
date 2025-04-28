@@ -3,39 +3,37 @@
  * @return {number}
  */
 var mySqrt = function(x) {
-  // for(let i = 0; i <= x; i++) {
-  //   if((i*i) === x) {
-  //     return i
-  //   }
-  //   // if((i * (i-1) ))
-  //   if((i *i) > x) {
-  //     return i - 1
-  //   }
-  // }
-  // 1 .... 4
-  let l = 0
+
+  // 1 2 3 4 5 6 7 8      9 / 2 => 4
+  // l     m       r
+  
+  // 1 2 3 4 5 6 7 8      4 / 2 => 2
+  // l m r
+  
+  // 1 2 3 4 5 6 7 8      4 / 2 => 2
+  //   m r
+  //     l
+
+  let l = 1
   let r = x
-  let m = Math.floor((l + r) / 2)
 
   while(l <= r) {
-    m = Math.floor((l + r) / 2)
-    // console.log(l, m, r)
-    let mid = m * m
-    if(mid === x) {
+    let m = Math.floor((l + r) / 2)
+    let mid = x / m
+    // console.log('lmr', l, m, r)
+
+
+    if(mid === m) {
       return m
     }
-    if(mid < x) {
-      l = m + 1
-    }
-    if(mid > x) {
+    if(mid < m) {
       r = m - 1
     }
+    if(mid > m) {
+      l = m + 1
+    }
   }
-  // console.log(l, m, r)
-  if(r < l) {
-    return r
-  } else {
-    return l
-  }
-  // return m
+
+  return r
+
 };
