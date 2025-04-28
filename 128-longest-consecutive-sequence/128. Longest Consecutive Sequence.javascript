@@ -4,41 +4,22 @@
  */
 var longestConsecutive = function(nums) {
 
-  let obj = {}
-
-  for(let i = 0; i < nums.length; i++) {
-    let num = nums[i]
-    obj[num] = true
-  }
-
-  // 100 4 200 1 3 2
-  // 101 - 99
+  let set = new Set(nums)
   let max = 0
-  // console.log(obj)
-  const keys = Object.keys(obj)
-  // console.log(keys)
-  for(let i = 0; i < keys.length; i++) {
-    let num = Number(keys[i])
+  for(let num of set) {
     let count = 1
-
-    // forward
-    let inc = num + 1
-    while(obj[inc] !== undefined) {
-      delete obj[inc]
+    let tmp = num +1
+    if (set.has(num - 1))  continue
+    
+    while (set.has(tmp) && ! set.has(num - 1)) {
+      // console.log('  num', num, 'tmp', tmp)
       count++
-      inc++
-    }
-
-    let dec = num - 1
-    while(obj[dec] !== undefined) {
-      delete obj[dec]
-      count++
-      dec--
+      tmp++
     }
 
     if(count > max) {
       max = count
     }
-  }
+  } 
   return max
 };
