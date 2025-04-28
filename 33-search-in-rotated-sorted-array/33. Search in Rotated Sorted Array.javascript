@@ -4,7 +4,6 @@
  * @return {number}
  */
 var search = function(nums, target) {
-
   let l = 0
   let r = nums.length - 1
 
@@ -13,16 +12,21 @@ var search = function(nums, target) {
     let mid = nums[m]
     let left = nums[l]
     let right = nums[r]
-    if(target === mid) {
+
+    if(mid === target) {
       return m
     }
 
     if(left <= mid) {
+      // 4 5 6 7 0 1 2
+      // l     m     r
+
       if(target < left || target > mid) {
         l = m + 1
       } else {
         r = m - 1
       }
+      
     } else {
       if(target < mid || target > right) {
         r = m - 1
@@ -30,12 +34,11 @@ var search = function(nums, target) {
         l = m + 1
       }
     }
+      // 5 6 7 0 1 2 4
+      // l     m     r
   }
   return -1
-  // 6 7 0 1 2 4 5
-  // l     m     r
-  
-  // 4 5 6 7 0 1 2
-  // l     m     r
+
+
 
 };
