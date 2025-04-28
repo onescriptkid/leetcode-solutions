@@ -5,43 +5,42 @@
  */
 var nextGreaterElement = function(nums1, nums2) {
 
-  // 4 1 2
-  // - 3 -
-
-  // 1 3 4 2
-  // 3 4 - -
-
-
-  // 1 3 4 2      [1] {}
+  // 1 3 4 2  [1]  {}
+  // i
+  
+  // 1 3 4 2  [1]  {}
+  //   i
+  // 1 3 4 2  []  {1: 3}
+  //   i
+  // 1 3 4 2  [3]  {1: 3}
   //   i
   
-  // 1 3 4 2      [] {1: 3}
-  //   i
+  // 1 3 4 2  [3]  {1: 3}
+  //     i   
+  // 1 3 4 2  []  {1: 3, 3: 4}
+  //     i   
+  // 1 3 4 2  [4]  {1: 3, 3: 4}
+  //     i   
+
 
   let stack = []
-  let hash = {}
+  let map = {}
   for(let num of nums2) {
-
-    while(stack.length > 0) {
-      let top = stack[stack.length - 1]
-      if(num > top) {
-        hash[top] = num
-      } else {
-        break;
-      }
-      stack.pop()
+    while(num > stack[stack.length - 1]) {
+      let top = stack.pop()
+      map[top] = num
     }
     stack.push(num)
   }
 
   let out = []
   for(let num of nums1) {
-    if(hash[num] === undefined) {
+    if(map[num] === undefined) {
       out.push(-1)
     } else {
-      out.push(hash[num])
+      out.push(map[num])
     }
-  }
+  } 
   return out
 
 };
