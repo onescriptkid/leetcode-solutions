@@ -11,34 +11,42 @@
  * @return {number[]}
  */
 var findMode = function(root) {
+
+  let prev
+  let count = 0
+  let max
   let modes = []
-  let counts = {}
+  // 1 2 2 3 3 4 5 5 5 6 6
+
   function dfs(curr) {
     if(curr === null) {
       return
     }
-    if(counts[curr.val] === undefined) {
-      counts[curr.val] = 1
-    } else {
-      counts[curr.val]++
-    }
+
     dfs(curr.left)
+    // console.log('curr', curr.val, '-', 'count', count, 'prev', prev)
+    if(prev === undefined) {
+      count = 1
+    } else if(prev === curr.val) {
+      count++
+    } else if(prev !== curr.val) {
+      count = 1
+    }
+    if(max === undefined) {
+      max = count
+      modes = [curr.val]
+    } else if(count > max) {
+      max = count
+      modes = [curr.val]
+    } else if(count === max) {
+      max = count
+      modes.push(curr.val)
+    }
+    prev = curr.val
     dfs(curr.right)
   }
   dfs(root)
-  let keys = Object.keys(counts)
-  let max = undefined
-  for(let key of keys) {
-    let count = counts[key]
-    if(max === undefined) {
-      max = count
-      modes.push(Number(key))
-    } else if(max === count) {
-      modes.push(Number(key))
-    } else if(count > max) {
-      modes = [Number(key)]
-      max = count
-    }
-  }
   return modes
+  //   
+  //  /    
 };
