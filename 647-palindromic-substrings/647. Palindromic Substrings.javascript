@@ -3,46 +3,22 @@
  * @return {number}
  */
 var countSubstrings = function(s) {
-
-  // abccba
-  //   i
-  //   c
-  //   cc
-  // i
-  // a
-  // ab
-  let count = 0
-  // function isPalindrome() {
-
-  // }
   function expand(l, r) {
-    // abccba
-    //   l
-    //   r
-    while(l >= 0 && r < s.length && s[l] === s[r]) {
-      // console.log(l, r, s.slice(l, r+1))
+    let count = 0
+    while(s[l] === s[r] && l >= 0 && r < s.length) {
+      count++
       l--
       r++
-      count++
     }
-    // let l = 0
-    // let r = 0
+    return count
   }
-
+  let sum = 0
   for(let i = 0; i < s.length; i++) {
-    expand(i, i) 
-      // console.log('hey', i+1, (i+1) < s.length)
-    if((i+1) < s.length) {
-      expand(i, i+1)
-    }
-    // let opt1 = s[i]
-    // let opt2 = s.slice(i, i+2)
+    let opt1 = expand(i, i)
+    let opt2 = expand(i, i+1)
+    // console.log('i', i, 'opt1', opt1, 'opt2', opt2, 'sum', sum)
 
-    // let one = expand(opt1)
-
-    // if(opt2.length === 2) {
-    //   expand(opt2)
-    // }
-  }
-  return count
+    sum+=opt1 + opt2
+  } 
+  return sum
 };
