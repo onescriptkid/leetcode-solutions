@@ -4,28 +4,34 @@
  * @return {boolean}
  */
 var wordPattern = function(pattern, s) {
-
-  let pmap = new Map()
-  let smap = new Map()
-
   let words = s.split(' ')
-  if(words.length !== pattern.length) return false
+  if(words.length !== pattern.length) {
+    return false
+  }
+
+  let ptos = new Map()
+  let stop = new Map()
 
   for(let i = 0; i < pattern.length; i++) {
-    let word = words[i]
+
     let p = pattern[i]
-    if(pmap.get(p) === undefined) {
-      pmap.set(p, word)
-    } else if(pmap.get(p) !== word) {
+    let w = words[i]
+
+    if(ptos.get(p) === undefined) {
+      ptos.set(p, w)
+    } else if(ptos.get(p) !== w) {
       return false
     }
-
-    if(smap.get(word) === undefined) {
-      smap.set(word, p)
-    } else if(smap.get(word) !== p) {
+    if(stop.get(w) === undefined) {
+      stop.set(w, p)
+    } else if(stop.get(w) !== p) {
       return false
     }
   }
+
   return true
+
+  // abba dog cat cat dog
+ 
 
 };
