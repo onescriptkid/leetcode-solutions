@@ -3,16 +3,16 @@
  * @return {string[][]}
  */
 var groupAnagrams = function(strs) {
-  let alphabet = 'abcdefghijklmnopqrstuvwxyz'
+
+  let letters = 'abcdefghijklmnopqrstuvwxyz'
   let ltov = {}
-  for(let i = 0; i < alphabet.length; i++) {
-    ltov[alphabet[i]] = i
+  for(let i = 0; i < letters.length; i++) {
+    ltov[letters[i]] = i
   }
 
-  let groups = {} 
+  let groups = {}
   for(let str of strs) {
     let keyarr = new Array(26).fill(0)
-
     for(let c of str) {
       let val = ltov[c]
       keyarr[val]++
@@ -29,6 +29,5 @@ var groupAnagrams = function(strs) {
     let group = groups[key]
     out.push(group)
   }
-
-  return  out
+  return out
 };
