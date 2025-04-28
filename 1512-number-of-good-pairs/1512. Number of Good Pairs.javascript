@@ -3,18 +3,18 @@
  * @return {number}
  */
 var numIdenticalPairs = function(nums) {
-  
-  let counts = {}
-  let total = 0
-  for(let i = 0; i < nums.length; i++) {
-    let num = nums[i]
 
-    if(counts[num] === undefined) {
-      counts[num] = 1
+  let freq = {}
+  let count = 0
+  for(let num of nums) {
+
+    if(freq[num] === undefined) {
+      freq[num] = 1
     } else {
-      total+=counts[num]
-      counts[num]++
+      count+=freq[num]
+      freq[num]++
     }
+
   }
-  return total
+  return count
 };
