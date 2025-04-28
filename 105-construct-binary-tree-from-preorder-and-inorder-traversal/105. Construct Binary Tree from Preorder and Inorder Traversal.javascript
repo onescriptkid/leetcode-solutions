@@ -12,21 +12,27 @@
  * @return {TreeNode}
  */
 var buildTree = function(preorder, inorder) {
-  if(preorder.length === 0 || inorder.length === 0) {
+
+  let i = 0
+  let p = 0
+
+  // 3 9 20 15 7 
+  // c l r
+  //   0
+
+  // 9 3 15 20 7
+  // l c r
+  // 0
+  function build(end) {
+    if(inorder[i] !== end) {
+      let node = new TreeNode(preorder[p])
+      p++
+      node.left = build(node.val)
+      i++
+      node.right = build(end)
+      return node
+    }
     return null
   }
-
-  // pre
-  // [3] [9] [20 15 7]
-  // c   l   r
-
-  // in
-  // [9] [3] [15 20 7] 
-  // l   c   r
-  let node = new TreeNode(preorder[0])
-  let i = inorder.indexOf(preorder[0])
-
-  node.left = buildTree(preorder.slice(1, i+1), inorder.slice(0, i))
-  node.right = buildTree(preorder.slice(i+1), inorder.slice(i+1))
-  return node
+  return build()
 };
