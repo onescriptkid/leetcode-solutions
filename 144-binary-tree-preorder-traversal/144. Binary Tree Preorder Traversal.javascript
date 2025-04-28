@@ -11,11 +11,11 @@
  * @return {number[]}
  */
 var preorderTraversal = function(root) {
-
   let out = []
   function dfs(curr) {
-    if(curr === null) return
-
+    if(curr === null) {
+      return
+    }
     out.push(curr.val)
     dfs(curr.left)
     dfs(curr.right)
