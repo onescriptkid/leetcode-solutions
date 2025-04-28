@@ -3,15 +3,14 @@
  * @return {boolean}
  */
 var canWinNim = function(n) {
-  // i go first
-  // 1 win
-  // 2 win
-  // 3 win
-  // 4 lose
-  // 5 win
-  // 6 win
-  // 7 win
-  // 8 lose
+  // 1 win true
+  // 2 true
+  // 3 true
+  // 4 false
+  // 5 true
+  // 6 true
+  // 7 true
+  // 8 false   
 
-  return n % 4 !== 0
+  return  n % 4 !== 0
 };
