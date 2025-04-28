@@ -3,22 +3,19 @@
  * @return {number}
  */
 var minMaxGame = function(nums) {
+  
+  while(nums.length > 1) {
 
-  while(nums.length !== 1) {
-    // console.log(nums)
-    let newNums = new Array(nums.length / 2) 
+    let next = new Array(nums.length / 2)
 
-    for(let i = 0;i < nums.length/2; i++) {
-      let num = nums[i]
-      let newNum
+    for(let i = 0; i < next.length; i++) {
       if(i % 2 === 0) {
-        newNum = Math.min(nums[2*i], nums[2*i+1])
+        next[i] = Math.min(nums[2*i], nums[2*i+1])
       } else {
-        newNum = Math.max(nums[2*i], nums[2*i+1])
+        next[i] = Math.max(nums[2*i], nums[2*i+1])
       }
-      newNums[i] = newNum
     }
-    nums = newNums
-  }  
+    nums = next
+  }
   return nums[0]
 };
