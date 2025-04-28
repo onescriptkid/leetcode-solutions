@@ -6,18 +6,10 @@ var repeatedSubstringPattern = function(s) {
 
   // abab
   // abababab
+  //  bababa
 
-  // abaaba
-  // baab
-  // 
+  let double = s + s
+  let chopends = double.slice(1, double.length-1)
 
-  let str = s + s
-  str = str.slice(1, str.length-1)
-
-
-  if(str.includes(s)) {
-    return true
-  }
-  return false
-
+  return chopends.includes(s)
 };
