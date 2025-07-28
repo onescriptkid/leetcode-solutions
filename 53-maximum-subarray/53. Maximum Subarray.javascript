@@ -3,11 +3,10 @@
  * @return {number}
  */
 var maxSubArray = function(nums) {
+  // -2 1 -3 4 -1 2 1 -5 4
+  // -2 
 
-  // -2  1 -3  4 -1  2  1 -5  4 
-  // -2 -1 -4  [        ]
-
-  let max
+  let max = nums[0]
   let sum = 0
   for(let num of nums) {
     if(sum < 0) {
@@ -15,12 +14,10 @@ var maxSubArray = function(nums) {
     } else {
       sum+=num
     }
-    // console.log('num', num, 'sum', sum)
-    if(max === undefined) {
-      max = sum
-    } else if(sum > max) {
-      max = sum
-    }
+
+
+    max = Math.max(max, sum)
   }
   return max
+
 };
