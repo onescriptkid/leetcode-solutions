@@ -11,22 +11,32 @@
  * @return {TreeNode}
  */
 var sortedArrayToBST = function(nums) {
+  //  0   1 2 3 4 5   6 => 3 => 3
+  // -10 -3 0 5 9 x
+  //          m
+  
+  //  0   1 2 3 4     5 => 2.5 => 2
+  // -10 -3 0 5 9
+  //
 
-  // -10 -3 0 9 5
-  //   0  1 2 3 4
+  function dfs(nums) {
+    if(nums.length === 0) {
+      return null
+    }
 
-  function dfs(arr) {
-    if(arr.length === 0) return null
+    let m = nums.length >> 1
+    let node = new TreeNode(nums[m])
 
-    let m = arr.length >> 1
-    let node  = new TreeNode(arr[m])
-    node.left = dfs(arr.slice(0, m))
-    node.right = dfs(arr.slice(m+1))
+    // console.log('n', nums[m], 'left', nums.slice(0, m), 'right', nums.slice(m+1))
+    node.left = dfs(nums.slice(0, m))
+    node.right = dfs(nums.slice(m+1))
+
     return node
 
   }
-  return dfs(nums)
 
+
+  return dfs(nums)
 
 
 };
