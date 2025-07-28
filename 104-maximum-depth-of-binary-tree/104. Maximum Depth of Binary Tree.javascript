@@ -11,20 +11,15 @@
  * @return {number}
  */
 var maxDepth = function(root) {
-  let max = 0
-  function dfs(curr, depth) {
-    if(curr === null) return
-    depth = depth + 1
 
-    if(max === undefined) {
-      max = depth
-    } else if(depth > max) {
-      max = depth
-    }
+  function dfs(curr) {
+    if(curr === null) return 0
 
-    dfs(curr.left, depth)
-    dfs(curr.right, depth)
+    let left = 1 + dfs(curr.left)
+    let right = 1 + dfs(curr.right)
+
+    return Math.max(left, right)
   }
-  dfs(root, 0)
-  return max
+  return dfs(root)
+
 };
