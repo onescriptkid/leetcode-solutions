@@ -5,26 +5,24 @@
  */
 var uniquePaths = function(m, n) {
 
-  let memo = {}
+  let memo = new Array(m+1).fill(0).map(v => new Array(n+1).fill(undefined))
 
   function dfs(r, c) {
-    let key = `${r},${c}`
-    if(r >= m || c >= n) {
+    if(memo[r][c] !== undefined) {
+      return memo[r][c]
+    }
+    if(r === m || c === n) {
       return 0
     }
     if(r === m-1 && c === n-1) {
       return 1
     }
-    if(memo[key] !== undefined) {
-      return memo[key]
-    }
 
-    let opt1 = dfs(r+1,c)
-    let opt2 = dfs(r,c+1)
-
-    let sum = opt1 + opt2
-    memo[key] = sum
-    return memo[key]
+    let opt1 = dfs(r+1, c)
+    let opt2 = dfs(r, c+1)
+    memo[r][c] = opt1 + opt2
+    
+    return memo[r][c]
   }
   return dfs(0,0)
 };
