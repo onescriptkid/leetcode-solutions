@@ -4,23 +4,24 @@
  */
 var rob = function(nums) {
 
-  let memo = {}
+  let memo = new Array(nums.length + 2).fill(0).map(v => new Array(2).fill(undefined))
+
   function dfs(i, robend) {
-    let key = `${i},${robend}`
-    if(memo[key] !== undefined) {
-      return memo[key]
+    if(memo[i][robend] !== undefined) {
+      return memo[i][robend]
     }
     if(i >= nums.length) {
       return 0
     }
-    if(robend === true && i === (nums.length -1)) {
+    if(i >= nums.length - 1 && robend === true) {
       return 0
     }
 
     let opt1 = nums[i] + dfs(i+2, robend || i === 0)
     let opt2 = dfs(i+1, robend)
-    memo[key] = Math.max(opt1, opt2)
-    return memo[key]
+
+    memo[i][robend] = Math.max(opt1, opt2)
+    return memo[i][robend]
   }
-  return Math.max(dfs(0, false), dfs(1, false))
+  return Math.max(dfs(0, false), dfs(1, false)) 
 };
