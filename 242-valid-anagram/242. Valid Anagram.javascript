@@ -4,26 +4,27 @@
  * @return {boolean}
  */
 var isAnagram = function(s, t) {
-  if(s.length !== t.length) return false
-  let sfreq = {}
-  let tfreq = {}
-  for(let i = 0; i < s.length; i++) {
-    let cs = s[i]
-    let ct = t[i]
-    sfreq[cs] = (sfreq[cs] || 0) + 1
-    tfreq[ct] = (tfreq[ct] || 0) + 1
+  let alphabet = 'abcdefghijklmnopqrstuvwxyz'
+  let ltov = {}
+  for(let i = 0; i < alphabet.length; i++) {
+    ltov[alphabet[i]] = i
   }
 
-  for(let c of Object.keys(sfreq)) {
-    if(sfreq[c] !== tfreq[c]) {
-      return false
-    }
+  let sfreq = new Array(26).fill(0)
+  for(let c of s) {
+    sfreq[ltov[c]]++
   }
-  for(let c of Object.keys(tfreq)) {
-    if(sfreq[c] !== tfreq[c]) {
-      return false
-    }
+ 
+  let tfreq = new Array(26).fill(0)
+  for(let c of t) {
+    tfreq[ltov[c]]++
+  }
+
+  for(let i = 0; i < 26; i++) {
+    if(sfreq[i] !== tfreq[i]) return false
   }
   return true
+
+
 
 };
