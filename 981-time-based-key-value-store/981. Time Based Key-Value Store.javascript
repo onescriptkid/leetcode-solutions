@@ -1,6 +1,6 @@
 
 var TimeMap = function() {
-           this.keyStore = new Map(); 
+  this.kv = new Map()    
 };
 
 /** 
@@ -10,16 +10,12 @@ var TimeMap = function() {
  * @return {void}
  */
 TimeMap.prototype.set = function(key, value, timestamp) {
-            // console.log('set', key, value, timestamp)
-        //
-        if(this.keyStore.has(key)) {
-            let arr = this.keyStore.get(key)
-            arr.push([timestamp, value])
-        } else {
-            this.keyStore.set(key, [[timestamp, value]])
-        }
-        // console.log('set', key, value,timestamp, this.keyStore)
-
+  if(this.kv.get(key) === undefined) {
+    this.kv.set(key, [[value, timestamp]])
+  } else {
+    this.kv.get(key).push([value, timestamp])
+  }
+    
 };
 
 /** 
@@ -28,36 +24,24 @@ TimeMap.prototype.set = function(key, value, timestamp) {
  * @return {string}
  */
 TimeMap.prototype.get = function(key, timestamp) {
-            // console.log('get', key, timestamp, this.keyStore)
-        let arr = this.keyStore.get(key)
-        if(arr === undefined) return ""
-        //  0 1 2 3 4 5
-        //  0 2 4 6 8 10
-        //  l   m     r
+  let arr = this.kv.get(key)
+  if(arr === undefined) return ''
+  let value = ''
+  let l = 0
+  let r = arr.length - 1
 
-        let l =  0
-        let r = arr.length -1
-        let out = ""
-        // console.log('arr', arr)
-        while(l <= r) {
-            let m = Math.floor((l + r) / 2)
-            // console.log('lmr', l, m ,r, '-', arr[m])
-            let [time, value] = arr[m]
-            if(time <= timestamp) {
-                out = value
-            }
-            if(time === timestamp) {
-                return value
-            }
-            if(time < timestamp) {
-               l = m + 1 
-            }
-            if(time > timestamp) {
-                r = m - 1
-            }
-        }
-
-        return out
+  while(l <= r) {
+    let m = Math.floor((l + r) / 2)
+    let mid = arr[m]
+    if(mid[1] <= timestamp) {
+      value = mid[0]
+      l = m +1
+    } else {
+      r = m - 1
+    }
+  }
+  return value
+    
 };
 
 /** 
