@@ -3,34 +3,26 @@
  * @param {number} target
  * @return {number[][]}
  */
-var combinationSum = function(candidates, target) {
-  candidates.sort((a,b) => a > b ? 1 : -1)
-  let memo = {}
-  //                                  [] t=7
-  //                          /                   \
-  //                       [2]                     []
-  //                    /       \                 /    \
-  //              [2,2]          [2]           [3]      []
-  //            /     \         
-  //      [2,2,2]      [2,2]
+var combinationSum = function (candidates, target) {
+
   let out = []
-  function dfs(i, left, arr) {
-    if(left === 0) {
-      out.push(arr.slice())
+  let arr = []
+  function dfs(i, sum) {
+    if(sum === target) {
+      out.push([...arr])
       return
     }
-    if(left < 0) {
-      return -1
+    if(sum > target) {
+      return
     }
+
     for(let j = i; j < candidates.length; j++) {
       let can = candidates[j]
       arr.push(can)
-      dfs(j, left - can, arr)
+      dfs(j, sum+can)
       arr.pop()
     }
   }
-  dfs(0, target, [])
+  dfs(0,0)
   return out
-
-
 };
