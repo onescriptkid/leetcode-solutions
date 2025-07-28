@@ -7,27 +7,30 @@ var groupAnagrams = function(strs) {
   let letters = 'abcdefghijklmnopqrstuvwxyz'
   let ltov = {}
   for(let i = 0; i < letters.length; i++) {
-    ltov[letters[i]] = i
+    ltov[letters[i]] = i 
   }
 
-  let groups = {}
+  let groups = {} 
   for(let str of strs) {
-    let keyarr = new Array(26).fill(0)
+
+    let key = new Array(26).fill(0)
     for(let c of str) {
       let val = ltov[c]
-      keyarr[val]++
+      key[val]++
     }
-    let key = keyarr.join(',')
-    if(groups[key] === undefined) {
-      groups[key] = [str]
+
+    let keystr = key.join(',')
+
+    if(groups[keystr] === undefined) {
+      groups[keystr] = [str]
     } else {
-      groups[key].push(str)
+      groups[keystr].push(str)
     }
   }
   let out = []
-  for(let key of Object.keys(groups)) {
-    let group = groups[key]
-    out.push(group)
+  for(let keystr in groups) {
+    out.push(groups[keystr])
   }
   return out
+
 };
