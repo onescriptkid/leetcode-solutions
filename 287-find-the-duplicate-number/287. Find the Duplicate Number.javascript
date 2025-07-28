@@ -3,24 +3,17 @@
  * @return {number}
  */
 var findDuplicate = function(nums) {
-  // negative marking
-  // 1 3 4 2 2
-  // - -
-  // 0 1 2 3 4 
-  // -   -
-  
-  // 1 3 4 2 2
-  // - - - x
-  // 0 1 2 3 4 
-  // - x - -
-  for(let i = 0; i < nums.length; i++) {
-    let num = nums[i]
-    let abs = Math.abs(num)
-
-    if(nums[abs-1] < 0) {
-      return abs
-    }
-    nums[abs-1] = -nums[abs-1]
+  let fast = nums[nums[0]]
+  let slow = nums[0]
+  while(fast !== slow) {
+    fast = nums[nums[fast]]
+    slow = nums[slow]
+  }
+  let slow2 = 0
+  while(slow !== slow2) {
+    slow = nums[slow]
+    slow2 = nums[slow2]
   }
 
+  return slow2
 };
