@@ -10,26 +10,28 @@
  * @return {void} Do not return anything, modify head in-place instead.
  */
 var reorderList = function(head) {
-  // divide into first and second
+  // split into 1st & 2nd half
+  // a b c d e f
+  //           f
+  //     s
   let slow = head
   let fast = head && head.next
   while(fast !== null && fast.next !== null) {
     slow = slow.next
     fast = fast.next.next
   }
-  // 1 2 3 4 5 6
-  //     ^
+
+  let first = head
   let second = slow.next
   slow.next = null
-  let first = head
   // console.log('first', first)
   // console.log('second', second)
 
-  // reverse second
+  // reverse second half
   function reverse(curr) {
+    //   1 2 3 4
+    // p c n
     let prev = null
-    //  1 2 3 4
-    //p c n 
     while(curr !== null) {
       let next = curr.next
       curr.next = prev
@@ -39,23 +41,30 @@ var reorderList = function(head) {
     return prev
   }
   let rev = reverse(second)
-  // console.log('reverse', rev)
+  // console.log('rev', rev)
 
-  // merge
-  // 1  2  3   6  5  4 
-  // c0 n0     c1 n1
-  let curr0 = first
-  let curr1 = rev
-  while(curr1 !== null) {
-    let next0 = curr0.next
-    let next1 = curr1.next
+  // merge lists
+  let a = first
+  let b = rev
+  while(a !== null && b !== null) {
+    let an = a.next
+    let bn = b.next
 
-    curr0.next = curr1
-    curr1.next = next0
-    
-    curr0 = next0
-    curr1 = next1
+    a.next = b
+    b.next = an
+
+    a = an
+    b = bn
   }
+
+  return first
+
+
+  // 1  2  3 
+  // a  an
+  
+  // 6  5  4
+  // b  bn
 
 
 };
