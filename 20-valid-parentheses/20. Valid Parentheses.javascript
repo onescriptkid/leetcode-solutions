@@ -10,24 +10,17 @@ var isValid = function(s) {
       stack.push(c)
     }
     if(c === ')') {
-      let top = stack.pop()
-      if(top !== '(') {
-        return false
-      }
+      if(stack[stack.length - 1] !== '(') return false
+      stack.pop()
     }
     if(c === ']') {
-      let top = stack.pop()
-      if(top !== '[') {
-        return false
-      }
+      if(stack[stack.length - 1] !== '[') return false
+      stack.pop()
     }
     if(c === '}') {
-      let top = stack.pop()
-      if(top !== '{') {
-        return false
-      }
+      if(stack[stack.length - 1] !== '{') return false
+      stack.pop()
     }
   }
-
   return stack.length === 0
 };
