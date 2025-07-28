@@ -14,9 +14,7 @@ var postorderTraversal = function(root) {
 
   let out = []
   function dfs(curr) {
-    if(curr === null) {
-      return
-    }
+    if(curr === null) return
     dfs(curr.left)
     dfs(curr.right)
     out.push(curr.val)
