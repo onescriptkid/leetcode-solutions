@@ -12,24 +12,20 @@
  * @return {number}
  */
 var kthSmallest = function(root, k) {
+  let kth = -1
 
   let i = 0
-  let kth = -1
+
   function dfs(curr) {
-    if(curr === null) {
-      return
-    }
-    // console.log('curr', curr.val, 'i', i)
-    // if(i === k) {
-    //   kth = curr.val
-    // }
+    if(curr === null) return
     dfs(curr.left)
     i++
     if(i === k) {
       kth = curr.val
+      return
     }
     dfs(curr.right)
   }
   dfs(root)
-  return kth
+  return kth 
 };
