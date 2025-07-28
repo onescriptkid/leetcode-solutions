@@ -20,20 +20,21 @@ var LRUCache = function(capacity) {
   this.tail.prev = this.head
 };
 
+LRUCache.prototype.add = function(node) {
+  //    <-node->
+  // h->         <-tmp
+  let tmp = this.head.next
+  node.prev = this.head
+  node.next = tmp
+  tmp.prev = node
+  this.head.next = node
+}
+
 LRUCache.prototype.remove = function(node) {
   let prev = node.prev
   let next = node.next
   prev.next = next
   next.prev = prev
-}
-LRUCache.prototype.add = function(node) {
-  //    <-n->
-  // h->     <-tmp->
-  let tmp = this.head.next
-  node.prev = this.head
-  node.next = tmp
-  this.head.next = node
-  tmp.prev = node
 }
 
 /** 
@@ -41,14 +42,13 @@ LRUCache.prototype.add = function(node) {
  * @return {number}
  */
 LRUCache.prototype.get = function(key) {
-  if(this.kv[key] === undefined) {
-    return -1
-  }
+  if(this.kv[key] === undefined) return -1
   let node = this.kv[key]
+
   this.remove(node)
   this.add(node)
+
   return node.value
-    
 };
 
 /** 
@@ -58,20 +58,23 @@ LRUCache.prototype.get = function(key) {
  */
 LRUCache.prototype.put = function(key, value) {
   if(this.kv[key] !== undefined) {
-    this.remove(this.kv[key])
+    let node = this.kv[key]
+    this.remove(node)
     this.size--
   }
   let node = new Node(key, value)
-  this.add(node)
   this.size++
+  this.add(node)
   this.kv[key] = node
+
   if(this.size > this.capacity) {
     let lru = this.tail.prev
-    this.size--
-    this.remove(lru)
     delete this.kv[lru.key]
+    this.remove(lru)
+    this.size--
   }
-  
+
+    
 };
 
 /** 
