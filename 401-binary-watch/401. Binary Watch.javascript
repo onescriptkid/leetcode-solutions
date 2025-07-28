@@ -3,34 +3,33 @@
  * @return {string[]}
  */
 var readBinaryWatch = function(turnedOn) {
-
-  function getOn(n) {
-    let on = 0
-    while(n > 0) {
-      let bit = n % 2
-      if(bit === 1) on+=1
-      n = Math.floor(n / 2)
+  function getBits(num) {
+    let count = 0
+    while(num > 0) {
+      let bit = num % 2
+      if(bit === 1) count++
+      num = Math.floor(num / 2)
     }
-    return on
+    return count
   }
-  function format(h, m) {
 
-    let mfmt = ""+m
+  function fmt(h, m) {
+    let hh = h
+    let mm = m
     if(m < 10) {
-      mfmt = "0"+m
+      mm = `0${m}`
     }
 
-    return `${h}:${mfmt}`
-
+    return `${hh}:${mm}`
   }
 
   let out = []
-  for(let i = 0; i < 12; i++){
+  for(let i = 0; i < 12; i++) {
     for(let j = 0; j < 60; j++) {
-      let on = getOn(i) + getOn(j)
+      let bits = getBits(i) + getBits(j)
 
-      if(on === turnedOn) {
-        out.push(format(i, j))
+      if(bits === turnedOn) {
+        out.push(fmt(i,j))
       }
     }
   }
