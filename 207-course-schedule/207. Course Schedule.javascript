@@ -6,16 +6,14 @@
 var canFinish = function(numCourses, prerequisites) {
   let adj = {}
   for(let i = 0; i < numCourses; i++) {
-    adj[i] = new Set()
+    adj[i] = []
   }
-
   for(let [u,v] of prerequisites) {
-    adj[u].add(v)
+    adj[v].push(u)
   }
 
   let indegrees = {}
-  let vertices = Object.keys(adj)
-  for(let vertex of vertices) {
+  for(let vertex of Object.keys(adj)) {
     indegrees[vertex] = (indegrees[vertex] || 0)
     for(let edge of adj[vertex]) {
       indegrees[edge] = (indegrees[edge] || 0) + 1
@@ -27,25 +25,27 @@ var canFinish = function(numCourses, prerequisites) {
     if(indegrees[vertex] === 0) {
       queue.push(vertex)
     }
-  }
+  } 
 
-  let out = 0
-
+  let out = []
+  // console.log('indegrees', indegrees)
+  // console.log('queue', queue)
+  // 1 <- 4   9
+  // v    v
+  // 3 <- 2
   while(queue.length > 0) {
     let curr = queue.shift()
-
-    out++
+    out.push(curr)
 
     for(let edge of adj[curr]) {
       indegrees[edge]--
-      if(indegrees[edge] === 0) {
-        queue.push(edge)
-      }
+      if(indegrees[edge] === 0) queue.push(edge)
     }
   }
 
-  if(out !== numCourses) {
-    return false
+  if(out.length === Object.keys(adj).length) {
+    return true
   }
-  return true
+  return false
+
 };
