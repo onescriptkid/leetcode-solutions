@@ -4,13 +4,16 @@
  */
 var canJump = function(nums) {
 
-  let goal = nums.length - 1
+  let g = nums.length -1
 
-  for(let i = nums.length -1; i >= 0; i--) {
-    if( (i + nums[i]) >= goal) {
-      goal = i
+  for(let i = nums.length - 2; i >= 0; i--) {
+    if(i + nums[i] >= g) {
+      g = i
     }
   }
-  return goal === 0
+  return g === 0
+
+  // 2 3 1 1 4
+  //       x g
 
 };
