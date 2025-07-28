@@ -4,51 +4,41 @@
  * @return {string}
  */
 var minWindow = function(s, t) {
-
   let freqt = {}
   for(let c of t) {
     freqt[c] = (freqt[c] || 0) + 1
   }
-  let total = Object.keys(freqt).length
+  let tcount = Object.keys(freqt).length
 
-  let min
+  let freqw = {}
   let l = 0
   let r = 0
   let count = 0
-  let freqw = {}
-  // console.log('freqt', freqt)
+  let min
 
   while(r < s.length) {
-    // console.log('l r', l, r, 'count', count, s.substring(l, r+1))
+    // console.log('l r', l, r, s.slice(l, r+1), min)
     let cr = s[r]
     r++
     freqw[cr] = (freqw[cr] || 0) + 1
-    if(freqt[cr] === freqw[cr]) {
-      count++
-    }
+    if(freqw[cr] === freqt[cr]) count++
 
-    while(l < r && count === total) {
-    // console.log('  l r', l, r, 'count', count, s.substring(l, r+1))
+    while(l < r && count === tcount) {
+      // console.log('   ', l, r, s.slice(l, r+1), min)
 
-      let len = r -l
       if(min === undefined) {
-        min = s.substring(l, r)
-      } else if(len < min.length) {
-        min = s.substring(l,r)
+        min = s.slice(l, r)
+      } else if(r-l < min.length) {
+        min = s.slice(l, r) 
       }
 
       let cl = s[l]
       l++
       freqw[cl]--
-      if(freqt[cl] !== undefined && freqw[cl] < freqt[cl]) {
-        count--
-      }
+      if(freqt[cl] !== undefined && freqw[cl] < freqt[cl]) count--
     }
+    
   }
-
-  return min || ""
-  // ADOBECODEBANC   ABC
-  //       r
-  // l
+  return min || ''
 
 };
