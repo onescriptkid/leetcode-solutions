@@ -11,18 +11,21 @@
  * @return {string[]}
  */
 var binaryTreePaths = function(root) {
-  let paths = []
-  function dfs(curr,path) {
+  let out = []
+  function dfs(curr, path) {
     if(curr === null) {
       return
     }
-    if(curr.left === null && curr.right === null) {
-      path = path + curr.val
-      paths.push(path)
+
+    if(curr.left === null && curr.right == null) {
+      out.push(path + curr.val)
+      return
     }
-    dfs(curr.left, path + curr.val + "->")
-    dfs(curr.right, path + curr.val + "->")
+
+    dfs(curr.left, path + curr.val + '->')
+    dfs(curr.right, path + curr.val + '->')
   }
   dfs(root, "")
-  return paths
+  return out
+
 };
