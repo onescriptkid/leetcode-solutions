@@ -6,7 +6,7 @@ var checkValidString = function(s) {
   let min = 0
   let max = 0
   for(let c of s) {
-    if(c == '(') {
+    if(c === '(') {
       min++
       max++
     }
@@ -20,6 +20,6 @@ var checkValidString = function(s) {
     }
     if(max < 0) return false
     min = Math.max(min, 0)
-  }
+  }   
   return min === 0
 };
