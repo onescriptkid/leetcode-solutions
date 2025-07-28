@@ -12,19 +12,19 @@
  * @param {TreeNode} root
  * @return {string}
  */
-var serialize = function(root) {
+var serialize = function (root) {
   let out = []
   function dfs(curr) {
-    if(curr === null) {
+    if (curr === null) {
       out.push('n')
       return
     }
     out.push(curr.val)
-    dfs(curr.left) 
+    dfs(curr.left)
     dfs(curr.right)
   }
   dfs(root)
-  return out
+  return out.join(',')
 };
 
 /**
@@ -34,20 +34,23 @@ var serialize = function(root) {
  * @return {TreeNode}
  */
 var deserialize = function(data) {
+  let arr = data.split(',')
+  if(arr.length === 0) return null
   let i = 0
   function dfs() {
-    let val = data[i]
-    if(val === 'n') {
+    let c = arr[i]
+    if(c === 'n') {
       i++
       return null
     }
-    let node = new TreeNode(val)
+    let node = new TreeNode(Number(c))
     i++
     node.left = dfs()
     node.right = dfs()
     return node
   }
   return dfs()
+    
 };
 
 /**
