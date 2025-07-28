@@ -12,12 +12,13 @@
  */
 var removeElements = function(head, val) {
 
-  //   6 1 2 6 3 4 5 6
+  //   6 1 2 6 3 4 5 6 
   //       p c
 
-  let prev = null
   let curr = head
+  let prev = null
   while(curr !== null) {
+
     if(curr.val === val) {
       if(prev === null) {
         head = curr.next
@@ -31,6 +32,8 @@ var removeElements = function(head, val) {
       curr = curr.next
     }
   }
+
   return head
+
 
 };
