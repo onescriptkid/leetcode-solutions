@@ -3,37 +3,30 @@
  * @return {number[][]}
  */
 var subsets = function(nums) {
-    
-    let out = []
-    // [1,2,3], []
-    //  i
-    //   
-    // [[], [1]]  
-    // Go left, Go right. left adds nothing, right adds the index
-    //                              res = []               nums =  [1,2,3]
-    //                       /                         \
-    // 0                   []                           [1]
-    //                 /       \                     /        \
-    // 1             []        [2]                [1]          [1, 2]
-    //            /     \     /   \              /    \        /     \
-    // 2         []     [3]  [2]  [2,3]      [1]     [1,3]  [2,3]     [1,2,3]
-     
-    function bt(i, res, ) {
-      // console.log(i, res)
-      // Once we've exhausted all options(numbers), add the result to the output
-      if(i >= nums.length) {
-        out.push([...res])
-        return
-      }
+  let out = []
+  // []    [1,2,3] i=0
 
-      // Grab num to be added to res
-      let num = nums[i]
-      i++
+  // [1]   [1,2,3] i=1
+  
+  // [1,2]   [1,2,3] i=2
+  
+  // [1,2,3]   [1,2,3] i=3
 
-      // left is [] and right is [..., num]
-      bt(i, [...res])
-      bt(i,[...res, num])
+
+
+  // [2]
+  // [3]
+
+  function bt(arr, i) {
+    out.push([...arr])
+
+    for(let j = i; j < nums.length; j++) {
+      arr.push(nums[j])
+      bt(arr, j+1)
+      arr.pop()
+
     }
-    bt(0, [])
-    return out
+  }   
+  bt([], 0)
+  return out
 };
