@@ -13,15 +13,28 @@
 var isValidBST = function(root) {
 
   function dfs(curr, min, max) {
-    if(curr === null) {
-      return true
+    // console.log(curr?.val, min, max)
+    if(curr === null) return true
+
+    if(curr.val <= min || curr.val >= max) return false
+
+
+    let nextmin
+    if(min === undefined) {
+      nextmin = curr.val
+    } else {
+      nextmin = Math.max(min, curr.val)
     }
-    if(curr.val <= min || curr.val >= max) {
-      return false
+    let nextmax
+    if(max === undefined) {
+      nextmax = curr.val
+    } else {
+      nextmax = Math.min(max, curr.val)
     }
 
-    return dfs(curr.left, min, curr.val) && dfs(curr.right, curr.val, max)
-    
-  } 
-  return dfs(root, -Infinity, Infinity)
+    return dfs(curr.left, min, nextmax) && dfs(curr.right, nextmin, max)
+
+  }
+  return dfs(root)
+
 };
