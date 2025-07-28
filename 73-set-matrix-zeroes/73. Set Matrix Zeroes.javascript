@@ -3,37 +3,24 @@
  * @return {void} Do not return anything, modify matrix in-place instead.
  */
 var setZeroes = function(matrix) {
-  //  5   5 5 5 5
-  //      -------
-  //  5 | 5 5 5 5
-  //  5 | 5 5 5 5
-  //  5 | 5 5 5 5
-  //  5 | 5 5 5 5
-  
-  //  5   5 5 0 5
-  //      -------
-  //  5 | 5 5 0 5
-  //  5 | 5 5 5 5
-  //  5 | 5 5 5 5
-  //  5 | 5 5 5 5
 
+  let flag = false
   let rows = matrix.length
   let cols = matrix[0].length
-  let flag = false
   for(let r = 0; r < rows; r++) {
-    for(let c = 0; c < cols; c++) {
+    for(let c =0 ; c < cols; c++) {
       if(matrix[r][c] === 0) {
-        if(r === 0) {
-          flag = true
-        } else {
+        if(r !== 0) {
           matrix[0][c] = 0
           matrix[r][0] = 0
+        } else {
+          flag = true
         }
       }
     }
   }
 
-  // [1, r] and [1,c] box
+  // rows+1, cols+1 
   for(let r = 1; r < rows; r++) {
     for(let c = 1; c < cols; c++) {
       if(matrix[r][0] === 0 || matrix[0][c] === 0) {
@@ -41,22 +28,22 @@ var setZeroes = function(matrix) {
       }
     }
   }
+  // console.log(matrix)
 
-  // rows+ (first column)
+  // rows
   for(let r = 0; r < rows; r++) {
-    if(matrix[0][0] === 0) {
-      matrix[r][0] = 0
-    }
+    if(matrix[0][0] === 0) matrix[r][0] = 0
   }
 
-  // cols+ (first row)
+  // cols
   for(let c = 0; c < cols; c++) {
-    if(flag) {
-      matrix[0][c] = 0
-    }
+    if(flag) matrix[0][c] = 0
   }
 
-  return matrix
+  //     c c c 0 c
 
-    
+  //  r  a b c d e
+  //  r  a b c d e
+  //  0  a b c 0 e
+  //  r  a b c d e
 };
