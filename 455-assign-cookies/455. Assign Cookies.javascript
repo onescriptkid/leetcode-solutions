@@ -5,24 +5,29 @@
  */
 var findContentChildren = function(g, s) {
 
+
+  let content = 0 
+
   g.sort((a,b) => a > b ? 1 : -1)
   s.sort((a,b) => a > b ? 1 : -1)
+  // s 1 1
+  //   i
+  // g 1 2 3
+  //     j
 
-  let content = 0
+  let i = 0
   let j = 0
-  for(let greed of g) {
 
-    while(s[j] < greed && j < s.length) {
+  while(i < s.length) {
+    let size = s[i]
+    let greed = g[j]
+    if(size >= greed) {
+      content++
       j++
     }
-
-    if(j === s.length) break;
-
-    content++
-    j++
-
+    i++
   }
-
   return content
+
 
 };
