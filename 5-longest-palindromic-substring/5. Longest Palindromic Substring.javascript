@@ -3,11 +3,10 @@
  * @return {string}
  */
 var longestPalindrome = function(s) {
-
   let max = ""
   for(let i = 0; i < s.length; i++) {
-
-    let opt1 = expand(i, i)
+    let opt1 = expand(i,i)
+    // console.log(i, 'opt1', opt1, 'max', max)
     if(opt1.length > max.length) {
       max = opt1
     }
@@ -17,20 +16,19 @@ var longestPalindrome = function(s) {
       max = opt2
     }
   }
-
   function expand(l, r) {
     if(s[l] !== s[r]) return ''
-
     let bl = l
     let br = r
-    while(s[l] === s[r] && l >= 0 && r < s.length) {
+    while(l >= 0 && r < s.length && s[l] === s[r]) {
+      // console.log('  ', l, r, s.slice(l, r+1))
       bl = l
       br = r
       l--
       r++
     }
 
-    return s.substring(bl, br+1)
+    return s.slice(bl, br + 1)
   }
   return max
 };
