@@ -12,29 +12,23 @@
  * @return {ListNode}
  */
 var getIntersectionNode = function(headA, headB) {
-  // a1 a2 
-  //            c1 c2 c3
-  // b1 b2 b3
-  // a1 a2 c1 c2 c3 b1 b2 b3 c1 c2 c3
-  // b1 b2 b3 c1 c2 c3 a1 a2 c1 c2 c3
+  let currA = headA
+  let currB = headB
 
-  let curr1 = headA
-  let curr2 = headB
-  while(curr1 !== null || curr2 !== null) {
-    // console.log('c1', curr1 && curr1.val, 'c2', curr2 && curr2.val)
-    if(curr1 === curr2) return curr1
-    if(curr1 === null) {
-      curr1 = headB
-    } else {
-      curr1 = curr1.next
+  while(currA !== null || currB !== null) {
+    if(currA === currB) {
+      return currA
     }
-    if(curr2 === null) {
-      curr2 = headA
+    if(currA === null) {
+      currA = headB
     } else {
-      curr2 = curr2.next
+      currA = currA.next
     }
-    // curr1 = curr1.next
-    // curr2 = curr2.next
+    if(currB === null) {
+      currB = headA
+    } else {
+      currB = currB.next
+    }
   }
   return null
 };
