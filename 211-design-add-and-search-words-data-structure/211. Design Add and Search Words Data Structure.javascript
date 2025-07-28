@@ -4,8 +4,9 @@ class TrieNode {
     this.end = false
   }
 }
+
 var WordDictionary = function() {
-  this.root = new TrieNode()
+    this.root = new TrieNode() 
 };
 
 /** 
@@ -21,7 +22,6 @@ WordDictionary.prototype.addWord = function(word) {
     curr = curr.children[c]
   }
   curr.end = true
-
 };
 
 /** 
@@ -30,53 +30,56 @@ WordDictionary.prototype.addWord = function(word) {
  */
 WordDictionary.prototype.search = function(word) {
   let curr = this.root
-  // console.log('search', 'curr', Object.keys(curr.children), word)
   for(let i = 0; i < word.length; i++) {
     let c = word[i]
-    if(c !== '.') {
+
+    if(c === '.') {
+      let children = Object.keys(curr.children)
+      let found = false
+      // console.log('word', word, '-', children)
+      for(let child of children) {
+        let valid = this.searchdot(word.slice(i+1),curr.children[child])
+        if(valid) {
+          found = true
+          break;
+        }
+      }
+
+      return found
+
+    } else {
       if(curr.children[c] === undefined) {
         return false
       }
       curr = curr.children[c]
-    } else {
-      let children = Object.keys(curr.children)
-      let valid = false
-      for(let child of children) {
-        let search = this.searchHelper(curr.children[child], word.slice(i+1))
-        if(search) {
-          return true
-        }
-      }
-      return false
     }
-  }
+  }    
   return curr.end
-    
 };
 
-WordDictionary.prototype.searchHelper = function(curr, word) {
-  // console.log('  helper', 'curr', Object.keys(curr.children), word)
-  for (let i = 0; i < word.length; i++) {
+WordDictionary.prototype.searchdot = function(word, curr) {
+  for(let i = 0; i < word.length; i++) {
     let c = word[i]
-    if (c !== '.') {
-      if (curr.children[c] === undefined) {
+    if(c === '.') {
+      let children = Object.keys(curr.children)
+      let found = false
+      for(let child of children) {
+        let valid = this.searchdot(word.slice(i+1), curr.children[child])
+        if(valid) {
+          found = true
+          break
+        }
+      }
+      return found
+    } else {
+      if(curr.children[c] === undefined) {
         return false
       }
       curr = curr.children[c]
-    } else {
-      let children = Object.keys(curr.children)
-      let valid = false
-      for (let child of children) {
-        let search = this.searchHelper(curr.children[child], word.slice(i + 1))
-        if (search) {
-          return true
-        }
-      }
-      return false
     }
-  }
-  return curr.end
 
+  } 
+  return curr.end
 }
 
 /** 
