@@ -15,33 +15,23 @@ var wordBreak = function(s, wordDict) {
       return true
     }
 
-    let opts = []
+    let results = []
     for(let word of wordDict) {
-
       let prefix = str.startsWith(word)
       if(prefix) {
-        let nextstr = str.substring(word.length)
-        let res = dfs(nextstr)
-        opts.push(res)
+        results.push(dfs(str.slice(word.length)))
       }
     }
-    // console.log('str', str, 'opts', opts)
 
-
-    if(opts.length === 0) {
-      memo[str] = false
-      return memo[str]
-    }
-    let hasTrue = false
-    for(let opt of opts) {
-      if(opt === true) {
-        hasTrue = true
+    let flag = false
+    for(let result of results) {
+      if(result) {
+        flag = true
         break;
       }
     }
-
-    memo[str] = hasTrue
-    return hasTrue
+    memo[str] = flag
+    return memo[str]
   }
   return dfs(s)
 
