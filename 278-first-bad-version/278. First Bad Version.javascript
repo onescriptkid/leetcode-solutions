@@ -18,37 +18,32 @@ var solution = function(isBadVersion) {
      * @return {integer} The first bad version
      */
     return function(n) {
-      // 1 2 3 4 5 6 7 8 9 10   (l+r)/2 => (10+1)/2 => 5.5 => 5
-      // b b b b g g g g g g
-      // l       m         r
-      
-      // 1 2 3 4 5 6 7 8 9 10   (l+r)/2 => (4+1)/2 => 2.5 => 2
-      // b b b b g g g g g g
-      // l m   r 
+      //   1 2 3 4 5 6 7 8 9
+      //   l       m       r
       let l = 1
-      let r = n 
+      let r = n
       let first
-
       while(l <= r) {
         let m = Math.floor((l + r) / 2)
-        let mid = isBadVersion(m)
-        if(mid === true) {
-          if(first === undefined) {
-            first = m
-          } else if(m < first) {
+        let isbad = isBadVersion(m)
+
+        if(isbad) {
+          r = m - 1
+
+          if(first === undefined || m < first) {
             first = m
           }
-        }
 
-        if(mid === false) {
+        } else {
           l = m + 1
         }
-        if(mid === true) {
-          r = m - 1
-        }
+
       }
+
       return first
 
-
+      //   0 1 2 3 4 5 6 7 8  
+      //   ? ? ? ? b b b b b
+      //   l       m       r
     };
 };
