@@ -6,18 +6,30 @@
  * @return {string}
  */
 var categorizeBox = function(length, width, height, mass) {
-  let isBulky = false
-  if(length >= 10 ** 4 || width >= 10 ** 4 || height >= 10 ** 4 || length * width * height >= 10 ** 9) {
-    isBulky = true
+  let bulky = false
+  if(length >= 10**4 || width >= 10**4 || height >= 10**4) {
+    bulky = true
+  }
+  if(length * width * height >= 10**9) {
+    bulky = true
   }
 
-  let isHeavy = false
-  if(mass >=100) {
-    isHeavy = true
+  let heavy = false
+  if(mass >= 100) {
+    heavy = true
   }
 
-  if(isHeavy && isBulky) return "Both"
-  if(isHeavy && !isBulky) return "Heavy"
-  if(!isHeavy && isBulky) return "Bulky"
-  return "Neither"
+
+  if(heavy&& bulky) {
+    return 'Both'
+  }
+  if(!heavy && !bulky) {
+    return 'Neither'
+  }
+  if(heavy) {
+    return 'Heavy'
+  }
+  if(bulky) {
+    return 'Bulky'
+  }
 };
