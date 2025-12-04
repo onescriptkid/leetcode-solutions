@@ -12,33 +12,17 @@
  * @return {boolean}
  */
 var findTarget = function(root, k) {
-  // {7: "lrlrr", }
-  let obj = {}
+  let out = []
+  let set = new Set()
 
-  function dfs(curr, path) {
-    if(curr === null) return
-    obj[k - curr.val] = path
+  function dfs(curr) {
+    if(curr === null) return false
+    let partial = k - curr.val
+    if(set.has(partial)) return true
+    set.add(curr.val)
 
-    dfs(curr.left, path+'l')
-    dfs(curr.right, path+'r')
-  }
-  dfs(root, '')
-  // console.log(obj)
+    return dfs(curr.left) || dfs(curr.right)
+  } 
+  return dfs(root)
 
-
-  let twoSum = false
-  function dfs2(curr, path) {
-    if(curr === null) return
-    // console.log(curr, path)
-    if(obj[curr.val] !== undefined && obj[curr.val] !== path) {
-      twoSum = true
-      return
-    }
-    dfs2(curr.left, path+'l')
-    dfs2(curr.right, path+'r')
-  }
-  dfs2(root, '')
-
-
-  return twoSum
 };
