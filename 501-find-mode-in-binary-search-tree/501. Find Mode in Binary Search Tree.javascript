@@ -12,11 +12,10 @@
  */
 var findMode = function(root) {
 
+  let out = []
   let prev
   let count = 0
-  let max
-  let modes = []
-  // 1 2 2 3 3 4 5 5 5 6 6
+  let max = 0
 
   function dfs(curr) {
     if(curr === null) {
@@ -24,29 +23,22 @@ var findMode = function(root) {
     }
 
     dfs(curr.left)
-    // console.log('curr', curr.val, '-', 'count', count, 'prev', prev)
-    if(prev === undefined) {
-      count = 1
-    } else if(prev === curr.val) {
+    if(prev === curr.val) {
       count++
-    } else if(prev !== curr.val) {
-      count = 1
+    } else {
+      count = 0
     }
-    if(max === undefined) {
+    // console.log('prev', prev, 'curr', curr?.val, 'max', max, 'count', count)
+
+    if(count > max) {
+      out = [curr.val]
       max = count
-      modes = [curr.val]
-    } else if(count > max) {
-      max = count
-      modes = [curr.val]
     } else if(count === max) {
-      max = count
-      modes.push(curr.val)
+      out.push(curr.val)
     }
     prev = curr.val
     dfs(curr.right)
   }
   dfs(root)
-  return modes
-  //   
-  //  /    
+  return out
 };
