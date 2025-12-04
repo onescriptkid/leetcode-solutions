@@ -12,24 +12,27 @@
  * @return {TreeNode}
  */
 var buildTree = function(inorder, postorder) {
-   // post l r c  9 15 7 20 3 
-   // in   l c r  9 3 15 20 7
+  if(inorder.length == 0 || postorder.length == 0) {
+    return null
+  }
 
-   // [9] [15  7 20][3]
-   // [9] [3] [15 20 7]
+  // in     9 3 15 20 7
+  // post   9 15 7 20 3
+    
+  // in     9 3 15 20 7
+  //        l c r 
 
-   // post  9 15 7  20 3
-   // in    9 3  15 20 7
-   //         |        |
-   if(inorder.length === 0 && postorder.length === 0) {
-     return null
-   }
-  console.log(inorder, postorder)
-   let i = inorder.indexOf(postorder[postorder.length - 1])
-  let root = new TreeNode(postorder[postorder.length -1])
+  // post   9 15 7 20 3
+  //        l r       c
 
-  root.left = buildTree(inorder.slice(0, i), postorder.slice(0, i))
-  root.right = buildTree(inorder.slice(i+1, inorder.length), postorder.slice(i, postorder.length-1)) 
+  let p = postorder.at(-1)
+  let pi = postorder.length - 1
+  let ii = inorder.indexOf(p)
 
-  return root 
+  let node = new TreeNode(p)
+
+  node.left = buildTree(inorder.slice(0, ii), postorder.slice(0, ii))
+  node.right = buildTree(inorder.slice(ii+1), postorder.slice(ii, pi))
+
+  return node
 };
