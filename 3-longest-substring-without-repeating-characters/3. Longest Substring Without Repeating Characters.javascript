@@ -3,32 +3,26 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function(s) {
-
-  let hash = {}
-  // abcabcbb
-  //    i
-
-  let l = 0
+  
+  let freq = {}
   let r = 0
-  let max
+  let l = 0
+  let max = 0
+
   while(r < s.length) {
     let cr = s[r]
-    hash[cr] = (hash[cr] || 0) + 1
     r++
 
-    while(l < r && hash[cr] > 1) {
+    freq[cr] = (freq[cr] || 0) + 1
+
+    while(l < r && freq[cr] > 1) {
       let cl = s[l]
       l++
-      hash[cl]--
+      freq[cl]--
     }
 
     let len = r - l
-    if(max === undefined) {
-      max =  len
-    } else if(len > max) {
-      max = len
-    }
+    max = Math.max(max, len)
   }
-  return max || 0
-
+  return max
 };
