@@ -3,20 +3,22 @@
  * @return {boolean}
  */
 var isPalindrome = function(s) {
-  let str = s.toLowerCase()   
-  let alphanumeric = new Set('abcdefghijklmnopqrstuvwxyz0123456789')
-  let fmt = ""
-  for(let i = 0; i < str.length; i++) {
-    let c = str[i]
-    if(alphanumeric.has(c)) fmt+=c
+  let lower = s.toLowerCase()
+  let alphanumeric = new Set('abcdefghijklmnopqrstuvwxyz0123456789')   
+
+  let str = ''
+  for(let c of lower) {
+    if(alphanumeric.has(c)) str+=c
   }
 
-  for(let i = 0; i < fmt.length; i++) {
-    let left = fmt[i]
-    let right = fmt[fmt.length - 1 - i]
-    if(left !== right) {
-      return false
-    }
+  let l = 0
+  let r = str.length - 1
+  // console.log(str)
+  while(l < r) {
+    if(str[l] !== str[r]) return false
+    l++
+    r--
   }
+
   return true
 };
