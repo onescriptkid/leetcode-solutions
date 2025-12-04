@@ -3,30 +3,25 @@
  * @return {number[][]}
  */
 var permute = function(nums) {
-    let distinct = []
-    // [1,2,3] []
-    // [1,2] [3]
-    let recurse = (leftover, sofar) => {
-        // console.log()
-        // console.log(leftover, sofar)
-        if(leftover.length === 0){
-            distinct.push(sofar)
-        }
-        // Next Arrays
-        let nextArrs = []
-        for(let i = 0; i < leftover.length; i++) {
-            nextArrs.push([...leftover])
-        }
-        // console.log(`nextArrs ${nextArrs} - leftover ${leftover}`)
-        // Next arrays
-        for(let i = 0; i < leftover.length; i++) {
-            let nextValue = nextArrs[i].splice(i, 1)[0]
-            let nextSofar = [...sofar]
-            nextSofar.push(nextValue)
-            // console.log(`nextValue ${nextValue}`, `nextSofar ${nextSofar} i ${i} sofar ${sofar}`)
-            recurse(nextArrs[i], nextSofar)
-        }
+  let arr = []
+  let out = []
+  let used = new Set()
+
+  function bt() {
+    if(arr.length === nums.length) {
+      out.push([...arr])
+      return
     }
-    recurse(nums, [])
-    return distinct
+
+    for(let num of nums) {
+      if(used.has(num)) continue
+      used.add(num)
+      arr.push(num)
+      bt()
+      arr.pop()
+      used.delete(num)
+    }
+  }
+  bt()
+  return out
 };
