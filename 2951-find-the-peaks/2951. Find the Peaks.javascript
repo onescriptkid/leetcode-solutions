@@ -4,14 +4,14 @@
  */
 var findPeaks = function(mountain) {
 
-  let peaks = []
-  for(let i = 0; i < mountain.length; i++) {
-    if(i === 0 || i === mountain.length - 1) {
-      continue
-    }
-    if(mountain[i] > mountain[i-1] && mountain[i] > mountain[i+1]) {
-      peaks.push(i)
+  let out = []
+  for(let i = 1; i < mountain.length - 1; i++) {
+    let left = mountain[i-1]
+    let curr = mountain[i]
+    let right = mountain[i+1]
+    if(curr > left && curr > right) {
+      out.push(i)
     }
   } 
-  return peaks
+  return out
 };
