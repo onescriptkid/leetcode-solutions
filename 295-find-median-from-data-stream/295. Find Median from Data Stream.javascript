@@ -1,7 +1,7 @@
 
 var MedianFinder = function() {
-  this.maxheap = new MaxPriorityQueue()
-  this.minheap = new MinPriorityQueue()    
+  this.minheap = new PriorityQueue((a,b) => a > b ? 1 : -1)  
+  this.maxheap = new PriorityQueue((a,b) => a > b ? -1: 1)
 };
 
 /** 
@@ -9,33 +9,38 @@ var MedianFinder = function() {
  * @return {void}
  */
 MedianFinder.prototype.addNum = function(num) {
-   // [2 4]
-  if(num < this.maxheap.front()) {
-    this.maxheap.enqueue(num)
+  if(this.minheap.size() === 0) {
+    this.minheap.push(num)
+  } else if(num < this.maxheap.front()) {
+    this.maxheap.push(num)
   } else {
-    this.minheap.enqueue(num)
+    this.minheap.push(num)
   }
 
-  if((this.maxheap.size() - 1) > this.minheap.size()) {
-    this.minheap.enqueue(this.maxheap.dequeue())
+  if(this.minheap.size()-1 > this.maxheap.size()) {
+    this.maxheap.push(this.minheap.pop())
   }
-  if(this.minheap.size() > this.maxheap.size()) {
-    this.maxheap.enqueue(this.minheap.dequeue())
+
+  if(this.maxheap.size() > this.minheap.size()) {
+    this.minheap.push(this.maxheap.pop())
   }
+
+ // []  [5,6]
+ // [2] [5]
 };
 
 /**
  * @return {number}
  */
 MedianFinder.prototype.findMedian = function() {
-  let len = this.maxheap.size() + this.minheap.size()
+  let total = this.minheap.size() + this.maxheap.size()
 
-  if(len % 2 === 0) {
-    return (this.maxheap.front() + this.minheap.front()) / 2
+  if(total % 2 === 0) {
+    return (this.minheap.front() + this.maxheap.front()) / 2
   } else {
-    return this.maxheap.front()
+    return this.minheap.front()
   }
-  
+    
 };
 
 /** 
