@@ -10,43 +10,41 @@
  * @return {ListNode}
  */
 var mergeKLists = function(lists) {
-
   function merge(left, right) {
+    let head = new ListNode()
+    let curr0 = head
+
     let curr1 = left
     let curr2 = right
-    let head = new ListNode()
-    let curr3 = head
 
     while(curr1 !== null && curr2 !== null) {
-      let node
+      let node = new ListNode()
       if(curr1.val < curr2.val) {
-        node = new ListNode(curr1.val)
+        node.val = curr1.val
         curr1 = curr1.next
-        curr3.next = node
-        curr3 = curr3.next
       } else {
-        node = new ListNode(curr2.val)
+        node.val = curr2.val
         curr2 = curr2.next
-        curr3.next = node
-        curr3 = curr3.next
       }
+
+      curr0.next = node
+      curr0 = curr0.next
     }
 
     while(curr1 !== null) {
       let node = new ListNode(curr1.val)
       curr1 = curr1.next
-      curr3.next = node
-      curr3 = curr3.next
+      curr0.next = node
+      curr0 = curr0.next
     }
     while(curr2 !== null) {
       let node = new ListNode(curr2.val)
       curr2 = curr2.next
-      curr3.next = node
-      curr3 = curr3.next
+      curr0.next = node
+      curr0 = curr0.next
     }
-
     return head.next
-  }
+  }   
 
   function partition(arr) {
     if(arr.length === 0) {
@@ -55,13 +53,16 @@ var mergeKLists = function(lists) {
     if(arr.length === 1) {
       return arr[0]
     }
+
     let m = arr.length >> 1
     let left = arr.slice(0, m)
-    let right = arr.slice(m)
+    let right = arr.slice(m,arr.length)
+
     return merge(
       partition(left),
       partition(right)
     )
   }
+
   return partition(lists)
 };
