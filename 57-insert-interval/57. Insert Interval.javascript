@@ -4,81 +4,34 @@
  * @return {number[][]}
  */
 var insert = function(intervals, newInterval) {
+  function isOverlapping(a,b) {
+    // a0   a1
+    //    b0    b1
+    return a[0] <= b[1] && b[0] <= a[1]
+  }  
 
-
-  function isOverlapping(a, b) {
-    // 1 2 3 4 5 6
-    // a0    a1
-    //     b0    b1 
-    if(a[0] <= b[1] && a[1] >= b[0]) {
-      return true
-    }
-    
-    // 1 2 3 4 5 6
-    // a0    a1
-    //     b0    b1 
-    return false
-  }
-
+  // 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+  // 1   3
+  //           6     9
+  //   2     5
   let out = []
-  let incInterval = [...newInterval]
-  let merged = false
-  let i = 0
-  // [1,2] [3,5] [6,7] [8,10] [12,16]  [2,5]
-  // i
+  let inc = newInterval
+  let i = 0;
   while(i < intervals.length) {
     let curr = intervals[i]
-    let next = intervals[i+1]
-    // console.log(curr, 'inc', incInterval, 'out', out)
-    // Just iterate if merged
-    if(merged) {
-      out.push(curr)
-      i++
-      continue
-    }
-
-    let overlapping = isOverlapping(curr,incInterval)
-    // Not overlapping
-    // [1 3] [6 9]   [7 8]
-    // [1 3] [6 9]   [4 5]
-    // [3 4] [8 9]   [1 2]
-    if(!overlapping) {
-      // Next overlapping
-      if(next !== undefined && isOverlapping(next, incInterval)) {
-        out.push(curr)
-        i++
-        continue
+    if(isOverlapping(inc, curr)) {
+      inc = [Math.min(inc[0], curr[0]), Math.max(inc[1], curr[1])]
+    } else {
+      if(inc[0] < curr[0]) {
+        out.push(inc)
+        inc = curr
       } else {
-        if(curr[0] < incInterval[0]) {
-          out.push(curr)
-          i++
-          continue
-        } else {
-          out.push(incInterval)
-          merged=true
-          continue
-        }
+        out.push(curr)
       }
     }
-
-    // Merge interval
-    if(overlapping) {
-      incInterval = [Math.min(curr[0], incInterval[0]), Math.max(curr[1], incInterval[1])]
-    }
-    // Append
-    if(next !== undefined && isOverlapping(next, incInterval)) {
-      i++
-      continue
-     // 
-    } else {
-      out.push(incInterval)
-      i++
-      merged = true
-    }
+    i++
   }
-  if(merged === false) {
-    out.push(incInterval)
-  }
+  out.push(inc)
 
   return out
 };
