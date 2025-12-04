@@ -4,28 +4,27 @@
  */
 var generate = function(numRows) {
 
+  //    0 1 2 3 4 
+  // 1 [1]
+  // 2 [1,1]
+  // 3 [1,2,1]
+  // 4 [1,3,3,1]
+  // 5 [1,4,6,4,1]
 
-  //  0 1   1
-  //  1 2   11
-  //  2 3   121
-  //  3 4   1331
-  //  4 5   14641
+  let out = [[1]]
 
-  let pascal = [[1]]
   for(let i = 1; i < numRows; i++) {
-    let row = []
-    let prev = pascal[i-1]
-    // console.log('i', i, 'row', row)
-    for(let j = 0; j <= prev.length; j++) {
-      let p0 = prev[j-1] || 0
-      let p1 = prev[j] || 0
-      let c = p0 + p1
-      row.push(c)
+    let prev = out[i-1]
+    let curr = []
+    for(let j = 0; j < i+1; j++) {  // i=1,  row(2) => [1,1]
+      let left = prev[j-1] ?? 0
+      let right = prev[j] ?? 0
+      curr.push(left+ right)
     }
-    pascal.push(row)
-    // console.log('  row', row)
+    out.push(curr)
   }
 
-  return pascal
+  return out
+
 
 };
