@@ -3,87 +3,47 @@
  * @return {number}
  */
 var orangesRotting = function(grid) {
-   
+  let rows = grid.length
+  let cols = grid[0].length
 
-        // 1 1 0
-        // 0 1 1
-        // 0 1 2
+  let queue = []
+  let rotten = 0
+  let total = 0
+  for(let r = 0; r < rows; r++) {
+    for(let c = 0; c < cols; c++) {
+      if(grid[r][c] === 2) {
+        queue.push([r,c])
+        rotten++
+        total++
+      }
+      if(grid[r][c] === 1) {
+        total++
+      }
+    }
+  }   
 
-        // [ [22, -1],[22]  ]
-        let oranges = 0
-        let e = grid
-        let rows = e.length
-        let cols = e[0].length
-        let o = e
-        let queue = []
-        let adj = {}
-        let visited = new Set()
-        for (let r = 0; r < rows; r++) {
-            for (let c = 0; c < cols; c++) {
-                //
-                let rc = r+','+c
-                if (o[r][c] === 2) {
-                    queue.push([rc, -1])
-                    visited.add(rc)
-                }
-                //
-                adj[rc] = new Set()
-                if(o?.[r]?.[c-1] !== undefined && o?.[r]?.[c-1] !== 0) {
-                    let key = `${r},${c-1}`
-                    adj[rc].add(key)
-                }
-                if(o?.[r]?.[c+1] !== undefined && o?.[r]?.[c+1] !== 0) {
-                    let key = `${r},${c+1}`
-                    adj[rc].add(key)
-                }
-                if(o?.[r-1]?.[c] !== undefined && o?.[r-1]?.[c] !== 0) {
-                    let key = `${r-1},${c}`
-                    adj[rc].add(key)
-                }
-                if(o?.[r+1]?.[c] !== undefined && o?.[r+1]?.[c] !== 0) {
-                    let key = `${r+1},${c}`
-                    adj[rc].add(key)
-                }
-                if(o[r][c]) oranges++
-            }
-        }
+  if(rotten === total) return 0
 
-        // console.log('adj', adj)
-        // console.log('queue', queue)
-        // console.log('oranges', oranges)
+  let minute = 1
+  let dirs = [[1,0],[-1,0],[0,1],[0,-1]]
 
-        let prev
-        let level = 0
-        while(queue.length > 0) {
-            let qlength = queue.length
-            let i = 0
-            // console.log('queue', queue, 'level', level)
-            while(i < qlength) {
-                let [curr, parent] = queue.shift()
-                // console.log("  curr", curr, 'parent', parent, 'prev', prev)
-                // let [r,c] = curr.split(",")
-                // if(e[r][c] === 1) {
-                //     e[r][c] = 2
-                //     total++
-                // }
-
-                for(let edge of adj[curr]) {
-                    if(edge === parent) continue
-                    if(visited.has(edge)) continue
-                    visited.add(edge)
-                    queue.push([edge, curr])
-                }
-                prev = curr
-                i++
-            }
-
-            if(queue.length === 0) break;
-
-            level++
-        }
-
-        if(visited.size !== oranges) {
-            return -1
-        }
-        return level
-    } 
+  while(queue.length > 0) {
+    let length = queue.length
+    for(let i = 0; i < length; i++) {
+      let [r, c] = queue.shift()
+      
+      for(let [dx, dy] of dirs) {
+        let rn = r + dx
+        let cn = c + dy
+        if(rn < 0 || rn >= rows || cn < 0 || cn >= cols) continue
+        if(grid[rn][cn] !== 1) continue
+        grid[rn][cn] = 2
+        rotten++
+        if(total === rotten) return minute
+        queue.push([rn, cn])
+      }
+    }
+    minute++
+  }
+  return -1
+};
