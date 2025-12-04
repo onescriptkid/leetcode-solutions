@@ -5,19 +5,20 @@
  * @return {number[]}
  */
 var findIndices = function(nums, indexDifference, valueDifference) {
+  // 0 1 2 3
+  // 5 1 4 1     id = 2, vd = 4
+  // x     y
 
-  // 5 1 4 1
-  // i   j
+  // 
   for(let i = 0; i < nums.length; i++) {
-    let first = nums[i]
-    for(let j = 0; j < nums.length; j++) {
-      let second = nums[j]
-      let id = Math.abs((i - j))
-      let vd = Math.abs(first - second)
-      if(id >= indexDifference && vd >= valueDifference){
+    for(let j = i; j < nums.length; j++) {
+      let id = Math.abs(i - j)
+      let vd = Math.abs(nums[i] - nums[j])
+      if(id >= indexDifference && vd >= valueDifference) {
         return [i, j]
       }
     }
   }
-  return [-1, -1]
+  return [-1,-1]
+
 };
