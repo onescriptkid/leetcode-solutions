@@ -4,19 +4,13 @@
  */
 var maxAdjacentDistance = function(nums) {
 
-  let max = undefined
-
+  let maxdiff = 0
   for(let i = 0; i < nums.length; i++) {
-    let next = nums[i+1]
-    if(next === undefined) {
-      next = nums[0]
-    }
-    let diff = Math.abs(nums[i] - next)
-    if(max === undefined) {
-      max = diff
-    } else if(diff > max) {
-      max = diff
-    }
+    let curr = nums[i]
+    let next = nums[(i + 1) % nums.length]
+    let diff = Math.abs(curr - next)
+    maxdiff = Math.max(diff, maxdiff)
   }
-  return max
+  return maxdiff
+
 };
