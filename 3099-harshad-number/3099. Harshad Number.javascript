@@ -3,14 +3,16 @@
  * @return {number}
  */
 var sumOfTheDigitsOfHarshadNumber = function(x) {
-  let sum = 0
-  let orig = x
-  while(x > 0) {
-    let digit = x % 10
 
-    sum+=digit
-    x = Math.floor(x / 10)
+  let digitsum = 0
+  let tmp = x
+  while(tmp > 0) {
+    let digit = tmp % 10
+    digitsum+=digit
+
+    tmp = Math.floor(tmp / 10)
   }
-  if(orig % sum === 0) return sum
+  if(x % digitsum === 0) return digitsum
+
   return -1
 };
