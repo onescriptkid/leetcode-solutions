@@ -2,8 +2,8 @@ class Node {
   constructor(key, value) {
     this.key = key
     this.value = value
-    this.prev = null
     this.next = null
+    this.prev = null
   }
 }
 
@@ -14,24 +14,32 @@ var LRUCache = function(capacity) {
   this.capacity = capacity
   this.size = 0
   this.kv = {}
+
   this.head = new Node()
   this.tail = new Node()
   this.head.next = this.tail
   this.tail.prev = this.head
+    
 };
 
 LRUCache.prototype.remove = function(node) {
-  let prev = node.prev
+  //          <-n->
+  // <-next->         <-prev->   
+
   let next = node.next
+  let prev = node.prev
   prev.next = next
   next.prev = prev
 }
+
 LRUCache.prototype.add = function(node) {
-  //    <-n->
-  // h->     <-tmp->
+  //       <-node->
+  //  h->           <-tmp->
+
   let tmp = this.head.next
-  node.prev = this.head
   node.next = tmp
+  node.prev = this.head
+
   this.head.next = node
   tmp.prev = node
 }
@@ -47,8 +55,8 @@ LRUCache.prototype.get = function(key) {
   let node = this.kv[key]
   this.remove(node)
   this.add(node)
+
   return node.value
-    
 };
 
 /** 
@@ -61,17 +69,20 @@ LRUCache.prototype.put = function(key, value) {
     this.remove(this.kv[key])
     this.size--
   }
+
   let node = new Node(key, value)
   this.add(node)
   this.size++
   this.kv[key] = node
+
   if(this.size > this.capacity) {
     let lru = this.tail.prev
-    this.size--
-    this.remove(lru)
     delete this.kv[lru.key]
+
+    this.remove(lru)
+    this.size--
   }
-  
+
 };
 
 /** 
