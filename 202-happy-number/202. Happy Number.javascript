@@ -4,25 +4,29 @@
  */
 var isHappy = function(n) {
 
-  function squareOfDigits(num) {
-    let out = 0
+  function digitSquares(num) {
+    let ds = 0
     while(num > 0) {
       let digit = num % 10
-      out += (digit ** 2)
+      ds+=digit**2
       num = Math.floor(num / 10)
     }
-    return out
+    return ds
   }
 
-  let set = new Set()
-  while(n !== 1) {
-    let digitsquare = squareOfDigits(n)
+  let visited = new Set()
 
-    n = digitsquare
-    if(set.has(n)) {
+  while(n > 1) {
+    if(visited.has(n)) {
       return false
     }
-    set.add(n)
+    visited.add(n)
+    let ds = digitSquares(n)
+    // console.log('n', n, 'ds', ds)
+    n = ds
   }
+
   return true
+
+
 };
