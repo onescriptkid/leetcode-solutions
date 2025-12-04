@@ -1,30 +1,40 @@
 /**
- * @param {string} str
- * @returns {string}
+ * @param {string} s
+ * @return {string}
  */
-var reverseWords = function(str) {
-    let arr = str;
-    let words = [];
-    let word = "";
-    for(char of str) {
-        if(char.match(/[^\s]/)) {
-            word = word + char;
-        } else if(word == '') {
-            word = '';
-        } else {
-            words.push(word);
-            word = '';
-        }
-    }
-    console.log(words)
-    if(word != ''){
-        words.push(word);
-    }
-    let reversed;
-    if(words != 0) {
-        reversed = words.reverse().join(' ');   
+var reverseWords = function(s) {
+
+  let words = []
+
+  // "  hello world  "
+  //  i
+  let word = ''
+  for(let i = 0; i < s.length; i++) {
+
+    let c = s[i]
+
+    if(c === ' ') {
+      if(word.length > 0) {
+        words.push(word)
+        word = ''
+      }
     } else {
-        reversed = '';
+      word+=c
     }
-    return reversed;
+  }
+
+  if(word.length > 0) {
+    words.push(word)
+  }
+
+  let l = 0
+  let r = words.length -1
+  while(l < r) {
+    let tmp = words[l]
+    words[l] = words[r]
+    words[r] = tmp
+    l++
+    r--
+  }   
+  return words.join(' ')
 };
