@@ -12,18 +12,16 @@
  */
 var invertTree = function(root) {
 
-  function invert(curr) {
-    if(curr === null) {
-      return null
-    }
+  function dfs(curr) {
+    if(curr === null) return
+
     let left = curr.left
     curr.left = curr.right
     curr.right = left
 
-    invert(curr.left)
-    invert(curr.right)
+    dfs(curr.left)
+    dfs(curr.right)
   }
-  invert(root)
+  dfs(root)
   return root
-
 };
