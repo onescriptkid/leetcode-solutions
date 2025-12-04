@@ -11,43 +11,31 @@
  * @return {number[][]}
  */
 var zigzagLevelOrder = function(root) {
-  let levels = []
-  // [
-  //   [3]
-  //   [9 20]
-  //   [15, 17]
-  // ]
+  // 
+  if(root === null) return []
 
-  function dfs(curr, level) {
-    if(curr === null) {
-      return
-    }
-    if(levels[level] === undefined) {
-      levels[level] = [curr.val]
-    } else {
-      levels[level].push(curr.val)
-    }
+  let out = []
+  let queue = [root]
+  let i =0
 
-    dfs(curr.left, level +1)
-    dfs(curr.right, level+1)
-  }
-  dfs(root, 0)
-  console.log(levels)
+  while(queue.length > 0) {
+    let length = queue.length
+    let level = []
+    for(let i = 0; i < length; i++) {
+      let curr = queue.shift()
+      level.push(curr.val)
 
-  for(let i = 0; i < levels.length; i++) {
-    if(i % 2 === 1) {
-      let arr = levels[i]
-      // 0 1 2 3 4  5 => < 2
-      // 0 1 2
-      // 0 1 2 3    4 => < 2
-      for(let j = 0; j < Math.floor(levels[i].length/2); j++) {
-        let tmp = levels[i][j]
-        levels[i][j] = levels[i][arr.length - 1 - j]
-        levels[i][arr.length - 1 - j] = tmp
+      if(curr.left !== null) {
+        queue.push(curr.left)
+      }
+      if(curr.right !== null) {
+        queue.push(curr.right)
       }
     }
+    if(i % 2=== 1) level.reverse()
+    i++
+    out.push(level)
   }
-  console.log(levels)
-  return levels
 
+  return out
 };
