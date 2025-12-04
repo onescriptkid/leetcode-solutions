@@ -4,32 +4,19 @@
  * @return {number}
  */
 var combinationSum4 = function(nums, target) {
+  let memo = new Array(target + 1).fill(undefined)
 
-  let memo = {}
+  function dfs(sum) {
+    if(sum === target) return 1
+    if(sum > target) return 0
+    if(memo[sum] !== undefined) return memo[sum]
 
-  function dfs(left) {
-    if(left === 0) {
-      return 1
-    }
-    if(left < 0) {
-      return -1
-    }
-    if(memo[left] !== undefined) {
-      return memo[left]
-    }
-    // let paths = []
-    let pathsum = 0
-    for(let i = 0; i < nums.length; i++) {
-      let num = nums[i]
-      let path = dfs(left - num)
-      if(path !== -1) {
-        pathsum+=path
-        // paths.push(path)
-      }
+    let res = 0
+    for(let num of nums) {
+      res+= dfs(sum + num)
     }
 
-    memo[left] = pathsum
-    return memo[left]
-  }
-  return dfs(target)
+    return memo[sum] = res
+  }   
+  return dfs(0)
 };
