@@ -4,20 +4,18 @@
  * @return {boolean}
  */
 var canConstruct = function(ransomNote, magazine) {
-  
-  let freq = {}
-  for(let c of magazine) {
-    freq[c] = (freq[c] || 0) + 1
+  let freqr = {}
+  for(let c of ransomNote) {
+    freqr[c] = (freqr[c] || 0) + 1
   }
 
-  for(let c of ransomNote) {
-    if(freq[c] === undefined) {
-      return false
-    }
-    if(freq[c] === 0) {
-      return false
-    }
-    freq[c]--
+  let freqm = {}
+  for(let c of magazine) {
+    freqm[c] = (freqm[c] || 0) + 1
+  }
+
+  for(let c in freqr) {
+    if(freqm[c] === undefined || freqm[c] < freqr[c]) return false
   }
   return true
 
