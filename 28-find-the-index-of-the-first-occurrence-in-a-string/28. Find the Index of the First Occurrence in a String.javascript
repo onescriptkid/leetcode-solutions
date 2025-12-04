@@ -6,30 +6,16 @@
 var strStr = function(haystack, needle) {
 
   for(let i = 0; i < haystack.length; i++) {
-    let ch = haystack[i]
-    let cn = needle[0]
-    // 012345678
-    // sadbutsad    but
-    //    i
-    //    j
 
-    if(ch === cn) {
-      let found = true
-      for(let j = 0; j < needle.length; j++) {
-        let cn = needle[j]
-        let ch = haystack[i+j]
-        // console.log('cn', cn, 'ch', ch)
-        if(cn !== ch) {
-          found = false
-          break;
-        }
+    let j = 0
+    let k = i
+    if(haystack[k] === needle[j]) {
+      while(j < needle.length && haystack[k] === needle[j]) {
+        j++
+        k++
       }
-
-      if(found) {
-        return i
-      }
+      if(j === needle.length) return i
     }
-  }
+  } 
   return -1
-
 };
