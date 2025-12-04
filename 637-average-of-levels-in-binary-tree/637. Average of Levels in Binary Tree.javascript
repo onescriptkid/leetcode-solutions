@@ -11,28 +11,26 @@
  * @return {number[]}
  */
 var averageOfLevels = function(root) {
-  let levels = []
-
-  function dfs(curr, depth) {
-    if(curr === null) return
-    if(levels[depth] === undefined) {
-      levels[depth] = [curr.val]
-    } else {
-      levels[depth].push(curr.val)
-    }
-    dfs(curr.left, depth + 1)
-    dfs(curr.right, depth + 1)
-  }
-  dfs(root, 0)
-  console.log('levels', levels)
-
   let out = []
-  for(let level of levels) {
+
+  let queue = [root]
+
+  while(queue.length > 0) {
+    let length = queue.length
     let sum = 0
-    for(let val of level) {
-      sum+=val
+    for(let i = 0; i < length; i++) {
+      let curr = queue.shift()
+
+      sum+=curr.val 
+
+      if(curr.left !== null) {
+        queue.push(curr.left)
+      }
+      if(curr.right !== null) {
+        queue.push(curr.right)
+      }
     }
-    out.push(sum / level.length)
+    out.push(sum / length)
   }
 
   return out
