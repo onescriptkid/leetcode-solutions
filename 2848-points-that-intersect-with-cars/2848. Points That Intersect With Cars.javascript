@@ -4,19 +4,24 @@
  */
 var numberOfPoints = function(nums) {
 
-  // 1 2 3 4 5 6 7 8
-  //     x-----x
-  // x-------x
-  //       x-----x
+  // 0 1 2 3 4 5 6 7 8
+  //       x x x x -
+  //   x x x x x -
+  //         x x x x -
+  let line = new Array(101).fill(0)
+  for(let [s,e] of nums) {
+    line[s]++
+    line[e+1]--
+  }
 
-  // x---x
-  //         x-----x
-  let set = new Set()
-  for(let num of nums) {
-    let [start, end] = num
-    for(let i = start; i <= end; i++) {
-      set.add(i)
+  let count = 0
+  let total = 0
+  for(let i = 0; i < line.length; i++) {
+    count+=line[i]
+    if(count > 0) {
+      total++
     }
   }
-  return set.size
+  return total
+
 };
