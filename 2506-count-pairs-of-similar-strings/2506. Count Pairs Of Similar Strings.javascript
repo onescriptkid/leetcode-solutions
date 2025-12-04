@@ -5,28 +5,31 @@
 var similarPairs = function(words) {
 
   let alphabet = 'abcdefghijklmnopqrstuvwxyz'
-  let letters = {}
+  let ltov = {}
   for(let i = 0; i < alphabet.length; i++) {
-    letters[alphabet[i]] = i
+    ltov[alphabet[i]] = i 
   }
 
-  let kv = {}
-  let total = 0
+  let freq = {}
+  let out = 0
   for(let word of words) {
-    let arr = new Array(26).fill(0)
+    let key = new Array(26).fill(0)
+
     for(let c of word) {
-      let val = letters[c]
-      arr[val] = 1
+      let val = ltov[c]
+      key[val] = 1
     }
-    let key = arr.join(',')
-    // console.log('word', word, 'key', key)
-    if(kv[key] === undefined) {
-      kv[key] = 1
+
+    let keystr = key.join(',')
+
+    // console.log('word', word, keystr, freq[keystr])
+    if(freq[keystr] === undefined) {
+      freq[keystr] = 1
     } else {
-      total+=kv[key]
-      kv[key]++
+      out+=freq[keystr]
+      freq[keystr]++
     }
   }
-  return total
+  return out
 
 };
