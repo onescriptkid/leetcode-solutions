@@ -3,32 +3,26 @@
  * @return {string}
  */
 var makeSmallestPalindrome = function(s) {
+  // egcfe   // 
+  //  i j
 
-  let i = 0
-  let j = s.length - 1
-
-  let str = ""
-  // egcfe
-  // i   j
-  let arr = new Array()
-  while(i <= j) {
-    if(s[i] === s[j]) {
-      arr[i] = s[i]
-      arr[j] = s[j]
-    } else {
-      if (s[i] < s[j]) {
-        arr[i] = s[i]
-        arr[j] = s[i]
+  let a = s.split('')
+  let l = 0
+  let r = s.length - 1
+  while(l < r) {
+    if(a[l] !== a[r]) {
+      if(a[l] < a[r]) {
+        a[r] = a[l]
       } else {
-        arr[i] = s[j]
-        arr[j] = s[j]
+        a[l] = a[r]
       }
+    } else {
+      l++
+      r--
     }
-    i++
-    j--
   }
 
-  return arr.join('')
+  return a.join('')
 
 
     
