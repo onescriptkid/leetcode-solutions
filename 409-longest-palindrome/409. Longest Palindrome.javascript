@@ -3,30 +3,31 @@
  * @return {number}
  */
 var longestPalindrome = function(s) {
-  // abccccdd
-  // longest odd + all the evens + (all the odds - 1)
+  // Count all the evens
+  // Count all the odds as (odd-1)
+  
+  // aaa bbb cc dddd
 
-
-  let chars = {}
-  let longestOddChar
-  let longestOdd
+  let freq = {}
   for(let c of s) {
-    chars[c] = (chars[c] || 0) + 1
+    freq[c] = (freq[c] || 0) + 1
   }
 
+  let oddmax
   let sum = 0
-  let hasOdd = false
-  for(let char of Object.keys(chars)) {
-    let count = chars[char]
-    if(count % 2 === 0) {
-      sum+=count
+  for(let c in freq) {
+    if(freq[c] % 2 === 1) {
+      oddmax = Math.max(oddmax, freq[c])
+      sum+=freq[c]-1
     } else {
-      hasOdd = true
-      sum+=(count - 1)
+      sum+=freq[c]
     }
+
   }
-  if(hasOdd) sum+=1
+
+  if(oddmax !== undefined) sum+=1
 
   return sum
 
+  // count the longest odd
 };
