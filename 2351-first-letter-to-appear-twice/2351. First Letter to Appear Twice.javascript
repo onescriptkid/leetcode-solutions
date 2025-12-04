@@ -3,15 +3,10 @@
  * @return {character}
  */
 var repeatedCharacter = function(s) {
+  let set = new Set()
+  for(let c of s) {
+    if(set.has(c)) return c
 
-  let counts = {}
-
-  for(let i = 0; i < s.length; i++) {
-    let c = s[i]
-    if(counts[c] === undefined) {
-      counts[c] = 1
-    } else {
-      return c
-    }
-  }
+    set.add(c)
+  }   
 };
