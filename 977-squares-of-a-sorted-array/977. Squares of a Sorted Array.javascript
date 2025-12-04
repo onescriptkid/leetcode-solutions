@@ -3,42 +3,51 @@
  * @return {number[]}
  */
 var sortedSquares = function(nums) {
-
-  let neg = []   
+  let neg = []
   let pos = []
-  for(let i = 0; i < nums.length; i++) {
-
-    let num = nums[i]
-
+  let zeroes = []
+  let out = []
+  for(let num of nums) {
     if(num < 0) {
-      neg.unshift(num * num)
-    } else {
-      pos.push(num *num)
+      neg.unshift(num*num)
+      continue
+    }
+    if(num === 0) {
+      zeroes.push(num*num)
+      continue
+    }
+    if(num > 0) {
+      pos.push(num* num)
+      continue
     }
   }
 
-  // merge
-  let i = 0;
-  let j = 0;
-  let out = []
-  while(i < neg.length && j < pos.length) {
-    if(neg[i] < pos[j]) {
-      out.push(neg[i])
+  
+  while(zeroes.length > 0) {
+    out.push(zeroes.pop())
+  }
+  let i = 0
+  let j = 0
+  // console.log('neg', neg)
+  // console.log('pos', pos)
+
+  while(i <pos.length && j < neg.length) {
+    if(pos[i] < neg[j]) {
+      out.push(pos[i])
       i++
     } else {
-      out.push(pos[j])
+      out.push(neg[j])
       j++
     }
   }
-  while(i < neg.length) {
-    out.push(neg[i])
+  while(i < pos.length) {
+    out.push(pos[i]) 
     i++
   }
-  while(j < pos.length) {
-    out.push(pos[j])
+  while(j < neg.length) {
+    out.push(neg[j])
     j++
   }
-  // console.log(neg, pos)
-  return out
-
+   return out
+    
 };
