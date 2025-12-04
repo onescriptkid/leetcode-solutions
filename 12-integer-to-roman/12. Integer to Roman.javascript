@@ -3,66 +3,65 @@
  * @return {string}
  */
 var intToRoman = function(num) {
-    let tmpNum = num;
-    let numeral = ''
+  let str = ''
+
+  // 4, 9      IV, IX
+  // 40, 90,   XL, XC
+  // 400, 900  CD, CM
+  // 109 => C + IX => CIX
+  // IX + C
+
+  // 149 => C+XL+IX
+
+  while(num > 0) {
+    // console.log('str', str, 'num', num)
+    if(false) {
+      //
+
+
+
+    } else if(num >= 1000) {
+      str = str + "M"
+      num-=1000
+    } else if(num >= 900) {
+      str = str + "CM"
+      num-=900
+    } else if(num >= 500) {
+      str = str + "D"
+      num-=500
+    } else if(num >= 400) {
+      str = str + "CD"
+      num-=400
+    } else if(num >= 100) {
+      str = str + "C"
+      num-=100
+    } else if(num >= 90) {
+      str = str + "XC"
+      num-=90
+    } else if(num >=50) {
+      str = str + "L"
+      num-=50
+    } else if(num >= 40) {
+      str = str + 'XL'
+      num-=40
+    } else if(num >= 10) {
+      str = str + "X"
+      num-=10
+    } else if(num % 10 === 9) {
+      str = str + "IX"
+      num-=9
+    } else if(num >= 5) {
+      str = str + "V"
+      num-=5
+    } else if(num % 10 === 4) {
+      str = str + "IV"
+      num-=4
+    } else if(num >= 1) {
+      str = str + "I"
+      num-=1
+    }
+  }
+
+  return str
     
-    // D
-    while(tmpNum / 1000 >= 1) {
-        numeral = numeral + 'M'
-        tmpNum = tmpNum - 1000
-    }
-    while(tmpNum / 900 >= 1) {
-        numeral = numeral + 'CM'
-        tmpNum = tmpNum - 900
-    }
-    // M
-    while(tmpNum / 500 >= 1) {
-        numeral = numeral + 'D'
-        tmpNum = tmpNum - 500
-    }
-    while(tmpNum / 400 >= 1) {
-        numeral = numeral + 'CD'
-        tmpNum = tmpNum - 400
-    }
-    // C
-    while(tmpNum / 100 >= 1) {
-        numeral = numeral + 'C'
-        tmpNum = tmpNum - 100
-    }
-    while(tmpNum / 90 >= 1) {
-        numeral = numeral + 'XC'
-        tmpNum = tmpNum - 90
-    }
-    // L
-    while(tmpNum / 50 >= 1) {
-        numeral = numeral + 'L'
-        tmpNum = tmpNum - 50
-    }
-    while(tmpNum / 40 >= 1) {
-        numeral = numeral + 'XL'
-        tmpNum = tmpNum - 40
-    }
-    // X
-    while(tmpNum / 10 >= 1) {
-        numeral = numeral + 'X'
-        tmpNum = tmpNum - 10
-    }
-    while(tmpNum / 9 >= 1) {
-        numeral = numeral + 'IX'
-        tmpNum = tmpNum - 9
-    }
-    // V
-    while(tmpNum / 5 >= 1) {
-        numeral = numeral + 'V'
-        tmpNum = tmpNum - 5
-    }
-    while(tmpNum / 4 >= 1) {
-        numeral = numeral + 'IV'
-        tmpNum = tmpNum - 4
-    }
-    while(tmpNum / 1 >= 1) {
-        numeral = numeral + 'I'
-        tmpNum = tmpNum - 1
-    }
-    return numeral
 };
