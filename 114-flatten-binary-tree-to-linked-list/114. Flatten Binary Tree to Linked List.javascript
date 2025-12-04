@@ -11,27 +11,22 @@
  * @return {void} Do not return anything, modify root in-place instead.
  */
 var flatten = function(root) {
+  
+  let curr = root
 
-    // Preorder
-    let output = []
-    let recurse = (root) => {
-        if(root == null) {
-            return
-        }
-        output.push(root)
-        recurse(root.left)
-        recurse(root.right)
+  while(curr !== null) {
+    let left = curr.left
+    if(left !== null) {
+      let pred = curr.left
+      while(pred.right !== null) {
+        pred = pred.right
+      }
+      pred.right = curr.right
+      curr.right = curr.left
+      curr.left = null
     }
-    recurse(root)
-    
-    let prev = null;
-    while(output.length > 0){
-        curr = output.shift()
-        if(prev !== null) {
-            prev.right = curr;
-            prev.left = null;
-        }
-        prev = curr;
-    }
-       
+    curr = curr.right
+  }
+
+  return root
 };
