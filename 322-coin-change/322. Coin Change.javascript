@@ -4,37 +4,24 @@
  * @return {number}
  */
 var coinChange = function(coins, amount) {
+  let memo = new Array(amount + 1).fill(undefined)
 
-  let memo = {}
-
-  function dfs(left) {
-    if(left === 0) {
-      return 0
-    }
-    if(left < 0) {
-      return -1
-    }
-    if(memo[left] !== undefined) {
-      return memo[left]
-    }
+  function dfs(sum) {
+    if(sum === amount) return 0
+    if(sum > amount) return -1
+    if(memo[sum] !== undefined) return memo[sum]
 
     let opts = []
     for(let coin of coins) {
-      let res = dfs(left - coin)
-      if(res !== -1) {
-        opts.push(1 + res)
-      }
-    }
-    // console.log('left', left, 'opts', opts)
-
-    if(opts.length === 0) {
-      memo[left] = -1
-      return memo[left]
+      let opt = dfs(sum + coin)
+      if(opt === -1) continue  
+      opts.push(opt)
     }
 
-    let min = Math.min(...opts)
-    memo[left] = min
-    return memo[left]
+    if(opts.length === 0) return memo[sum] = -1
+
+    return memo[sum] = 1+Math.min(...opts)
   }
-  return dfs(amount)
+  return dfs(0)
+    
 };
