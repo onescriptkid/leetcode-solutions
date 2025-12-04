@@ -31,4 +31,5 @@ var licenseKeyFormatting = function(s, k) {
     count++
   }
   return out
+
 };
