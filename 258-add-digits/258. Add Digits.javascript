@@ -4,7 +4,8 @@
  */
 var addDigits = function(num) {
 
-  function getDigitSum(n) {
+  function sumDigits(n) {
+    
     let sum = 0
     while(n > 0) {
       let digit = n % 10
@@ -14,9 +15,11 @@ var addDigits = function(num) {
     return sum
   }
 
+  while(num >= 10) {
+    let sum = sumDigits(num)
 
-  while(num / 10 >= 1) {
-    num = getDigitSum(num)
+    num = sum
   }
   return num
+
 };
