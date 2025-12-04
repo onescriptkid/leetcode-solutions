@@ -4,48 +4,46 @@
  * @return {boolean}
  */
 var canFinish = function(numCourses, prerequisites) {
+  
   let adj = {}
   for(let i = 0; i < numCourses; i++) {
-    adj[i] = new Set()
+    adj[i] = []
   }
-
-  for(let [u,v] of prerequisites) {
-    adj[u].add(v)
+  for(let [course, pre] of prerequisites) {
+    adj[pre].push(course)
   }
 
   let indegrees = {}
-  let vertices = Object.keys(adj)
-  for(let vertex of vertices) {
-    indegrees[vertex] = (indegrees[vertex] || 0)
-    for(let edge of adj[vertex]) {
-      indegrees[edge] = (indegrees[edge] || 0) + 1
+  for(let u in adj) {
+    indegrees[u] = (indegrees[u] || 0) 
+    for(let v of adj[u]) {
+      indegrees[v] = (indegrees[v] || 0) + 1
     }
   }
 
   let queue = []
-  for(let vertex of Object.keys(indegrees)) {
-    if(indegrees[vertex] === 0) {
-      queue.push(vertex)
+  for(let u in indegrees) {
+    if(indegrees[u] === 0) {
+      queue.push(u)
     }
   }
 
-  let out = 0
+  let out = []
 
   while(queue.length > 0) {
-    let curr = queue.shift()
+    let u = queue.shift()
 
-    out++
+    out.push(u)
 
-    for(let edge of adj[curr]) {
-      indegrees[edge]--
-      if(indegrees[edge] === 0) {
-        queue.push(edge)
-      }
+    for(let v of adj[u]) {
+      indegrees[v]--
+      if(indegrees[v] === 0) queue.push(v)
     }
   }
 
-  if(out !== numCourses) {
+  if(out.length !== Object.keys(adj).length) {
     return false
   }
+
   return true
 };
