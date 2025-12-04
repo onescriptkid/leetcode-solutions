@@ -6,34 +6,29 @@
 var longestAlternatingSubarray = function(nums, threshold) {
 
   // 3 2 5 4
-  //   2 1 r
-  //   l
+  //   r
+  // l
   
-  // 3 2 5 4 5 4 4
-  //           2 1 r
+  // 3 2 5 4 5 4 8
+  //               r
   //   l
 
   let l = 0
-  let max = 0
   let r = 0
+  let max = 0
   while(r < nums.length) {
     let nr = nums[r]
     r++
 
-    // l even
-    if(nums[l] % 2 === 1) {
+    if(nums[l] % 2 !== 0) {
       l = r
       continue
     }
-
-    // oscillate
-    if((r -l) >= 2 && nums[r-2] % 2 === nums[r-1] % 2) {
+    if((r-l) >= 2 && nums[r-2] % 2 === nums[r-1] % 2) {
       r = r - 1
       l = r
       continue
     }
-
-    // threshold
     if(nr > threshold) {
       l = r
       continue
@@ -44,5 +39,7 @@ var longestAlternatingSubarray = function(nums, threshold) {
     }
   }
   return max
+
+
     
 };
