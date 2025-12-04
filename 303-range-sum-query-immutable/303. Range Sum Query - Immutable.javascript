@@ -2,11 +2,17 @@
  * @param {number[]} nums
  */
 var NumArray = function(nums) {
-  this.prefixsums = []
-  this.sum = 0
+  //  0  1  2  3  4  5 
+
+  // -2  0  3 -5  2 -1
+  // -2 -2  1 -4 -2 -3
+  //        x        x
+  //        2        5      -3 - (-2)  => 1
+  this.psums = []
+  let sum = 0
   for(let num of nums) {
-    this.sum+=num
-    this.prefixsums.push(this.sum)
+    sum+=num
+    this.psums.push(sum)
   }
 };
 
@@ -16,13 +22,11 @@ var NumArray = function(nums) {
  * @return {number}
  */
 NumArray.prototype.sumRange = function(left, right) {
-  //  0  1  2  3  4  5  6
-  // -2  0  3  0 -5  2 -1
-  // -2  0  1  1 -4 -2 -3
-  //        l        r
 
-  return this.prefixsums[right] - (this.prefixsums[left - 1] || 0)
-    
+  let lsum = this.psums[left - 1] || 0
+  let rsum = this.psums[right]
+
+  return rsum - lsum
 };
 
 /** 
