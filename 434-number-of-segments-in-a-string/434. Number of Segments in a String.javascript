@@ -6,7 +6,9 @@ var countSegments = function(s) {
 
   let count = 0
   let word = ""
-  for(let c of s) {
+  for(let i = 0; i < s.length; i++) {
+    let c = s[i]
+
     if(c === ' ') {
       if(word !== '') {
         count++
