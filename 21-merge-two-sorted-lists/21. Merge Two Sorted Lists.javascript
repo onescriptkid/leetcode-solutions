@@ -11,10 +11,12 @@
  * @return {ListNode}
  */
 var mergeTwoLists = function(list1, list2) {
+  let dummy = new ListNode()  
+  let curr0 = dummy
+
   let curr1 = list1
   let curr2 = list2
-  let head = new ListNode()
-  let curr3 = head 
+
   while(curr1 !== null && curr2 !== null) {
     let node = new ListNode()
     if(curr1.val < curr2.val) {
@@ -24,23 +26,29 @@ var mergeTwoLists = function(list1, list2) {
       node.val = curr2.val
       curr2 = curr2.next
     }
-    curr3.next = node
-    curr3 = curr3.next
-  }
 
+    curr0.next = node
+    curr0 = curr0.next
+  }
   while(curr1 !== null) {
     let node = new ListNode()
     node.val = curr1.val
+
     curr1 = curr1.next
-    curr3.next = node
-    curr3 = curr3.next
+
+    curr0.next = node
+    curr0 = curr0.next 
   }
   while(curr2 !== null) {
     let node = new ListNode()
     node.val = curr2.val
+
     curr2 = curr2.next
-    curr3.next = node
-    curr3 = curr3.next
+
+    curr0.next = node
+    curr0 = curr0.next
   }
-  return head.next
+
+  return dummy.next
+
 };
