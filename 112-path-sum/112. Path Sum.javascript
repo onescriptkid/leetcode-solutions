@@ -13,22 +13,15 @@
  */
 var hasPathSum = function(root, targetSum) {
 
-  let flag = false
   function dfs(curr, sum) {
-    if (curr === null) {
-      return false
-    }
-
-    let nextsum = sum+ curr.val
+    if(curr === null) return false
 
     if(curr.left === null && curr.right === null) {
-      if(nextsum === targetSum) {
-        return true
-        // flag = true
-      }
+      return curr.val + sum === targetSum
     }
-    return dfs(curr.left, nextsum) || dfs(curr.right, nextsum)
-  } 
+
+    return dfs(curr.left, curr.val +sum) || dfs(curr.right, curr.val+sum)
+  }
   return dfs(root, 0)
-  // return flag
+
 };
