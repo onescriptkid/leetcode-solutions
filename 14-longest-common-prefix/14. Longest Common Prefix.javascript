@@ -3,36 +3,39 @@
  * @return {string}
  */
 var longestCommonPrefix = function(strs) {
+
   // flower
   // flow
   // flight
-  // i
-
-  let shortest
-  for(let i = 0; i < strs.length; i++) {
-    let str = strs[i]
-    if(shortest === undefined) {
-      shortest = str
-    } else if(str.length < shortest.length) {
-      shortest = str
-    }
+  // 
+  let i = 0
+  let minlength = Infinity
+  for(let str of strs) {
+    if(str.length < minlength) minlength = str.length
   }
 
-  let max = ""
-  for(let i = 0; i < strs[0].length; i++) {
-    let letter = strs[0][i]
-    // console.log(strs[0][i])
-    let sameLetter = true
+  let out = ''
+  while(i < minlength) {
+
+    let c
+    let common = true
+
     for(let str of strs) {
-      if(str[i] !== letter) {
-        sameLetter = false
-        return max || ""
+      if(c === undefined) {
+        c = str[i]
+        continue
+      }
+      if(c !== str[i]) {
+        common = false
         break;
       }
     }
-    if(sameLetter) {
-      max+=letter
-    }
+    if(!common) break;
+    if(common) out+=c
+    i++
+
   }
-  return max || ""
+
+  return out
+
 };
