@@ -4,31 +4,34 @@
  */
 var findMiddleIndex = function(nums) {
 
-  let lsum = 0
-  let lsums = [0]
+  //  2  3 -1  8  4
+  //  0  2  5  4  12
+  // 14  11 12  4  0
 
-  for(let i = 0; i < nums.length -1; i++) {
-    lsum+=nums[i]
-    lsums.push(lsum)
+  let lsums = []
+  let leftsum = 0
+  for(let num of nums) {
+    lsums.push(leftsum)
+    leftsum+=num
   }
 
-
-  let rsum = 0
-  let rsums = [0]
-  for(let i = 0; i < nums.length - 1; i++) {
-    rsum+=nums[nums.length - 1 -i]
-    rsums.unshift(rsum)
+  let rsums = new Array(nums.length).fill(0)
+  let rightsum =0
+  for(let i = nums.length - 1; i >= 0; i--) {
+    rsums[i] = rightsum
+    rightsum+= nums[i]
   }
-  console.log(rsums)
-  console.log(lsums)
-  // 2  3 -1  8  4 
-  // 0  2  5  4  12
-  // 14 11 12 4  0
+  // console.log('lsums', lsums)
+  // console.log('rsums', rsums)
 
   for(let i = 0; i < nums.length; i++) {
-    if(rsums[i] === lsums[i]) {
+    let left = lsums[i]
+    let right = rsums[i]
+    if(left === right) {
       return i
     }
+
   }
   return -1
+
 };
