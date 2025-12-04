@@ -3,15 +3,12 @@
  * @return {boolean}
  */
 var isThree = function(n) {
-  let found = false
-  for(let i = 2; i <n; i++) {
-    if(n / i === Math.floor(n / i)) {
-      if(found === false) {
-        found = true
-      } else {
-        return false
-      }
+  let count = 0
+  for(let i = 1; i <= n; i++) {
+    if(n % i===0) {
+      count++
     }
+    if(count > 3) return false
   }
-  return found
+  return count === 3
 };
