@@ -21,7 +21,6 @@ WordDictionary.prototype.addWord = function(word) {
     curr = curr.children[c]
   }
   curr.end = true
-
 };
 
 /** 
@@ -30,7 +29,6 @@ WordDictionary.prototype.addWord = function(word) {
  */
 WordDictionary.prototype.search = function(word) {
   let curr = this.root
-  // console.log('search', 'curr', Object.keys(curr.children), word)
   for(let i = 0; i < word.length; i++) {
     let c = word[i]
     if(c !== '.') {
@@ -40,43 +38,44 @@ WordDictionary.prototype.search = function(word) {
       curr = curr.children[c]
     } else {
       let children = Object.keys(curr.children)
-      let valid = false
+      let any = false
       for(let child of children) {
-        let search = this.searchHelper(curr.children[child], word.slice(i+1))
-        if(search) {
-          return true
+        let valid = this.searchdot(curr.children[child], word.slice(i+1))
+        if(valid) {
+          any = true
+          break;
         }
       }
-      return false
+      return any
     }
   }
   return curr.end
-    
 };
 
-WordDictionary.prototype.searchHelper = function(curr, word) {
-  // console.log('  helper', 'curr', Object.keys(curr.children), word)
-  for (let i = 0; i < word.length; i++) {
+WordDictionary.prototype.searchdot = function(curr, word) {
+
+  for(let i = 0; i < word.length; i++) {
     let c = word[i]
-    if (c !== '.') {
-      if (curr.children[c] === undefined) {
+
+    if(c !== '.') {
+      if(curr.children[c] === undefined) {
         return false
       }
       curr = curr.children[c]
     } else {
       let children = Object.keys(curr.children)
-      let valid = false
-      for (let child of children) {
-        let search = this.searchHelper(curr.children[child], word.slice(i + 1))
-        if (search) {
-          return true
+      let any = false
+      for(let child of children) {
+        let valid = this.searchdot(curr.children[child], word.slice(i+1))
+        if(valid) {
+          any = true
+          break
         }
       }
-      return false
+      return any
     }
   }
   return curr.end
-
 }
 
 /** 
