@@ -10,21 +10,31 @@ var NeighborSum = function(grid) {
  * @return {number}
  */
 NeighborSum.prototype.adjacentSum = function(value) {
-  let sum = 0
-  let grid = this.grid
-  for(let r = 0; r < this.grid.length; r++) {
-    for(let c = 0; c < this.grid[r].length; c++) {
-      if(grid[r][c] === value) {
-        let up = grid[r-1]?.[c] || 0
-        let down = grid[r+1]?.[c] || 0
-        let left = grid[r][c-1] || 0
-        let right = grid[r][c+1] || 0
-        sum+=(up+down+left+right)
-        break
+
+  let rows = this.grid.length
+  let cols = this.grid[0].length
+  for(let r = 0; r < rows; r++) {
+    for(let c = 0; c < cols; c++) {
+      if(this.grid[r][c] === value) {
+        let sum = 0
+        if(this.grid[r-1] !== undefined && this.grid[r-1][c] !== undefined) {
+          sum+=this.grid[r-1][c]
+        }
+        if(this.grid[r+1] !== undefined && this.grid[r+1][c] !== undefined) {
+          sum+=this.grid[r+1][c]
+        }
+        if(this.grid[r][c-1] !== undefined) {
+          sum+=this.grid[r][c-1]
+        }
+        if(this.grid[r][c+1] !== undefined) {
+          sum+=this.grid[r][c+1]
+        }
+        return sum
       }
     }
   }
-  return sum
+  return -1
+
 };
 
 /** 
@@ -32,22 +42,31 @@ NeighborSum.prototype.adjacentSum = function(value) {
  * @return {number}
  */
 NeighborSum.prototype.diagonalSum = function(value) {
-    
-  let sum = 0
-  let grid = this.grid
-  for(let r = 0; r < this.grid.length; r++) {
-    for(let c = 0; c < this.grid[r].length; c++) {
-      if(grid[r][c] === value) {
-        let uleft = this.grid[r-1]?.[c-1] || 0
-        let uright= this.grid[r-1]?.[c+1] || 0
-        let dleft = this.grid[r+1]?.[c-1] || 0
-        let dright = this.grid[r+1]?.[c+1] || 0
-        sum+=(uleft+uright + dleft + dright)
-        break
+
+  let rows = this.grid.length
+  let cols = this.grid[0].length
+  for(let r = 0; r < rows; r++) {
+    for(let c = 0; c < cols; c++) {
+      if(this.grid[r][c] === value) {
+        let sum = 0
+        if(this.grid?.[r-1]?.[c-1] !== undefined) {
+          sum+=this.grid[r-1][c-1]
+        }
+        if(this.grid?.[r+1]?.[c-1] !== undefined) {
+          sum+=this.grid[r+1][c-1]
+        }
+        if(this.grid?.[r+1]?.[c+1] !== undefined) {
+          sum+=this.grid[r+1][c+1]
+        }
+        if(this.grid?.[r-1]?.[c+1] !== undefined) {
+          sum+=this.grid[r-1][c+1]
+        }
+        return sum
       }
     }
   }
-  return sum
+  return -1
+ 
 
 };
 
