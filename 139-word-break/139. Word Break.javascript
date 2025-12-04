@@ -4,46 +4,23 @@
  * @return {boolean}
  */
 var wordBreak = function(s, wordDict) {
-
   let memo = {}
 
   function dfs(str) {
-    if(memo[str] !== undefined) {
-      return memo[str]
-    }
-    if(str === '') {
-      return true
-    }
+    if(str === '') return true
+    if(memo[str] !== undefined) return memo[str]
 
     let opts = []
     for(let word of wordDict) {
-
-      let prefix = str.startsWith(word)
-      if(prefix) {
-        let nextstr = str.substring(word.length)
-        let res = dfs(nextstr)
-        opts.push(res)
+      if(str.startsWith(word)) {
+        let opt = dfs(str.slice(word.length))
+        opts.push(opt)
       }
-    }
-    // console.log('str', str, 'opts', opts)
+    } 
+    
+    if(opts.length === 0) return memo[str] = false
 
-
-    if(opts.length === 0) {
-      memo[str] = false
-      return memo[str]
-    }
-    let hasTrue = false
-    for(let opt of opts) {
-      if(opt === true) {
-        hasTrue = true
-        break;
-      }
-    }
-
-    memo[str] = hasTrue
-    return hasTrue
+    return memo[str] = opts.some(v => v)
   }
   return dfs(s)
-
-
 };
