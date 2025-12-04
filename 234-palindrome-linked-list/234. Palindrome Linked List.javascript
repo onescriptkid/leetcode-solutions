@@ -10,48 +10,49 @@
  * @return {boolean}
  */
 var isPalindrome = function(head) {
+
+  if(head.next ===null) return true
+
+
+  //  1 2 3 2 1 
+  //    f
+  
+  //  s 
+  // First second half split trick
   let fast = head && head.next
   let slow = head
-  while(fast !== null && fast.next !== null) {
-
+  while (fast !== null && fast.next !== null) {
     slow = slow.next
     fast = fast.next.next
   }
-  // 1 2 2 1
-  //     s 
-  
-  
-  // 1 2 2 1
-  //   s
-  //       f
-  function reverse(curr) {
-    let prev = null
-    //   1 2 3 4
-    //         p c n
-    while(curr !== null) {
-      let next = curr.next
-      curr.next = prev
-      prev = curr
-      curr = next   
-    }
-    return prev
-  }
-  // console.log('slow', slow)
-  let rev = reverse(slow)
-  // console.log('rev', rev)
-  // console.log('head', head)
+  let first = head
+  let second = slow.next
+  slow.next = null
+  // console.log('first', first)
+  // console.log('second', second)
 
-  let curr1 = head
-  let curr2 = rev
+  // reverse
+  let prev = null
+  let curr = second
+  while(curr !== null) {
+    let next = curr.next
+    curr.next = prev
+    prev = curr
+    curr = next
+  }
+  let rev = prev
+
+  // Walk rev and first
+  let curr1 = rev
+  let curr2 = first
   while(curr1 !== null && curr2 !== null) {
-    if(curr1.val !== curr2.val) {
-      return false
-    }
+    if(curr1.val !== curr2.val) return false
     curr1 =curr1.next
     curr2 = curr2.next
   }
 
-  return true
 
+
+  return true
 
 };
