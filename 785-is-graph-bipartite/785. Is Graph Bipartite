@@ -1,0 +1,38 @@
+/**
+ * @param {number[][]} graph
+ * @return {boolean}
+ */
+var isBipartite = function(graph) {
+  let adj = graph
+  let red = new Set()
+  let blue = new Set()
+
+  for(let i = 0; i < graph.length; i++) {
+    if(red.has(i) || blue.has(i)) continue
+
+    let queue = [[i, 'red']]
+    red.add(i)
+
+    while(queue.length > 0) {
+      let [u,color] = queue.shift()
+
+      for(let v of adj[u]) {
+
+        if(color === 'red' && red.has(v)) return false
+        if(color === 'blue' && blue.has(v)) return false
+
+        if(red.has(v) || blue.has(v)) continue
+
+        if(color === 'red') {
+          queue.push([v, 'blue'])
+          blue.add(v)
+        } else {
+          queue.push([v,'red'])
+          red.add(v)
+        }
+      }
+    }
+  }
+
+  return true
+};
