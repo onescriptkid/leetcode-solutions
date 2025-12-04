@@ -14,16 +14,16 @@
 var searchBST = function(root, val) {
 
   function dfs(curr) {
-    if(curr === null) {
-      return null
-    }
-    if(val === curr.val) return curr
-    if(val > curr.val) {
+    if(curr === null) return null
+
+    if(curr.val === val) return curr
+
+    if(val < curr.val) {
+      return dfs(curr.left)  
+    } else {
       return dfs(curr.right)
     }
-    if(val < curr.val) {
-      return dfs(curr.left)
-    }
   }
+
   return dfs(root)
 };
