@@ -3,15 +3,18 @@
  * @return {number}
  */
 var bitwiseComplement = function(n) {
-  if(n === 0) return 1
 
-   // 5 => 101
-   // 2 => 010` 
+  // 5 =   101
+  //   =   010   = 2
+
+  //       111  7 => 2**x - 1
+  //       101
 
   let tmp = 2
   while(tmp <= n) {
-    tmp = tmp << 1
+    tmp = tmp * 2
   }
 
-  return tmp - n -1
+  return tmp- 1 - n
+
 };
