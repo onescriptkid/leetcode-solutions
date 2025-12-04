@@ -3,23 +3,20 @@
  * @return {number}
  */
 var longestConsecutive = function(nums) {
-
   let set = new Set(nums)
   let max = 0
   for(let num of set) {
-    let count = 1
-    let tmp = num +1
-    if (set.has(num - 1))  continue
-    
-    while (set.has(tmp) && ! set.has(num - 1)) {
-      // console.log('  num', num, 'tmp', tmp)
+    let tmp = num
+
+    if(set.has(tmp - 1)) continue
+
+    let count = 0
+    while(set.has(tmp)) {
       count++
       tmp++
     }
 
-    if(count > max) {
-      max = count
-    }
-  } 
+    max = Math.max(count, max)
+  }   
   return max
 };
