@@ -10,20 +10,10 @@
  * @return {ListNode}
  */
 var reverseList = function(head) {
-  //    1  2 3 4 
-  // p->c->n
-  
-  //    1  2 3 4 
-  // p->c->n
-  //       ^
-  
-  //    1  2 3 4 
-  // p->c  n
-  // ^
-  
-  //    1  2 3 4 
-  // p->c->n
-  let curr = head
+  //   1 2 3 4 5
+  // p c n
+
+  let curr = head   
   let prev = null
   while(curr !== null) {
     let next = curr.next
@@ -32,5 +22,4 @@ var reverseList = function(head) {
     curr = next
   }
   return prev
-
 };
