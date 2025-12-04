@@ -3,53 +3,54 @@
  * @return {number}
  */
 var romanToInt = function(s) {
-
+  // 01234
+  // LVIII
+  // i
   let i = 0
-  let sum = 0
+  let out = 0
   while(i < s.length) {
     let c = s[i]
     let c2 = s[i+1]
-
     if(c === 'I' && c2 === 'V') {
-      sum+=4
+      out+=4
       i+=2
-    } else if(c === 'I' && c2 === 'X') {
-      sum+=9
+    } else if(c ==='I' && c2 === 'X') {
+      out+=9
       i+=2
     } else if(c === 'X' && c2 === 'L') {
-      sum+=40
+      out+=40
       i+=2
     } else if(c === 'X' && c2 === 'C') {
-      sum+=90
+      out+=90
       i+=2
     } else if(c === 'C' && c2 === 'D') {
-      sum+=400
+      out+=400
       i+=2
     } else if(c === 'C' && c2 === 'M') {
-      sum+=900
+      out+=900
       i+=2
     } else if(c === 'I') {
-      sum+=1
-      i++
+      out+=1
+      i+=1
     } else if(c === 'V') {
-      sum+=5
+      out+=5
       i++
     } else if(c === 'X') {
-      sum+=10
+      out+=10
       i++
     } else if(c === 'L') {
-      sum+=50
+      out+=50
       i++
     } else if(c === 'C') {
-      sum+=100
+      out+=100
       i++
-    } else if(c === 'D') {
-      sum+=500
+    } else if(c ==='D') {
+      out+=500
       i++
-    } else if(c === 'M') {
-      sum+=1000
+    } else if( c=== 'M') {
+      out+=1000
       i++
     }
-  }
-  return sum
+  }   
+  return out
 };
