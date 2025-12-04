@@ -2,33 +2,18 @@
  * @param {string} s
  * @return {number}
  */
-var firstUniqChar = function(s) {
+var firstUniqChar = function (s) {
 
-  let uniq = {}
+  let hash = {}
+  for (let c of s) {
+    hash[c] = (hash[c] || 0) + 1
+  } 
 
   for(let i = 0; i < s.length; i++) {
     let c = s[i]
-
-    if(uniq[c] === undefined) {
-      uniq[c] = i
-    } else {
-      uniq[c] = false
-    }
-  }  
-  
-  let uniqkeys = Object.keys(uniq)
-  let min = undefined
-  for(let key of uniqkeys) {
-    let index = uniq[key]
-
-    if(index !== false) {
-      if(min === undefined) {
-        min = index
-      } else if(index < min) {
-        min = index
-      }
+    if(hash[c] === 1) {
+      return i
     }
   }
-  if(min === undefined) return -1
-  return min
+  return -1
 };
