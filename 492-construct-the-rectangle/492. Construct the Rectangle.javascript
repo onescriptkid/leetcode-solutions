@@ -4,21 +4,17 @@
  */
 var constructRectangle = function(area) {
 
-  // 10
-  // L   W
-  // 16  1
-  //  8  2
-  //  4  4
-
-  //  3  3.3
-  //  4  2.5
-  //  5  2
-
-  for(let w = Math.floor(area **0.5); w >= 0; w--) {
+  // L  W     20
+  // 5  4
+  // 10 2
+  // 20 1
+  for(let w = Math.floor(area ** 0.5); w >= 0; w--) {
     let l = area / w
-    // console.log('l', l, 'w', w)
     if(l % 1 === 0) {
       return [l, w]
     }
   }
+  return [-1,-1]
+
+
 };
