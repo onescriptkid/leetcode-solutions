@@ -11,21 +11,33 @@
  * @return {boolean}
  */
 var isSymmetric = function(root) {
-  function dfs(curr1, curr2) {
-    if(curr1 === null && curr2 === null) {
-      return true
-    }
-    if(curr1 === null && curr2 !== null) {
-      return false
-    }
-    if(curr1 !== null && curr2 === null) {
-      return false
-    }
-    if(curr1.val !== curr2.val) {
-      return false
-    }
 
-    return dfs(curr1.left, curr2.right) && dfs(curr1.right, curr2.left)
+  // function isSame(curr0, curr1) {
+  //   if(curr0 === null && curr1 === null) return true
+  //   if(curr0 === null && curr1 !== null) return false
+  //   if(curr0 1== null && curr1 === null) return false
+
+  //   if(curr0.val !== curr2.val) return false
+
+  //   return isSame(curr0.left, curr1.left) && isSame(curr0.right, curr1.right)
+  // }   
+
+  function issym(curr0, curr1) {
+    if(curr0 === null && curr1 === null) return true
+    if(curr0 === null && curr1 !== null) return false
+    if(curr0 !== null && curr1 === null) return false
+    
+    if(curr0.val !== curr1.val) return false
+    // let left = curr.left
+    // let right = curr.right
+
+
+    // let same = isSame(curr.left, curr.right)
+
+    return issym(curr0.left, curr1.right) && issym(curr0.right, curr1.left)
   }
-  return dfs(root, root)
+  return issym(root, root)
+
+
+
 };
