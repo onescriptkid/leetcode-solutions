@@ -3,7 +3,7 @@
  * @return {string[][]}
  */
 var groupAnagrams = function(strs) {
-
+  let freq = {}   
   let letters = 'abcdefghijklmnopqrstuvwxyz'
   let ltov = {}
   for(let i = 0; i < letters.length; i++) {
@@ -13,21 +13,19 @@ var groupAnagrams = function(strs) {
   let groups = {}
   for(let str of strs) {
     let keyarr = new Array(26).fill(0)
+
     for(let c of str) {
       let val = ltov[c]
       keyarr[val]++
     }
-    let key = keyarr.join(',')
-    if(groups[key] === undefined) {
-      groups[key] = [str]
-    } else {
-      groups[key].push(str)
-    }
+
+    let key = keyarr.join(',') 
+    if(groups[key] === undefined) groups[key] = []
+    groups[key].push(str)
   }
   let out = []
-  for(let key of Object.keys(groups)) {
-    let group = groups[key]
-    out.push(group)
+  for(let key in groups) {
+    out.push(groups[key])
   }
   return out
 };
