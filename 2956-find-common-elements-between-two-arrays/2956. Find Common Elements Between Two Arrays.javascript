@@ -4,23 +4,26 @@
  * @return {number[]}
  */
 var findIntersectionValues = function(nums1, nums2) {
+
+  // 4 3 2 3 1     2 2 5 2 3 6
+  //   x x x
+  // 3             x x   x x
+  //               4
+
   let set1 = new Set(nums1)
   let set2 = new Set(nums2)
-
-  let answer1 = 0
-  for(let i = 0; i < nums1.length; i++) {
-    let num = nums1[i]
+  let i = 0
+  for(let num of nums1) {
     if(set2.has(num)) {
-      answer1++
+      i++
     }
   }
-  let answer2 = 0
-  for(let i = 0; i < nums2.length; i++) {
-    let num = nums2[i]
+
+  let j = 0
+  for(let num of nums2) {
     if(set1.has(num)) {
-      answer2++
+      j++
     }
   }
-  return [answer1, answer2]
-  
+  return [i, j] 
 };
