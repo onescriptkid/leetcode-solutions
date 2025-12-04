@@ -5,14 +5,15 @@
  */
 var intersection = function(nums1, nums2) {
   let set1 = new Set(nums1)
+  let set2 = new Set()
 
-
-  let setb = new Set()
-  for(let i = 0; i < nums2.length; i++) {
-    let num = nums2[i]
+  for(let num of nums2) {
     if(set1.has(num)) {
-      setb.add(num)
+      set2.add(num)
     }
   }
-  return [...setb]
+
+  return [...set2]
+
+
 };
