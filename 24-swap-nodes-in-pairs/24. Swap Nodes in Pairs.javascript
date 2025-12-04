@@ -10,39 +10,25 @@
  * @return {ListNode}
  */
 var swapPairs = function(head) {
-  // h
-  // 1 2 3 4
-  // 2 1 4 3
+  //   1 2 3 4 5
+  // p c n nn
+  let curr = head
+  let prev = null
+  while(curr !== null && curr.next !== null) {
+    let next = curr.next
+    let nextnext = next.next
 
-
-  let curr = head;
-  let prev = null;
-  let next = null;
-  let nextnext = null;
-  let i = 0;
-  while(curr !== null) {
-    // console.log(i, curr, 'prev', prev)
-    // first in pair
-    if(i % 2 === 0) {
-      next = curr.next
-      if(next !== null) {
-        nextnext = next.next
-        next.next = curr
-        curr.next = nextnext
-        if(prev !== null) {
-          prev.next = next
-        }
-        curr = next
-      }
-    }
-    if(i === 0) {
-      head = curr
+    if(prev === null) {
+      head = next
+    } else {
+      prev.next = next
     }
 
-    prev = curr;
-    curr = curr.next;
-    i++
+    curr.next = nextnext
+    next.next = curr
+
+    prev = curr
+    curr = curr.next
   }
-  // console.log(head)
   return head
 };
