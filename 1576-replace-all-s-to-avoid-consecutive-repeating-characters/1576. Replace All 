@@ -1,0 +1,34 @@
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var modifyString = function(s) {
+
+  let str = ""
+  for(let i = 0; i < s.length;  i++) {
+    // console.log('i', i, 'str', str)
+    let c = s[i]
+    if(s[i] !== '?') {
+      str+=c
+    } else {
+      let p = str[i-1]
+      let n = s[i+1]
+      // 012345 
+      // a????c   bcabc
+      //
+      
+      // 012345 
+      // a????c   bcabc
+      // abab
+      if(p !== 'a' && n !== 'a') {
+        str+='a'
+      } else if(p !== 'b' && n !== 'b') {
+        str+='b'
+      } else {
+        str+='c'
+      }
+    }
+  } 
+
+  return str
+};
