@@ -12,21 +12,10 @@
  * @return {boolean}
  */
 var isSameTree = function(p, q) {
+  if(p === null && q === null) return true
+  if(p=== null || q === null) return false
 
-  function dfs(currp, currq) {
-    if(currp === null && currq === null) {
-      return true
-    }
-    if(currp === null && currq !== null) {
-      return false
-    }
-    if(currp !== null && currq === null) {
-      return false
-    }
-    if(currp.val !== currq.val) {
-      return false
-    }
-    return dfs(currp.left, currq.left) && dfs(currp.right, currq.right)
-  }   
-  return dfs(p, q)
+  if(p.val !== q.val) return false
+
+  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right)
 };
