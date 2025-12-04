@@ -3,33 +3,26 @@
  * @return {number}
  */
 var maxProduct = function(nums) {
-  // arr: 2 3 -2  4
-  // max: 2 6 -2  4
-  // min: 2 2 -12 -48
+  //      2  3 -2  4
+  // min  2  3 -12 -48
+  // max  2  6 -2  4
 
-
-  let gmax
-  let max
   let min
-
-  for(let i = 0; i < nums.length; i++) {
-    let num = nums[i]
-    if(min === undefined || max === undefined) {
+  let max
+  let gmax
+  for(let num of nums) {
+    if(min === undefined) {
       min = num
       max = num
-    } else {
-      let opt1 = num
-      let opt2 = num * min
-      let opt3 = num * max
-      min = Math.min(opt1, opt2, opt3)
-      max = Math.max(opt1, opt2, opt3)
+      gmax = num
+      continue
     }
 
-    if(gmax === undefined) {
-      gmax = max
-    } else if(max > gmax) {
-      gmax = max
-    }
+    let opts = [min*num, max*num, num]
+
+    min = Math.min(...opts)
+    max = Math.max(...opts)
+    gmax = Math.max(gmax, max)
   }
   return gmax
 };
