@@ -3,46 +3,36 @@
  * @return {number[]}
  */
 var productExceptSelf = function(nums) {
-  // 1  2  3  4 
-  // 1  2  6  24
-  // 1  24 12  4
+
+  // 1  2   3 4 
   
-  // 1  2  3  4  [4]
-  //       i
+  // 1  1   2 6  ltor
 
-  let leftprods = []
-  let prev
-  for(let i = 0; i < nums.length; i++) {
-    if(prev === undefined) {
-      leftprods.push(nums[i])
-    } else {
-      leftprods.push(nums[i] * leftprods[leftprods.length - 1])
-    }
-    prev = nums[i] * leftprods[leftprods.length - 1]
+  // 24 12  4 1  rtol
+
+  let ltor = []
+  let lprod = 1
+  for(let num of nums) {
+    ltor.push(lprod)
+    lprod = lprod * num
   }
 
-  // console.log('leftprods', leftprods)
-
-  let rightprods = new Array(nums.length)
-  let next
+  let rtol = []
+  let rprod = 1
   for(let i = nums.length - 1; i >= 0; i--) {
-    if(next === undefined) {
-      rightprods[i] =nums[i]
-    } else {
-      rightprods[i] =rightprods[i+1] *nums[i]
-    }
-    next =rightprods[i+1] *nums[i] 
+    rtol[i] = rprod
+    rprod = rprod * nums[i]
   }
-  // console.log('rightprods', rightprods)
+
 
   let out = []
   for(let i = 0; i < nums.length; i++) {
-    let left = leftprods[i-1] === undefined ? 1 : leftprods[i-1]
-    let right = rightprods[i+1] === undefined ? 1 : rightprods[i+1]
-
-    out.push(left * right)
+    let left = ltor[i]
+    let right = rtol[i]
+    out.push(left*right)
   }
+
   return out
 
-    
+
 };
