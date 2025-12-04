@@ -3,56 +3,36 @@
  * @return {number[]}
  */
 var sortArray = function(nums) {
-    
-  let unsorted = nums
-  console.log(`nums ${nums}`)
-  
-  function merge(left, right) {
-    let merged = []
-    
-    let i = 0;
-    let j = 0;
-    //console.log(`merge left ${left} right ${right}`)
-    
-    while(i < left.length && j < right.length) {
-      let l = left[i]
-      let r = right[j]
-      if(l < r) {
-        merged.push(l)
-        i++
-      } else {
-        merged.push(r)
-        j++
-      }
-    }
-    
-    while( i < left.length) {
-      let l = left[i]
-      merged.push(l)
-      i++
-    }
-    while(j < right.length) {
-      let r = right[j]
-      merged.push(r)
-      j++
-    }
-    //console.log(`merge merged ${merged}`)
-    return merged
-  }
-  
-  function mergeSort(unsorted) {
-    //console.log(`mergeSort unsorted ${unsorted}`)
-    if(unsorted.length <= 1) { return unsorted}
-    
-    let half = Math.floor(unsorted.length /2)
-    let left = unsorted.slice(0, half )
-    let right = unsorted.slice(half)
-    
-    //console.log(`mergeSort unsorted ${unsorted} l ${left} r ${right}`)
+    function partition(arr, start, end) {
+      let rand = start + Math.floor(Math.random() * (end - start + 1));
+      [arr[rand], arr[end]] = [arr[end], arr[rand]];
 
-    let sorted = merge(mergeSort(left), mergeSort(right));
-    return sorted
+      let pv = arr[end]
+      let pi = start
+      for(let i = start; i < end; i++) {
+          if(arr[i] < pv) {
+              let tmp = arr[pi]
+              arr[pi] = arr[i]
+              arr[i] = tmp
+              pi++
+          }
+      }
+      let tmp = arr[pi]
+      arr[pi] = arr[end]
+      arr[end] = tmp
+      return pi
+
+  }        
+
+  function quicksorti(arr, start, end) {
+      if(start >= end) {
+          return
+      }
+      let i = partition(arr, start, end)
+
+      quicksorti(arr, start, i -1)
+      quicksorti(arr, i+1, end)
   }
-  
-  return mergeSort(unsorted)
+  quicksorti(nums, 0, nums.length - 1)
+  return nums 
 };
