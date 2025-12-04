@@ -3,26 +3,22 @@
  * @return {number[]}
  */
 var findErrorNums = function(nums) {
+   // 1 2 2 4 
+   //     x
+  let freq = {}
+  for(let i = 1; i <= nums.length; i++) {
+    freq[i] = 0
+  }
 
-  let set = new Set()
-
-  // 0 1 2 3 4
-  // 1 2 2 2 3
-
+  for(let num of nums) {
+    freq[num]++
+  }
   let out = []
-  for(let i = 0; i < nums.length; i++) {
-    let num = nums[i]
-    if(set.has(num)) {
-      out.push(num)
-    }
-    set.add(num)
+  for(let k in freq) {
+    if(freq[k] === 2) out[0] = Number(k)
+    if(freq[k] === 0) out[1] = Number(k)
   }
 
-  for(let i = 0; i < nums.length; i++) {
-    let num = i + 1
-    if(!set.has(num)) {
-      out.push(num)
-    }
-  }
   return out
+
 };
