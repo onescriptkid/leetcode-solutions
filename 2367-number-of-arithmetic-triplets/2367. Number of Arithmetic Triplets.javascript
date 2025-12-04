@@ -7,15 +7,15 @@ var arithmeticTriplets = function(nums, diff) {
 
   let set = new Set()
   let count = 0
-  for(let k = 0; k < nums.length; k++) {
-    let num = nums[k]
-    let prev = nums[k] - diff
-    let prev2 = nums[k] - diff * 2
+  for(let num of nums) {
 
-    if(set.has(prev) && set.has(prev2)) {
-     count++ 
+    if(set.has(num - diff) && set.has(num - diff * 2)) {
+      count++
     }
+    
     set.add(num)
-  }   
+  }
+
   return count
+
 };
