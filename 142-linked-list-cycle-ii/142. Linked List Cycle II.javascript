@@ -11,23 +11,23 @@
  * @return {ListNode}
  */
 var detectCycle = function(head) {
-  let nodeMap = {}
-  let cycle = null
-  let curr = head;
+  let fast = head && head.next
+  let slow = head
 
-  let index = 0;
-  while (curr !== null) {
-    console.log('nodeMap',nodeMap, 'index', index)
-    if (nodeMap[curr] !== undefined) {
-      cycle = curr
-      break;
-    } else {
-      nodeMap[curr] = curr.val
+  while(fast !== null && fast.next !== null) {
+    if(fast === slow) {
+      let curr0 = fast.next
+      let curr1 = head
+      while(curr0 !== curr1) {
+        curr0 = curr0.next
+        curr1 = curr1.next
+      }
+      return  curr0
+
     }
-    index++
-    curr = curr.next
-  }
-  // console.log('cycle val',cycle.val)
-  // console.log('curr', curr)
-  return cycle
+    fast = fast.next.next
+    slow = slow.next
+  }   
+
+  return null
 };
