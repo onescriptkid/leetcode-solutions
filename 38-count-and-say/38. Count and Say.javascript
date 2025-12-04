@@ -3,35 +3,42 @@
  * @return {string}
  */
 var countAndSay = function(n) {
-   
-   let i = 1; 
-   let str = ""
-   while(i <= n) {
-       if(i === 1) {
-           str = "1"
-           i++
-           continue;
-       }
-       
-       let chunks = []
-       let prevChar = ""
-       for(let j = 0; j < str.length; j++) {
-           let char = str[j]
-           if(char === prevChar) {
-               chunks[chunks.length - 1]+=char 
-           } else {
-               chunks.push(char)
-           }
-           prevChar = char; 
-       }
-       str = ""
-       console.log(str, chunks) 
-       for(let chunk of chunks) {
-            let say = ""+chunk.length+chunk[0]
-            str += say
-       }
-       
-       i++
-   }
-    return str
+
+
+
+  let str = '1'
+
+  //  21                  => 1211 => 11 12 21
+  // pc
+  
+  //  21      count=1,p=2, ns=12
+  //  pc
+  
+  //  21      count=1,p=2, ns=12
+  //   pc
+
+  for(let i = 1; i < n; i++) {
+    let nextstr = ''
+    let count = 0
+    let p = undefined
+    for(let j = 0; j < str.length; j++) {
+      let c = str[j]
+      if(p === undefined) {
+        count++
+      } else if(c === p) {
+        count++
+      } else {
+        nextstr+=`${count}${p}`
+        count = 1
+      } 
+      p = c
+    }
+    nextstr+=`${count}${p}`
+    // console.log('i', i, nextstr)
+
+    str = nextstr
+
+  }
+
+  return str
 };
