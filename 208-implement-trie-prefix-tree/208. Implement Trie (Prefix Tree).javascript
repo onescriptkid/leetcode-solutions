@@ -12,15 +12,17 @@ var Trie = function() {
  * @param {string} word
  * @return {void}
  */
-Trie.prototype.insert = function (word) {
+Trie.prototype.insert = function(word) {
   let curr = this.root
-  for (let c of word) {
+
+  for(let c of word) {
     if(curr.children[c] === undefined) {
       curr.children[c] = new TrieNode()
     }
     curr = curr.children[c]
-  } 
+  }
   curr.end = true
+
 };
 
 /** 
@@ -28,14 +30,16 @@ Trie.prototype.insert = function (word) {
  * @return {boolean}
  */
 Trie.prototype.search = function(word) {
-   let curr = this.root
-   for(let c of word) {
+  let curr = this.root
+
+  for(let c of word) {
     if(curr.children[c] === undefined) {
       return false
     }
     curr = curr.children[c]
-   } 
+  }
   return curr.end
+    
 };
 
 /** 
@@ -43,14 +47,15 @@ Trie.prototype.search = function(word) {
  * @return {boolean}
  */
 Trie.prototype.startsWith = function(prefix) {
-   let curr = this.root
-   for(let c of prefix) {
+  let curr = this.root
+  for(let c of prefix) {
     if(curr.children[c] === undefined) {
       return false
     }
     curr = curr.children[c]
-   } 
+  }
   return true
+    
 };
 
 /** 
