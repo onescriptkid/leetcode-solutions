@@ -3,50 +3,35 @@
  * @return {string}
  */
 var reformatNumber = function(number) {
-
-  let formatted = ""
-
-  for(let i = 0; i < number.length; i++) {
-    let c = number[i]
-    if(c === ' ' || c === '-') continue
-    formatted+=c
-  }   
-
-  // 012
-  // 123456
-  //   i
-  let curr = 1
-  let out = ""
-  let left = formatted.length
-  let index = 0;
-  if (formatted.length > 4) {
-    for (let i = 0; i < formatted.length; i++) {
-      let c = formatted[i]
-      left = formatted.length - i - 1
-      if (curr === 3) {
-        out = out + c + "-"
-        curr = 1
-        if (left <= 4) {
-          index = i + 1
-          break;
-        }
-      } else {
-        out = out + c
-        curr++
-      }
+  
+  let str = ""
+  for(let c of number) {
+    if(c !== '-' && c !== ' ') {
+      str+=c
     }
-
   }
 
+  // 01234
+  // 01234567      l=8,   8-4 = 4  
+  // 
 
+  let i = 0
+  let out = ''
+  while(i < str.length - 4) {
+    let slice = str.slice(i, i+3) 
+    out+=slice + '-'
+    i+=3
+  }
+
+  let left = str.length -i
   if(left === 2) {
-    out+=formatted.substring(index)
+    out+=str.slice(i, i+2)
   } else if(left === 3) {
-    out+=formatted.substring(index)
+    out+=str.slice(i, i+3)
   } else if(left === 4) {
-    // console.log(formatted, index, formatted.substring(index, index+2))
-    out+=formatted.substring(index, index+2) + "-" + formatted.substring(index+2)
+    out+=str.slice(i, i+2)
+    out+='-'+str.slice(i+2, i+4)
   }
-
   return out
+
 };
