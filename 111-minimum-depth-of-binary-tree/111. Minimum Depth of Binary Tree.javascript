@@ -11,24 +11,22 @@
  * @return {number}
  */
 var minDepth = function(root) {
+  if(root === null) return 0
 
-  let min
-  function dfs(curr, d) {
+  function dfs(curr, depth) {
     if(curr === null) {
-      return
+      return Infinity
     }
-    if(curr.left == null && curr.right === null) {
-      if(min === undefined) {
-        min = d
-      } else if(d < min) {
-        min = d
-      }
+    if(curr.left === null && curr.right === null) {
+      return depth +1
     }
-    dfs(curr.left, d+1)
-    dfs(curr.right, d+1)
-  }
-  dfs(root, 1)
-  if(min === undefined) return 0
-  return min
 
+
+    let left = dfs(curr.left, depth+1)
+    let right = dfs(curr.right, depth+1)
+    // console.log('curr', curr.val, 'left', left, 'right', right)
+
+    return Math.min(left, right)
+  } 
+  return dfs(root, 0)
 };
