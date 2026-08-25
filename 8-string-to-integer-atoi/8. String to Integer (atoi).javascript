@@ -3,54 +3,44 @@
  * @return {number}
  */
 var myAtoi = function(s) {
-  // 1 remove whitespace 
-  let str = ''
+  // 1
+  let astr = ''
   let leadingw = true
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] === ' ' && leadingw) continue
-    leadingw = false
-    str += s[i]
-  }
+  for(let c of s) {
+    if(c === ' ' && leadingw) continue
+    if(c !== ' ') leadingw = false
+    astr+=c
+  }   
 
-  // 2 signedness
-  let neg = false
-  if (str[0] === '-') {
-    neg = true
-  }
-
-  // 3 read left to right
-  let out = 0
-  let numbers = new Set('0123456789')
-  let leading = true
+  // 2
+  let pos = true
   let start = 0
-  if(str[0] === '-' || str[0] === '+') start = 1
-
-  for (let i = start; i < str.length; i++) {
-    let c = str[i]
-
-    // leading zeros
-    if(leading) {
-      if(c === '0') continue  
-    }
-    leading = false
-
-    // non-digit character
-    if(!numbers.has(c)) {
-      break;
-    }
-
-    // accumulate digits
-    let num = Number(c)
-    out = out*10 + num
+  if(astr[0] === '-') {
+    pos = false
+    start = 1
+  }
+  if(astr[0] === '+') {
+    start = 1
   }
 
-  // Apply sign
-  if(neg) out = -out
+  // 3
+  let numbers = new Set('0123456789')
+  let num = 0
+  let leadingz = true
+  for(let i = start; i < astr.length; i++) {
+    let c = astr[i]
+    if(c === '0' && leadingz) continue
+    if(c !== '0') leadingz = false
 
-  // Rounding
-  if(out < -(2**31)) out = -(2**31) 
-  if(out > 2**31-1) out = 2**31-1
+    if(!numbers.has(c)) break;
 
-  return out
+    num = num*10 + Number(c)
+  }
+  if(pos === false) num = -num
 
+  // 4
+  if(num < -(2**31)) num = -(2**31)
+  if(num > 2**31-1) num = 2**31-1
+
+  return num 
 };
