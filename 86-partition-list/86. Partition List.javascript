@@ -11,53 +11,28 @@
  * @return {ListNode}
  */
 var partition = function(head, x) {
+  let curr = head
 
-  let first = new ListNode()
-  let curr1 = first
-  let second = new ListNode()
-  let curr2 = second
+  let head1 = new ListNode()
+  let curr1 = head1   
 
-  let curr0 = head
+  let head2 = new ListNode()
+  let curr2 = head2
 
-
-
-  //   1 4 3 2 5 2    1      _
-  //   c              f      s
-  
-  //   1 4 3 2 5 2    1      4
-  //     c            f      s
-  
-  //   1 4 3 2 5 2    1      4 3
-  //       c          f        s
-  
-  //   1 4 3 2 5 2    1 2    4 3
-  //         c          f      s
-
-  while(curr0 !== null) {
-    let node = new ListNode(curr0.val)
-    if(curr0.val < x) {
+  while(curr !== null) {
+    let node = new ListNode(curr.val)
+    if(curr.val < x) {
       curr1.next = node
-      curr1 = curr1.next 
+      curr1 = curr1.next
     } else {
       curr2.next = node
       curr2 = curr2.next
     }
-    curr0 = curr0.next
+    curr = curr.next
   }
-  // console.log('first', first.next)
-  // console.log('second', second.next)
 
-  // d 1 2 2
-  // f     c
-  // d 4 3 2
-  // s     c
+  curr1.next = head2.next
 
-  curr1.next = second.next
-  first = first.next
+  return head1.next
 
-  return first
-  
-  
-  //   f
-  //   s
 };
