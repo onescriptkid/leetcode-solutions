@@ -3,7 +3,6 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function(s) {
-  
   let freq = {}
   let r = 0
   let l = 0
@@ -13,16 +12,17 @@ var lengthOfLongestSubstring = function(s) {
     let cr = s[r]
     r++
 
-    freq[cr] = (freq[cr] || 0) + 1
+    freq[cr] =(freq[cr] || 0) + 1
 
-    while(l < r && freq[cr] > 1) {
+    while(l < s.length && freq[cr] > 1) {
       let cl = s[l]
       l++
+
       freq[cl]--
     }
 
     let len = r - l
     max = Math.max(max, len)
-  }
+  }   
   return max
 };
