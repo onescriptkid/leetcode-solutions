@@ -12,54 +12,40 @@
  * @return {ListNode}
  */
 var reverseBetween = function(head, left, right) {
-
-  //   1 2 3 4 5
-  // p c n
-  //     l   r
-  
-  //   1 2 3 4 4 4 4 5
+  // 1   2 3 4   5   
   //   p c n
-  //     l         r
-  //     s
-  //               p e
+  //     l   r
+  //     s   r   e
 
-  let prev0 = null
-  let curr0 = head
+  let curr = head
   let i = 1
-  while(curr0 !== null && i < left) {
-    prev0 = curr0
-    curr0= curr0.next
+  let prev = null
+  while(curr !== null && i < left) {
     i++
+    prev = curr
+    curr = curr.next
   }
-  // if(curr0 === null) return head
-  // console.log('curr0', curr0)
-  // console.log('prev0', prev0)
 
-  let prev = prev0
-  let start = curr0
-  let e = curr0
-  while(e !== null &&  i <= right) {
-    let next = e.next
-    e.next = prev 
-    prev = e
-    e = next
+  let prev2 = null
+  let start = curr
+  let end = curr
+
+  while(end !== null && i <= right) {
     i++
+    let next = end.next
+    end.next = prev2
+    prev2 = end
+    end = next
   }
-  // console.log('b start', start)
-  // console.log('b prev', prev)
-  if(start !== null) {
-    start.next = e
-  }
-  if(prev0!== null) {
-    prev0.next = prev
+
+  if(prev !== null) {
+    prev.next = prev2
   } else {
-    head = prev
+    head = prev2
   }
-  // console.log('a start', start)
-  // console.log('a prev', prev)
-
+  if(start) {
+    start.next =end
+  }
   return head
 
-
-    
 };
