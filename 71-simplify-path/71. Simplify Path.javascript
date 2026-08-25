@@ -3,26 +3,16 @@
  * @return {string}
  */
 var simplifyPath = function(path) {
-
-  // /home/foo => [home, foo]
-  // /home//foo => [home, '', foo]
-  let split = path.split('/')
-  let out = []
-
-  for(let dir of split) {
-    if(dir === '') {
-     // continue 
-    } else if(dir === '.') {
-      continue
-    } else if(dir === '..') {
-      out.pop()
+  let stack = []
+  let split = path.split('/')   
+  for(let str of split) {
+    if(str === '.' || str === '') {
+      //
+    } else if(str === '..') {
+      stack.pop()
     } else {
-      out.push(dir)
+      stack.push(str)
     }
   }
-
-  let outstr = out.join('/')
-  return `/${outstr}`
-
-
+  return '/' + stack.join('/')
 };
