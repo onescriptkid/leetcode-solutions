@@ -3,24 +3,26 @@
  * @return {string[]}
  */
 var generateParenthesis = function(n) {
+  let out = []
+  let arr = []   
 
-    function backtrack(openN, closedN, n, res, stack) {
-        if (openN === closedN && openN === n) {
-            res.push(stack);
-            return;
-        }
-
-        if (openN < n) {
-            backtrack(openN + 1, closedN, n, res, stack + '(');
-        }
-        if (closedN < openN) {
-            backtrack(openN, closedN + 1, n, res, stack + ')');
-        }
+  function bt(i,j) {
+    if(i === j && i === n) {
+      out.push(arr.join(''))
+      return
     }
 
-
-        const res = [];
-        backtrack(0, 0, n, res, '');
-        return res;
-    
+    if(i < n) {
+      arr.push('(')
+      bt(i+1,j)
+      arr.pop()
+    }
+    if(j < i) {
+      arr.push(')')
+      bt(i, j+1)
+      arr.pop()
+    }
+  }
+  bt(0,0)
+  return out
 };
