@@ -3,62 +3,50 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 var nextPermutation = function(nums) {
-  // 5  7 6 4   
-  
-  // 5  7 6 4   
+
+  // 6  8 7 5 4   
   // p
+  // c  p
   
-  // 5  7 6 4   
-  // p      i
-  
-  // 5  7 6 4   
+  // 6  8 7 5 4   
   // p    i
   
-  // 6  7 5 4   
+  // 7  8 6 5 4   
   // p    i
   
-  // 6  4 5 7   
-  // p    
+  // 7  4 5 6 8
+  // p    i
 
-  // 3  6 4 2
-  //      c p
-
-  let pivot
-
+  let pi
   for(let i = nums.length - 2; i >= 0; i--) {
     let curr = nums[i]
     let prev = nums[i+1]
 
     if(curr < prev) {
-      pivot = i
-      break;
+      pi = i
+      break
     }
   }
 
-  // 1 2 3    p
-  //   p
-  
-  // 1 2 3    
-  //   p
-
-  if (pivot !== undefined) {
-    for (let i = nums.length - 1; i >= 0; i--) {
-      if (nums[pivot] < nums[i]) {
-        let tmp = nums[pivot]
-        nums[pivot] = nums[i]
+  if(pi !== undefined) {
+    for(let i = nums.length - 1; i >= 0; i--) {
+      if(nums[pi] < nums[i]) {
+        let tmp = nums[pi]
+        nums[pi] = nums[i]
         nums[i] = tmp
-        break;
+        break
       }
     }
 
-    reverse(pivot+1)
+    reverse(pi+1)
   } else {
     reverse(0)
   }
 
-  function reverse(start) {
-    let l = start
+  function reverse(s) {
+    let l = s
     let r = nums.length - 1
+
     while(l < r) {
       let tmp = nums[l]
       nums[l] = nums[r]
@@ -67,5 +55,4 @@ var nextPermutation = function(nums) {
       r--
     }
   }
-  return nums
 };
