@@ -5,33 +5,20 @@
  * @return {boolean}
  */
 var isInterleave = function(s1, s2, s3) {
-           if(s1.length + s2.length !== s3.length)return false
+  let memo = new Array(s1.length+1).fill(undefined).map(v => new Array(s2.length+1).fill(undefined).map(v => new Array(s3.length+1).fill(undefined)))   
 
-        let memo = {}
+  if(s1.length + s2.length !== s3.length) return false
 
-        function dfs(i, j,k) {
-            let key = `${i},${j},${k}`
-            // console.log(i,j,k, s1.slice(i), s2.slice(j), s3.slice(k))
-            if(i === s1.length && j === s2.length) {
-                if(k === s3.length) return true
-                return false
-            }
-            if(memo[key] !== undefined) {
-                return memo[key]
-            }
+  function dfs(i, j, k) {
+    if(i === s1.length && j === s2.length) {
+      return k === s3.length
+    }
+    if(memo[i][j][k] !== undefined) return memo[i][j][k]
 
-            let opt1 = false 
-            if(s1[i] === s3[k]) {
-                opt1 = dfs(i+1,j,k+1) 
-            }
-            let opt2 = false
-            if(s2[j] === s3[k]) {
-                opt2 = dfs(i,j+1,k+1)
-            }
+    let opt1 = s1[i] === s3[k] && dfs(i+1, j, k+1)
+    let opt2 = s2[j] === s3[k] && dfs(i, j+1, k+1)
 
-            memo[key] = opt1 || opt2
-
-            return memo[key]
-        }
-        return dfs(0,0,0) 
+    return memo[i][j][k] = Math.max(opt1, opt2)
+  }
+  return dfs(0, 0, 0)
 };
