@@ -3,7 +3,7 @@
  * @return {string[]}
  */
 var letterCombinations = function(digits) {
-  let dm = {
+  let map = {
     2: 'abc',
     3: 'def',
     4: 'ghi',
@@ -11,26 +11,29 @@ var letterCombinations = function(digits) {
     6: 'mno',
     7: 'pqrs',
     8: 'tuv',
-    9: 'wxyz',
-  }
+    9: 'wxyz'
+  }   
 
   let out = []
-  function dfs(i, arr) {
-    if(i === digits.length) {
-      if(arr.length === 0) return
+  let arr = []
+
+  function bt(i) {
+    if(arr.length >= digits.length) {
       out.push(arr.join(''))
       return
     }
 
-    let digit = digits[i]
-    let letters = dm[digit]
-    for(let letter of letters) {
-      // let letter = letters[i]
-      arr.push(letter)  
-      dfs(i+1, arr)
-      arr.pop()
+    for(let j = i; j < digits.length; j++) {
+
+      let chars = map[digits[j]]
+
+      for(let char of chars) {
+        arr.push(char)
+        bt(j+1)
+        arr.pop()
+      }
     }
   }
-  dfs(0, [])
+  bt(0)
   return out
 };
