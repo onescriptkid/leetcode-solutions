@@ -11,9 +11,8 @@
  * @return {ListNode}
  */
 var mergeTwoLists = function(list1, list2) {
-  let dummy = new ListNode()  
-  let curr0 = dummy
-
+  let dummy = new ListNode()
+  let curr0 = dummy   
   let curr1 = list1
   let curr2 = list2
 
@@ -24,31 +23,27 @@ var mergeTwoLists = function(list1, list2) {
       curr1 = curr1.next
     } else {
       node.val = curr2.val
-      curr2 = curr2.next
+      curr2 =curr2.next
     }
 
     curr0.next = node
     curr0 = curr0.next
   }
+
   while(curr1 !== null) {
-    let node = new ListNode()
-    node.val = curr1.val
-
+    let node = new ListNode(curr1.val)
     curr1 = curr1.next
-
-    curr0.next = node
-    curr0 = curr0.next 
-  }
-  while(curr2 !== null) {
-    let node = new ListNode()
-    node.val = curr2.val
-
-    curr2 = curr2.next
 
     curr0.next = node
     curr0 = curr0.next
   }
 
-  return dummy.next
+  while(curr2 !== null) {
+    let node = new ListNode(curr2.val)
+    curr2 = curr2.next
 
+    curr0.next = node
+    curr0 = curr0.next
+  }
+  return dummy.next
 };
