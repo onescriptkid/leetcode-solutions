@@ -6,15 +6,14 @@
 var twoSum = function(nums, target) {
   let partials = {}
   for(let i = 0; i < nums.length; i++) {
-    // num[0] + num[1] === target
-    // num[0] === target - num[1]
+    let num = nums[i]
 
-    let partial = target - nums[i]
-    if(partials[nums[i]] !== undefined) {
-      return [i, partials[nums[i]]]
+    if(partials[num] !== undefined) {
+      return [partials[num], i]
     }
 
+    let partial = target - num
     partials[partial] = i
-  }   
+  }  
   return [-1,-1]
 };
