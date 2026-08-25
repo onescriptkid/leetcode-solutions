@@ -3,16 +3,18 @@
  * @return {number}
  */
 var climbStairs = function(n) {
-  let dp = new Array(n+1).fill(0)   
 
-  // 0 1 2 3 4 5 6
+  let memo = new Array(n+1).fill(undefined)   
 
-  dp[0] = 1
-  dp[1] = 1
+  function dfs(i) {
+    if(i === n) return 1
+    if(i > n) return 0
+    if(memo[i] !== undefined) return memo[i]
 
-  for(let i = 2; i <= n; i++) {
-    dp[i] = dp[i-1] + dp[i-2]
+    let opt1 = dfs(i+1)
+    let opt2 = dfs(i+2)
+
+    return memo[i] = opt1 + opt2
   }
-
-  return dp[n]
+  return dfs(0)
 };
