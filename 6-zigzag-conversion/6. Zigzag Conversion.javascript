@@ -4,57 +4,35 @@
  * @return {string}
  */
 var convert = function(s, numRows) {
-
-  //  01234567890123
-  //s=paypalishiring
-  //  
-  
-  //    01234567890123
-  //  s=paypalishiring
-  // 0  p     i     g
-  // 1   a   l h   n
-  // 2    y a   i i
-  // 3     p     r
-
-  if(numRows === 1) return s
-
-  // 0123456789
-  // p y a i h
-  //  a p l s i
-
-  let out = []
+  let out = new Array(numRows).fill(0).map(v => [])   
   let dir = 'down'
-  let r=0
-  for(let i = 0; i < s.length; i++) {
-    let c = s[i]
-    // console.log('c', c, 'd', dir, 'r', r, 'out', out)
+  let i = 0
 
-    if(out[r] === undefined) {
-      out[r] = []
-    }
-     out[r].push(c)
+  for(let c of s) {
+    out[i].push(c)
 
     if(dir === 'down') {
-      r++
+      i++
     } else {
-      r--
+      i--
     }
 
-    if(r === numRows) {
-      dir= 'up'
-      r--
-      r--
-    } if(r === -1) {
+    if(i < 0) {
+      i = 1
+      if(i === numRows) i = 0
       dir = 'down'
-      r++
-      r++
+    } else if(i === numRows) {
+      i = numRows - 2
+      if(i < 0) i = 0
+      dir = 'up'
     }
   }
 
   let str = ''
-  for(let level of out) {
-    str+=level.join('')
+  for(let arr of out) {
+    for(let c of arr) {
+      str+=c
+    }
   }
   return str
-    
 };
