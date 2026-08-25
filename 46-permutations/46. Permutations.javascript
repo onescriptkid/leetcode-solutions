@@ -3,10 +3,10 @@
  * @return {number[][]}
  */
 var permute = function(nums) {
-  let arr = []
-  let out = []
-  let used = new Set()
 
+  let out = []
+  let arr = []
+  let set = new Set()
   function bt() {
     if(arr.length === nums.length) {
       out.push([...arr])
@@ -14,14 +14,15 @@ var permute = function(nums) {
     }
 
     for(let num of nums) {
-      if(used.has(num)) continue
-      used.add(num)
+      if(set.has(num)) continue
+
+      set.add(num)
       arr.push(num)
       bt()
       arr.pop()
-      used.delete(num)
+      set.delete(num)
     }
-  }
+  } 
   bt()
   return out
 };
