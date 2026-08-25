@@ -11,18 +11,18 @@
  * @return {boolean}
  */
 var isValidBST = function(root) {
-  let prev
 
-  function dfs(curr) {
-    if(curr === null) return true
+  function dfs(curr, min, max) {
+    if(curr === null) return true 
 
-    let left = dfs(curr.left)
-    // console.log('prev', prev, 'curr', curr.val)
-    if(prev !== undefined && prev >= curr.val) return false
-    prev = curr.val
-    let right = dfs(curr.right)
+    if(curr.val <= min || curr.val >= max) return false
+
+
+    let left = dfs(curr.left, min, curr.val)
+    let right = dfs(curr.right, curr.val, max)
 
     return left && right
-  }
-  return dfs(root)
+
+  }   
+  return dfs(root, -Infinity, Infinity)
 };
