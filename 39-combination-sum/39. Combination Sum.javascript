@@ -4,23 +4,24 @@
  * @return {number[][]}
  */
 var combinationSum = function(candidates, target) {
-  let arr = []
-  let out = []
 
-  function bt(sum, j) {
+  let out = []
+  let arr = []
+
+  function dfs(i, sum) {
     if(sum === target) {
       out.push([...arr])
-      return 
+      return
     }
     if(sum > target) return
 
-    for(let i = j; i < candidates.length; i++) {
-      let can = candidates[i]
+    for(let j = i; j < candidates.length; j++) {
+      let can = candidates[j]
       arr.push(can)
-      bt(sum+can, i)
+      dfs(j, sum+can)
       arr.pop()
     }
   }
-  bt(0, 0)
+  dfs(0,0)
   return out
 };
