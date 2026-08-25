@@ -7,9 +7,11 @@ var threeSum = function(nums) {
 
   let i = 0
   let out = []
+
   while(i < nums.length) {
-    let l = i + 1
+    let l = i+1
     let r = nums.length - 1
+
     while(l < r) {
       let sum = nums[i] + nums[l] + nums[r]
 
@@ -31,6 +33,6 @@ var threeSum = function(nums) {
     while(prev === nums[i]) {
       i++
     }
-  }  
+  }
   return out
 };
