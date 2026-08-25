@@ -12,12 +12,12 @@ var isValid = function(s) {
       if(stack.at(-1) !== '(') return false
       stack.pop()
     }
-    if(c === '}') {
-      if(stack.at(-1) !== '{') return false
-      stack.pop()
-    }
     if(c === ']') {
       if(stack.at(-1) !== '[') return false
+      stack.pop()
+    }
+    if(c === '}') {
+      if(stack.at(-1) !== '{') return false
       stack.pop()
     }
   }   
