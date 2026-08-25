@@ -5,8 +5,7 @@
  */
 var combine = function(n, k) {
   let out = []
-  let arr = []   
-  let used = new Set()
+  let arr = []
 
   function bt(i) {
     if(arr.length === k) {
@@ -19,8 +18,7 @@ var combine = function(n, k) {
       bt(j+1)
       arr.pop()
     }
-  }
+  }   
   bt(1)
-
   return out
 };
