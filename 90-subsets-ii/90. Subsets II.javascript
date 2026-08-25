@@ -5,13 +5,14 @@
 var subsetsWithDup = function(nums) {
   let out = []
   let arr = []
-  nums.sort((a,b) => a > b ? 1 : -1)
+  nums.sort((a,b) => a > b ? 1 : -1)   
 
   function bt(i) {
-    out.push([...arr])
+    out.push([...arr])  
 
     for(let j = i; j < nums.length; j++) {
-      if(j !== i && nums[j] === nums[j-1]) continue
+      if(i !== j && nums[j] == nums[j-1]) continue
+
       arr.push(nums[j])
       bt(j+1)
       arr.pop()
