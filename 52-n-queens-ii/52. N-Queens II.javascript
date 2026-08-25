@@ -3,37 +3,38 @@
  * @return {number}
  */
 var totalNQueens = function(n) {
+  let board = new Array(n).fill(0).map(v => new Array(n).fill(0))   
 
-     let board = new Array(n).fill(0).map(v => new Array(n).fill('.'))
-  // let out = []
-  let out = 0
+  let count = 0
   function bt(r) {
     if(r === n) {
-      out++
-      // out.push(board.map(v => v.join('')))
+      count++
       return
     }
+
     for(let c = 0; c < n; c++) {
-      if(isValid(r,c)) {
-        board[r][c] = 'Q'
+      
+      if(place(r,c)) {
+        board[r][c] = 1
         bt(r+1)
-        board[r][c] = '.'
+        board[r][c] = 0
       }
     }
   }
   bt(0)
-  function isValid(r,c) {
+  return count
+
+  function place(r,c) {
     for(let i = 0; i < r; i++) {
-      if(board[i][c] === 'Q') return false
+      if(board[i][c] === 1) return false
     }
-    for(let i = r,j=c; i >= 0 && j >= 0; i--,j--) {
-      if(board[i][j] === 'Q') return false
+
+    for(let i = r, j = c; i >= 0 && j >= 0; i--,j--) {
+      if(board[i][j] === 1) return false
     }
-    for(let i = r,j=c; i >= 0 && j < n; i--, j++) {
-      if(board[i][j] === 'Q') return false
+    for(let i = r, j = c; i >= 0 && j < n; i--,j++) {
+      if(board[i][j] === 1) return false
     }
     return true
   }
-  // return out.length
-  return out
 };
