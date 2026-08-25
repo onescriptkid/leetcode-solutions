@@ -10,37 +10,53 @@
  * @param {number} k
  * @return {ListNode}
  */
-var reverseKGroup = function (head, k) {
-  // - 1 2 3 4 5 6 7 
-  // p c 
-  //   s     e
-  //       r
+var reverseKGroup = function(head, k) {
+  //    1 2 3 4 5 6 7   
+  //  p       c
+  //    s   r e
+
+  // i === k 
+  //    1 2 3 4 5 6 7   
+  //  p       c
+  //    s   r e
+  //    3 2 1 4 5 6 7   
+  //  p       c
+  //    r   s e
+  
+  // e === null
+  //    1 2 3 4 5 6 7   
+  //  p       c
+  //    s   r e
+
   let dummy = new ListNode()
-  let prevEnd = dummy
+  let prevend = dummy
+
   let curr = head
+
   while(curr !== null) {
+    let s = curr
+    let e = curr
     let i = 0
-    let start = curr
-    let end = curr
-    while(i < k && end !== null) {
-      end = end.next
+
+    while(e !== null && i < k) {
+      e = e.next
       i++
     }
 
     if(i === k) {
-      let rev = reverse(start, end)
-      prevEnd.next = rev
+      let rev = reverse(s, e)
+      prevend.next = rev
     } else {
-      prevEnd.next = start
+      prevend.next = s
     }
-
-    prevEnd = start
-    curr = end
+    prevend = s
+    curr = e
   }
 
   return dummy.next
 
   function reverse(curr, end) {
+
     let prev = null
     while(curr !== null && curr !== end) {
       let next = curr.next
