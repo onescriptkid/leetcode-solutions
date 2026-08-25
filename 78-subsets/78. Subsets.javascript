@@ -14,7 +14,7 @@ var subsets = function(nums) {
       bt(j+1)
       arr.pop()
     }
-  }
+  }   
   bt(0)
   return out
 };
