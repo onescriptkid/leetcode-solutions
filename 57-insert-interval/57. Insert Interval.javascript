@@ -5,26 +5,21 @@
  */
 var insert = function(intervals, newInterval) {
 
+  intervals.sort((a,b) => a[0] > b[0] ? 1 : -1)   
+
   function isOverlapping(a,b) {
-    // a0    a1
-    //    b0    b1
+    // a0   a1
+    //   b0    b1
     return a[0] <= b[1] && b[0] <= a[1]
-  }   
-
-  intervals.sort((a,b) => a[0] > b[0] ? 1 : -1)
-
-  // 1 2 3 4 5 6 7 8 9
-  // 1   3
-  //           6     9
-  //   2     5
-
-  let i = 0
-  let curr = newInterval
+  }
   let out = []
+  let curr = newInterval
+  let i = 0
   while(i < intervals.length) {
     let inc = intervals[i]
-    if(isOverlapping(inc, curr)) {
-      curr = [Math.min(inc[0], curr[0]), Math.max(inc[1], curr[1])]
+
+    if(isOverlapping(curr, inc)) {
+      curr = [Math.min(curr[0], inc[0]), Math.max(curr[1], inc[1])]
     } else {
       if(curr[0] < inc[0]) {
         out.push(curr)
@@ -37,5 +32,4 @@ var insert = function(intervals, newInterval) {
   }
   out.push(curr)
   return out
-
 };
