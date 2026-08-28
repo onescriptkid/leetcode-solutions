@@ -2,30 +2,24 @@
  * @param {number[]} digits
  * @return {number[]}
  */
-var plusOne = function(digits) {
+var plusOne = function (digits) {
 
 
-  let out = []
+  // 1 2 3
   let carry = 1
   let i = digits.length - 1
   while(i >= 0) {
-    let digit = digits[i]
 
-    let sum = carry + digit
-    let nextdigit = sum % 10
-    // console.log('i', i, 'nextdigit', nextdigit,)
-    if(sum >= 10) {
-      carry = 1
-    } else {
-      carry = 0
-    }
+    let digit = (digits[i] + carry) % 10
+    carry = Math.floor((digits[i] + carry) / 10)
 
-    out.unshift(nextdigit)
+    digits[i] = digit
     i--
   }
-  if(carry === 1) {
-    out.unshift(1)
-  }
-  return out
 
+  if(carry === 1) {
+    digits.unshift(1)
+  }
+
+  return digits
 };
