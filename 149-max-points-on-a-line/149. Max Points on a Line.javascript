@@ -4,23 +4,20 @@
  */
 var maxPoints = function(points) {
   let max = 1
-  for(let [x,y] of points) {
-    let map = new Map()
+  for(let [x0, y0] of points) {
+    let slopes = new Map()
+    for(let [x1, y1] of points) {
+      if(x0 === x1 && y0 === y1) continue
 
-    for(let [x2,y2] of points) {
-      if(x === x2 && y === y2) continue
+      let dy = y1 - y0
+      let dx = x1 - x0
 
-      let dy = y2 - y
-      let dx = x2 - x
+      let slope = dy/dx
+      if(slope === -Infinity) slope = Infinity
 
-      let slope = dy / dx
-
-      if(slope === -Infinity) slope = Infinity  
-
-      map.set(slope, (map.get(slope) || 1) + 1  )
-      max = Math.max(max, map.get(slope))
+      slopes.set(slope, (slopes.get(slope) || 1) + 1) 
+      max = Math.max(max, slopes.get(slope))
     }
-  }
-
+  }   
   return max
 };
