@@ -20,16 +20,12 @@ var widthOfBinaryTree = function(root) {
     if(mins[level] === undefined || index < mins[level]) {
       mins[level] = index
     }
+    let diff = index - mins[level]
+    max = Math.max(max, 1+diff)
 
-    let width = index - mins[level]
-    max = Math.max(max, 1+width)
-
-    dfs(curr.left, 2*width, level+1)
-    dfs(curr.right, 2*width+1, level+1)
+    dfs(curr.left, 2*diff, level+1)
+    dfs(curr.right, 2*diff+1, level+1)
   }
   dfs(root, 0, 0)
   return max
-  //    0
-  //  0   1
-  // 0 1 2 3
 };
