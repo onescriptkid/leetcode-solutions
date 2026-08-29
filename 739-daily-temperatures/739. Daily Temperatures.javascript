@@ -3,35 +3,34 @@
  * @return {number[]}
  */
 var dailyTemperatures = function(temperatures) {
-  //  0  1  2  3  4
-  // [73 74 75 71 69 72 67 73]       [[73, 0]]  {}
-  //  ^
+  //
+  // 73 74 75 71 69 72  [], {}
   
-  //  0  1  2  3  4
-  // [73 74 75 71 69 72 67 73]       [[73, 0]]  {0: 1}
-  //     ^
+  // 73 74 75 71 69 72     [73(0)], {0: 1}
+  // 73 74 75 71 69 72     [74(1)], {0: 1, 1: 1}
 
-  // Made 2 optimizations to go from 115ms -> 18ms
-  // - Created out array ahead of time
-  // - Only stored the index in the stack.
+  // 73 74 75 71 69 72 76  [75(2)], {0: 1, 1: 1}
+  // 73 74 75 71 69 72 76  [75(2), 72(5), 76()], {0: 1, 1: 1, ..., 2: 76(6) - 75(2)}
+
 
   let stack = []
-  let out2 = new Array(temperatures.length).fill(0)
+  let map = {}
   for(let i = 0; i < temperatures.length; i++) {
+
     let t = temperatures[i]
 
-    while(stack.length > 0) {
-      let topi = stack[stack.length - 1]
-      let topt = temperatures[topi]
-      if(t > topt) {
-        stack.pop()
-        out2[topi] = i - topi
-      } else {
-        break;
-      }
+    while(stack.length > 0 && temperatures[stack.at(-1)] < t) {
+      let si = stack.pop()
+      let diff = i - si
+      map[si] = diff
     }
     stack.push(i)
   }
-  return out2
 
+  let out = []
+  for(let i = 0; i < temperatures.length; i++) {
+    let val = map[i] ?? 0
+    out.push(val)
+  }
+  return out
 };
