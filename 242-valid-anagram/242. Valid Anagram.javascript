@@ -4,22 +4,26 @@
  * @return {boolean}
  */
 var isAnagram = function(s, t) {
-  let freqs = {}
-  let freqt = {}
+  let alphabet = 'abcdefghijklmnopqrstuvwxyz'
+  let ltov = {}
+  for(let i = 0; i < alphabet.length; i++) {
+    ltov[alphabet[i]] = i
+  }
+  let skeyarr = new Array(26).fill(0)   
 
   for(let c of s) {
-    freqs[c] = (freqs[c] || 0) + 1
-  }   
-  for(let c of t) {
-    freqt[c] = (freqt[c] || 0) + 1
+    let val = ltov[c]
+    skeyarr[val]++
   }
 
-  for(let c of s) {
-    if(freqt[c] !== freqs[c]) return false
-  }
+  let tkeyarr = new Array(26).fill(0)
   for(let c of t) {
-    if(freqt[c] !== freqs[c]) return false
+    let val = ltov[c]
+    tkeyarr[val]++
   }
 
-  return true
+  return skeyarr.join(',') === tkeyarr.join(',')
+
+
+
 };
