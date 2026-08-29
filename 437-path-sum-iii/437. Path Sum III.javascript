@@ -13,13 +13,13 @@
  */
 var pathSum = function(root, targetSum) {
   let map = {0:1}
-  let count = 0
   let prefixsum = 0
-
+  let count = 0
   function dfs(curr) {
     if(curr === null) return
 
     prefixsum+=curr.val
+
     count+=(map[prefixsum - targetSum] || 0)
     map[prefixsum]=(map[prefixsum] || 0) + 1
 
