@@ -4,22 +4,24 @@
  * @return {number}
  */
 var characterReplacement = function(s, k) {
+
   let set = new Set(s)   
   let max = 0
   for(let c of set) {
-
-    let r = 0
     let l = 0
+    let r = 0
     let count = 0
+
     while(r < s.length) {
       let cr = s[r]
       r++
 
-      if(cr !== c) count++ 
+      if(cr !== c) count++
 
-      while(l < r && count > k) {
+      while(l < s.length && count > k) {
         let cl = s[l]
         l++
+
         if(cl !== c) count--
       }
 
