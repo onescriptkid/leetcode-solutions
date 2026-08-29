@@ -11,33 +11,17 @@
  * @return {number[]}
  */
 var rightSideView = function(root) {
-  if(root === null) return []
+  let out = []
+  function dfs(curr, i) {
+    if(curr === null) return
 
-  let queue = [root]   
-  let out = [root.val]
-  while(queue.length > 0) {
-    // console.log('queue', queue,'out', out)
-    let level = 0
-    let last
-    let length = queue.length
-    let i = 0
-    while(i < length) {
-      let curr = queue.shift()
+    if(out[i] === undefined) {
+      out[i] = curr.val
+    }
 
-      if(curr.left !== null) {
-        last = curr.left
-        queue.push(curr.left)
-      }
-      if(curr.right !== null) {
-        last = curr.right
-        queue.push(curr.right)
-      }
-      i++
-    }
-    level++
-    if(last !== undefined) {
-      out.push(last.val)
-    }
-  }
+    dfs(curr.right, i+1)
+    dfs(curr.left, i+1)
+  }   
+  dfs(root, 0)
   return out
 };
