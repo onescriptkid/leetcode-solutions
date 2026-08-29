@@ -12,23 +12,17 @@
  * @return {boolean}
  */
 var isSubtree = function(root, subRoot) {
-
   function isSame(curr0, curr1) {
     if(curr0 === null && curr1 === null) return true
-    if(curr0 === null && curr1 !== null) return false
-    if(curr0 !== null && curr1 === null) return false
+    if(curr0 === null || curr1 === null) return false
 
     if(curr0.val !== curr1.val) return false
 
     return isSame(curr0.left, curr1.left) && isSame(curr0.right, curr1.right)
   }   
 
-  function isSub(curr0, curr1) {
-    if(curr0 === null && curr1 === null) return true
-    if(curr0 === null || curr1 === null) return false
+  if(root ===null && subRoot === null) return true
+  if(root === null || subRoot === null) return false
 
-    return isSame(curr0, curr1) || isSub(curr0.left, curr1) || isSub(curr0.right, curr1)
-  }
-
-  return isSub(root, subRoot)
+  return isSame(root, subRoot) || isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot)
 };
