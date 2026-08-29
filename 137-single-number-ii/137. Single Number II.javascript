@@ -3,14 +3,12 @@
  * @return {number}
  */
 var singleNumber = function(nums) {
-       let ones = 0;
-    let twos = 0;
+  let one = 0
+  let two = 0
 
-    for (let num of nums) {
-        ones = (ones ^ num) & ~twos;
-        twos = (twos ^ num) & ~ones;
-    }
-
-    return ones;
- 
+  for(let num of nums) {
+    one = one ^ num & ~two
+    two = two ^ num & ~one
+  }   
+  return one
 };
