@@ -15,7 +15,7 @@ var maxSubarraySumCircular = function(nums) {
 
     max = Math.max(max, currmax)
     min = Math.min(min, currmin)
-    total+=num 
+    total+=num
   }
 
   let opt1 = max
