@@ -3,36 +3,32 @@
  * @return {boolean}
  */
 var isBipartite = function(graph) {
-  let adj = graph
-  let red = new Set()
-  let blue = new Set()
+  let reds = new Set()
+  let blues = new Set()
 
-  for(let i = 0; i < graph.length; i++) {
-    if(red.has(i) || blue.has(i)) continue
+  for(let u = 0; u < graph.length; u++) {
+    if(reds.has(u) || blues.has(u)) continue
 
-    let queue = [[i, 'red']]
-    red.add(i)
-
-    while(queue.length > 0) {
-      let [u,color] = queue.shift()
-
-      for(let v of adj[u]) {
-
-        if(color === 'red' && red.has(v)) return false
-        if(color === 'blue' && blue.has(v)) return false
-
-        if(red.has(v) || blue.has(v)) continue
-
-        if(color === 'red') {
-          queue.push([v, 'blue'])
-          blue.add(v)
-        } else {
-          queue.push([v,'red'])
-          red.add(v)
-        }
-      }
-    }
+    if(dfs(u, -1, 'red') === false) return false
   }
 
   return true
+
+  function dfs(u, p, color) {
+    if(color === 'red') reds.add(u)
+    if(color === 'blue') blues.add(u)
+
+    let nextcolor = color === 'blue' ? 'red' : 'blue'
+
+    for(let v of graph[u]) {
+      if(v === p) continue
+      if(nextcolor === 'red' && blues.has(v)) return false
+      if(nextcolor === 'blue' && reds.has(v)) return false
+
+      if(reds.has(v) || blues.has(v)) continue
+      if(dfs(v,u, nextcolor) === false) return false
+    }
+
+    return true
+  }
 };
