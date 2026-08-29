@@ -15,49 +15,34 @@
  * @return {_Node}
  */
 var construct = function(grid) {
-  // [0,0]
-  // [1,0]
   let rows = grid.length
   let cols = grid[0].length
-  let node = new Node()
-  node.isLeaf = true
-  node.val = grid[0][0]
 
-  for(let r = 0; r < rows; r++) {
-    for(let c = 0; c < cols; c++) {
-      if(grid[r][c] !== node.val) {
-        node.isLeaf = false
+  //  0 0 1 1
+  //  0 0 1 1
+  //  0 0 0 0
+  //  0 0 0 0
+
+  function dfs(rs,re,cs,ce) {
+    if(rs >= re || cs >= ce) {
+      return new _Node(grid[rs][ce], true)
+    }
+    let rm = Math.floor((rs + re) / 2)
+    let cm = Math.floor((cs + ce) / 2)
+
+    let tl = dfs(rs, rm, cs, cm)
+    let tr = dfs(rs, rm, cm+1, ce)
+    let bl = dfs(rm+1, re, cs, cm)
+    let br = dfs(rm+1, re, cm+1, ce)
+
+    if (tl.isLeaf && bl.isLeaf && tr.isLeaf && br.isLeaf) {
+      if (tl.val === tr.val && tr.val === bl.val && bl.val === br.val) {
+        return new _Node(tl.val, true)
       }
     }
-  }
 
-  if(node.isLeaf) return node
+    return new _Node(1, false, tl, tr, bl, br)
+  }   
 
-  let rm = rows >> 1
-  let cm = cols >> 1
-  // console.log('rm cm', rm, cm)
-
-  let tl = grid.slice(0, rm).map(v => v.slice(0, cm))
-  let tr = grid.slice(0, rm).map(v => v.slice(cm))
-  let bl = grid.slice(rm).map(v => v.slice(0, cm))
-  let br = grid.slice(rm).map(v => v.slice(cm))
-
-  // [0,0,0,0]
-  // [0,0,0,0]
-  // [0,0,0,0]
-  // [0,0,0,0]
-  // console.log('tl', tl)
-  // console.log('tr', tr)
-  // console.log('bl', bl)
-  // console.log('br', br)
-
-  node.topLeft = construct(tl)
-  node.topRight = construct(tr)
-  node.bottomLeft = construct(bl)
-  node.bottomRight = construct(br)
-  
-  return node
-
-
-    
+  return dfs(0, rows-1, 0, cols-1)
 };
