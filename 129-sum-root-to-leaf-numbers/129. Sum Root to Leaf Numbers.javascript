@@ -12,21 +12,16 @@
  */
 var sumNumbers = function(root) {
 
-  // let num = 0   
-
-  function dfs(curr, num) {
+  function dfs(curr, val) {
     if(curr === null) return 0
 
-    let next = num*10 + curr.val
+    let nextval = val*10 + curr.val
 
     if(curr.left === null && curr.right === null) {
-      return next
+      return nextval
     }
 
-    let left = dfs(curr.left, next)
-    let right = dfs(curr.right, next)
-
-    return left + right
-  }
+    return dfs(curr.left, nextval) + dfs(curr.right, nextval)
+  }   
   return dfs(root, 0)
 };
