@@ -3,47 +3,56 @@
  * @return {number}
  */
 var countHillValley = function(nums) {
+  // - h -
+  // 2 3 2
 
   // 2 4 1 1 6 5
-  // - h v
-
-
   // - h v v h -
-
-
-  // 6 6 5 5 4 1
-  // - h v v v -
   
-  // 6 6 5 5 6 1
-  // - h v v v -
+  // 2 4 4 4 4 1 1 6 5
+  // - h h h h v v h -
 
-
-  let isValley = false
-  let isHill = false
   let hills = 0
   let valleys = 0
-  for(let i = 1; i < nums.length-1; i++) {
-    let num = nums[i]
-    let left = nums[i-1]
-    let right = nums[i+1]
-    // console.log('num', num, 'v', isValley, 'h', isHill, 'count', hills, valleys)
-    if(left < num) {
-      isHill = true
-    }
-    if(left > num) {
-      isValley = true
-    }
+  let ishill = false
+  let isvalley = false
 
-    if(isHill && num > right) {
+  for(let i = 0; i < nums.length; i++) {
+    let curr = nums[i]
+    let prev = nums[i-1]
+    let next = nums[i+1]
+
+    // hills
+    if(prev !== undefined && prev < curr && ishill === false) {
+      ishill = true
+    }
+    if(next !== undefined && curr > next && ishill === true) {
+      ishill = false
       hills++
-      isHill = false
     }
-    if(isValley && num < right) {
+  }
+
+  for(let i = 0; i < nums.length; i++) {
+   
+    let curr = nums[i]
+    let prev = nums[i-1]
+    let next = nums[i+1]
+
+    // valleys
+    if(prev !== undefined && prev > curr && isvalley === false) {
+      isvalley = true
+    }
+    if(next !== undefined && curr < next && isvalley === true) {
+      isvalley = false
       valleys++
-      isValley = false
     }
 
+   
   }
-  return hills + valleys 
+  // console.log('hills', hills, 'valley', valleys)
+    return hills + valleys
+
+
+
 
 };
