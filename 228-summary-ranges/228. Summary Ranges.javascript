@@ -3,41 +3,32 @@
  * @return {string[]}
  */
 var summaryRanges = function(nums) {
-  // 0 1 2 4 5 7  st=
-  // i
-  
-  // 0 1 2 4 5 7  st=0, [0->2, ]
-  //       i
   if(nums.length === 0) return []
-
-  let out = []
   let start
-  let end
   let prev
+  let out = []
   for(let num of nums) {
-
-    if(start === undefined) {
+    if(prev === undefined) {
+      prev = num
       start = num
     } else if(prev+1 !== num) {
-
-      if(start !== prev) {
-        out.push(`${start}->${prev}`)
+      if(prev === start) {
+        out.push(''+prev)
       } else {
-        out.push(`${start}`)
+        out.push(`${start}->${prev}`)
       }
+      prev = num
       start = num
+    } else {
+      prev = num
     }
-    prev = num
   }
 
-  if (start !== prev) {
-    out.push(`${start}->${prev}`)
+  if(prev === start) {
+    out.push(''+prev)
   } else {
-    out.push(`${start}`)
+    out.push(`${start}->${prev}`)
   }
+
   return out
-
-
-
-
 };
