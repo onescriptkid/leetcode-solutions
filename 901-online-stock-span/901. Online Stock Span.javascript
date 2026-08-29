@@ -11,10 +11,11 @@ StockSpanner.prototype.next = function(price) {
   let span = 1
   while(this.stack.length > 0 && this.stack.at(-1)[0] <= price) {
     let [p,s] = this.stack.pop()
-    span+=s 
+    span+=s
   }
-  this.stack.push([price, span])
+  this.stack.push([price,span])
   return span
+    
 };
 
 /** 
