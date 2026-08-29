@@ -3,44 +3,30 @@
  * @return {number}
  */
 var evalRPN = function(tokens) {
-  let stack = []  
+     let stack = []  
 
   for(let token of tokens) {
     // console.log('token', token, 'stack', stack)
-    let num = Number(token)
-    if(!Number.isNaN(num)) {
-      stack.push(num)
+    let val = Number(token)
+    if(!Number.isNaN(val)) {
+      stack.push(val)
+      continue
     }
-    if(token === '-') {
-      let n1 = stack.pop()
-      let n2 = stack.pop()
-      let out = (n2-n1)
-      stack.push(out)
-    }
-    if(token === '+') {
-      let n1 = stack.pop()
-      let n2 = stack.pop()
-      let out = (n1+n2)
-      stack.push(out)
-    }
-    if(token === '*') {
-      let n1 = stack.pop()
-      let n2 = stack.pop()
-      let out = (n1*n2)
-      stack.push(out)
-    }
-    if(token === '/') {
-      let n1 = stack.pop()
-      let n2 = stack.pop()
-      let out = (n2/n1)
-      if(out > 0) {
-        out = Math.floor(out)
+    let n1 = stack.pop()
+    let n2 = stack.pop()
+    let num = 0
+    if(token === '-') num = (n2-n1)
+    if(token === '+') num = (n1+n2)
+    if(token === '*') num = (n1*n2)
+    if(token === '/') { 
+      num = (n2/n1)
+      if(num > 0) {
+        num = Math.floor(num)
       } else {
-        out = Math.ceil(out)
+        num = Math.ceil(num)
       }
-      stack.push(out)
     }
+    stack.push(num)
   }
-  return stack[0]
-
+  return stack[0] 
 };
