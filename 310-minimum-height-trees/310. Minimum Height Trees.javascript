@@ -24,8 +24,7 @@ var findMinHeightTrees = function(n, edges) {
   let leaves = []
   for(let u in adj) {
     if(adj[u].size === 1) leaves.push(Number(u))
-  } 
-  // console.log(leaves)
+  }
 
   while(n > 2) {
     let newleaves = []
@@ -34,8 +33,6 @@ var findMinHeightTrees = function(n, edges) {
       adj[trim].delete(leaf)
       if(adj[trim].size === 1) newleaves.push(trim)
     }
-    // console.log(newleaves)
-
     n-=leaves.length
     leaves = newleaves
   }
