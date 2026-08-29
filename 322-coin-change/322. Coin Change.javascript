@@ -4,7 +4,7 @@
  * @return {number}
  */
 var coinChange = function(coins, amount) {
-  let memo = new Array(amount + 1).fill(undefined)
+  let memo = new Array(amount+1).fill(undefined)
 
   function dfs(sum) {
     if(sum === amount) return 0
@@ -13,15 +13,14 @@ var coinChange = function(coins, amount) {
 
     let opts = []
     for(let coin of coins) {
-      let opt = dfs(sum + coin)
-      if(opt === -1) continue  
-      opts.push(opt)
+      let opt = dfs(sum+ coin)
+
+      if(opt !== -1) opts.push(1+opt)
     }
 
     if(opts.length === 0) return memo[sum] = -1
 
-    return memo[sum] = 1+Math.min(...opts)
-  }
+    return memo[sum] = Math.min(...opts)
+  }   
   return dfs(0)
-    
 };
