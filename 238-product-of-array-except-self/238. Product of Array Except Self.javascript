@@ -4,35 +4,23 @@
  */
 var productExceptSelf = function(nums) {
 
-  // 1  2   3 4 
-  
-  // 1  1   2 6  ltor
 
-  // 24 12  4 1  rtol
+  // 1 2 3 4   
 
-  let ltor = []
-  let lprod = 1
-  for(let num of nums) {
-    ltor.push(lprod)
-    lprod = lprod * num
-  }
+  // 1 1 2 6
 
-  let rtol = []
-  let rprod = 1
-  for(let i = nums.length - 1; i >= 0; i--) {
-    rtol[i] = rprod
-    rprod = rprod * nums[i]
-  }
-
-
-  let out = []
+  let out = new Array(nums.length).fill(1)
+  let left = 1
   for(let i = 0; i < nums.length; i++) {
-    let left = ltor[i]
-    let right = rtol[i]
-    out.push(left*right)
+    out[i] = left * out[i]
+    left = left * nums[i]
+  }
+
+  let right = 1
+  for(let i = nums.length - 1; i >= 0; i--) {
+    out[i] = right * out[i]
+    right = right * nums[i]
   }
 
   return out
-
-
 };
