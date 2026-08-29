@@ -11,13 +11,12 @@
  * @return {void} Do not return anything, modify root in-place instead.
  */
 var flatten = function(root) {
-  
   let curr = root
 
   while(curr !== null) {
     let left = curr.left
     if(left !== null) {
-      let pred = curr.left
+      let pred = left
       while(pred.right !== null) {
         pred = pred.right
       }
@@ -26,7 +25,6 @@ var flatten = function(root) {
       curr.left = null
     }
     curr = curr.right
-  }
-
+  }   
   return root
 };
