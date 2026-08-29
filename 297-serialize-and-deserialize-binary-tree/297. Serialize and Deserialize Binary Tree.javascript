@@ -13,18 +13,17 @@
  * @return {string}
  */
 var serialize = function(root) {
-  let out = []   
+  let out = []
   function dfs(curr) {
     if(curr === null) {
       out.push('n')
-      return
+      return 
     }
-    out.push(curr.val) 
+    out.push(curr.val)
     dfs(curr.left)
     dfs(curr.right)
-  }
+  }  
   dfs(root)
-
   return out.join(',')
 };
 
@@ -36,27 +35,22 @@ var serialize = function(root) {
  */
 var deserialize = function(data) {
   let arr = data.split(',')
-
-  // 1 2 n n 3 4 n n 5 n n
-  // i
-  // console.log(arr)
-
   let i = 0
   function dfs() {
-    if(i > arr.length) {
-      return null
-    }
     if(arr[i] === 'n') {
       i++
       return null
     }
-    let node = new TreeNode(Number(arr[i])) 
+
+    let node = new TreeNode(Number(arr[i]))
     i++
     node.left = dfs()
     node.right = dfs()
     return node
   }
   return dfs()
+
+    
 };
 
 /**
