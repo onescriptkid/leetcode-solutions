@@ -11,39 +11,27 @@
  * @return {number}
  */
 var countNodes = function(root) {
-  function getLeftHeight(curr) {
+  function countleft(curr) {
     if(curr === null) return 0
-    let h = 0
-    while(curr !== null) {
-      curr = curr.left
-      h++
-    }
-    return h
-  }
-  function getRightHeight(curr) {
+
+    return 1 + countleft(curr.left)
+  }    
+  function countright(curr) {
     if(curr === null) return 0
-    let h = 0
-    while(curr !== null) {
-      curr = curr.right
-      h++
-    }
-    return h
+
+    return 1 + countright(curr.right)
   }
 
   function dfs(curr) {
     if(curr === null) return 0
+    let left = countleft(curr)
+    let right = countright(curr)
 
-    let lh = getLeftHeight(curr)
-    let rh = getRightHeight(curr)
-    // console.log('curr', curr.val, 'lh', lh, 'rh', rh)
-
-    if(lh === rh) {
-      return 2**rh-1
+    if(left === right) {
+      return 2 ** left - 1
     }
 
-    return 1+dfs(curr.left) + dfs(curr.right)
-
+    return 1 + dfs(curr.left) + dfs(curr.right)
   }
   return dfs(root)
-
 };
