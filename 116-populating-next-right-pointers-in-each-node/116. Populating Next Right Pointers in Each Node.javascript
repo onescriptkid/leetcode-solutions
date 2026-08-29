@@ -13,27 +13,20 @@
  * @return {_Node}
  */
 var connect = function(root) {
-  
+
   function dfs(curr) {
-    if(curr === null) return null
-    
-    let left = curr.left
-    let right = curr.right
-    let next  = curr.next
+    if(curr === null) return
 
-    // left
-    if(curr.left !== null) {
-      left.next = right
+    if(curr.left) {
+      curr.left.next = curr.right
     }
-
-    // right
-    if(curr.next && curr.right) {
+    if(curr.right && curr.next) {
       curr.right.next = curr.next.left
     }
-
-    dfs(curr.left)
+    
     dfs(curr.right)
-  }
+    dfs(curr.left)
+  } 
   dfs(root)
   return root
 };
