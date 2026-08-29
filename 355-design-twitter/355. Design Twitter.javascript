@@ -1,7 +1,7 @@
 
 var Twitter = function() {
-  this.followMap = new Map()
-  this.tweetMap = new Map()
+  this.follows = new Map()  // followee -> set of followers
+  this.tweets = new Map()  // userId -> list of tweets?
   this.count = 0
 };
 
@@ -11,12 +11,11 @@ var Twitter = function() {
  * @return {void}
  */
 Twitter.prototype.postTweet = function(userId, tweetId) {
-  if(this.tweetMap.get(userId) === undefined) {
-    this.tweetMap.set(userId, [[this.count, tweetId]])
-  } else {
-    this.tweetMap.get(userId).push([this.count, tweetId])
+  if(this.tweets.get(userId) === undefined) {
+    this.tweets.set(userId, [])
   }
-  this.count++
+  this.tweets.get(userId).push([this.count, tweetId])
+  this.count++ 
 };
 
 /** 
@@ -24,20 +23,18 @@ Twitter.prototype.postTweet = function(userId, tweetId) {
  * @return {number[]}
  */
 Twitter.prototype.getNewsFeed = function(userId) {
-  if(this.followMap.get(userId) === undefined) {
-    this.followMap.set(userId, new Set([userId]))
-  } else {
-    this.followMap.get(userId).add(userId)
+  if(this.follows.get(userId) === undefined) {
+    this.follows.set(userId, new Set([]))
   }
+  this.follows.get(userId).add(userId)
 
   let maxheap = new PriorityQueue((a,b) => a[0] > b[0] ? -1 : 1)
 
-
-  for(let follow of this.followMap.get(userId)) {
-    let tweets = this.tweetMap.get(follow)
+  for(let follow of this.follows.get(userId)) {
+    let tweets = this.tweets.get(follow)
     if(tweets !== undefined && tweets.length > 0) {
       let [count, tweetId] = tweets[tweets.length - 1]
-      maxheap.push([count, tweetId, tweets.length - 1, follow])   
+      maxheap.push([count, tweetId, tweets.length - 1, follow])
     }
   }
 
@@ -46,12 +43,13 @@ Twitter.prototype.getNewsFeed = function(userId) {
     let [count, tweetId, index, follow] = maxheap.pop()
     out.push(tweetId)
 
-    let tweets = this.tweetMap.get(follow)
-    if(tweets[index - 1] !== undefined) {
-      let [ncount, ntweetId] = tweets[index - 1]
-      maxheap.push([ncount, ntweetId, index - 1, follow])
+    let tweets = this.tweets.get(follow)
+    if(tweets[index-1] !== undefined) {
+      let [ncount, ntweetId] = tweets[index-1]
+      maxheap.push([ncount, ntweetId, index-1, follow])
     }
   }
+
   return out
     
 };
@@ -62,12 +60,10 @@ Twitter.prototype.getNewsFeed = function(userId) {
  * @return {void}
  */
 Twitter.prototype.follow = function(followerId, followeeId) {
-  if(this.followMap.get(followerId) === undefined) {
-    this.followMap.set(followerId, new Set([followeeId]))
-  } else {
-    this.followMap.get(followerId).add(followeeId)
+  if(this.follows.get(followerId) === undefined) {
+    this.follows.set(followerId, new Set())
   }
-    
+  this.follows.get(followerId).add(followeeId)
 };
 
 /** 
@@ -76,7 +72,7 @@ Twitter.prototype.follow = function(followerId, followeeId) {
  * @return {void}
  */
 Twitter.prototype.unfollow = function(followerId, followeeId) {
-  this.followMap.get(followerId)?.delete(followeeId) 
+  this.follows.get(followerId)?.delete(followeeId)
 };
 
 /** 
