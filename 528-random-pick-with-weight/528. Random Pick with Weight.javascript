@@ -14,13 +14,14 @@ var Solution = function(w) {
  * @return {number}
  */
 Solution.prototype.pickIndex = function() {
-  let rand = Math.floor(Math.random() * (this.sum))
-
+  let rand = Math.floor(Math.random() * this.sum)
   let l = 0
   let r = this.prefixsums.length - 1
+
   while(l <= r) {
     let m = Math.floor((l + r) / 2)
     let mid = this.prefixsums[m]
+    // console.log('l r', l, r, '-', this.sum)
 
     if(mid === rand) {
       l = m + 1
@@ -33,7 +34,7 @@ Solution.prototype.pickIndex = function() {
     }
   }
   return l
-
+    
 };
 
 /** 
