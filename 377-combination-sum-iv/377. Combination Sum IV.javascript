@@ -4,7 +4,7 @@
  * @return {number}
  */
 var combinationSum4 = function(nums, target) {
-  let memo = new Array(target + 1).fill(undefined)
+  let memo = new Array(target+1).fill(undefined)   
 
   function dfs(sum) {
     if(sum === target) return 1
@@ -13,10 +13,11 @@ var combinationSum4 = function(nums, target) {
 
     let res = 0
     for(let num of nums) {
-      res+= dfs(sum + num)
+      let opt = dfs(sum + num)
+      res+=opt
     }
 
     return memo[sum] = res
-  }   
+  }
   return dfs(0)
 };
