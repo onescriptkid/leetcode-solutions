@@ -4,44 +4,42 @@
  */
 var palindromePairs = function(words) {
 
-  let map = {}
-  let out = []
+  let map = new Map()
   for(let i = 0; i < words.length; i++) {
-    let word = words[i]
-    map[word] = i 
-  }
+    map.set(words[i], i)
+  }   
 
+  let out = []
   for(let i = 0; i < words.length; i++) {
     let word = words[i]
     let bw = word.split('').reverse().join('')
 
     if(word === '') {
       for(let j = 0; j < words.length; j++) {
-        if(isPal(words[j]) && j !== i) {
-          out.push([i,j], [j,i])
+        if(isPal(words[j]) && i !== j) {
+          out.push([i, j])
+          out.push([j, i])
         }
       }
-      continue
     }
 
-    let res = map[bw]
-    if(res !== undefined && res !== i) {
-      out.push([i, res])
-    }
+    let res = map.get(bw)
+    if(res !== undefined && res !== i) out.push([i, res])
 
-    // word     bw
-    // sssll -> llsss
     for(let j = 1; j < bw.length; j++) {
-      if(isPal(bw.slice(0, j))) {
-        let res = map[bw.slice(j)]
-        if(res !== undefined) out.push([i, res])
+      let pre = bw.slice(0, j)
+      let suf = bw.slice(j)
+
+      if(isPal(pre) && map.has(suf)) {
+        out.push([i, map.get(suf)])
       }
-      if(isPal(bw.slice(j))) {
-        let res = map[bw.slice(0,j)]
-        if(res !== undefined) out.push([res,i])
+      if(isPal(suf) && map.has(pre)) {
+        out.push([map.get(pre), i])
       }
     }
   }
+
+  return out
 
   function isPal(str) {
     let l = 0
@@ -53,10 +51,4 @@ var palindromePairs = function(words) {
     }
     return true
   }
-  // console.log(out)
-
-  return out
-
 };
-
-
