@@ -4,22 +4,19 @@
  * @return {boolean}
  */
 var mergeTriplets = function(triplets, target) {
-
-  let mx, my, mz
+  let [tx, ty, tz] = target
+  let cx, cy, cz = 0   
 
   for(let [x,y,z] of triplets) {
-    if(x === target[0] && y <= target[1] && z <= target[2]) {
-      mx = x
+    if(x === tx && y <= ty && z <= tz) {
+      cx = tx
     }
-    if(y === target[1] && x <= target[0] && z <= target[2]) {
-      my = y
+    if(y === ty && x <= tx && z <= tz) {
+      cy = ty
     }
-    if(z === target[2] && x <= target[0] && y <= target[1]) {
-      mz = z
+    if(z === tz && x <= tx && y <= ty) {
+      cz = tz
     }
-    if(mx === target[0] && my === target[1] && mz === target[2]) {
-      return true
-    }
-  }   
-  return false
+  }
+  return cx === tx && cy === ty && cz === tz
 };
