@@ -23,15 +23,15 @@ var isBalanced = function(root) {
     }
 
     let diff = Math.abs(left - right)
+
     if(diff > 1) {
       return -1
     }
 
-    return Math.max(left, right) + 1
-  }
+    return 1+Math.max(left, right)
+  }    
   let out = dfs(root)
-  if(out === -1) {
-    return false
-  }
+  if(out === -1) return false
+
   return true
 };
