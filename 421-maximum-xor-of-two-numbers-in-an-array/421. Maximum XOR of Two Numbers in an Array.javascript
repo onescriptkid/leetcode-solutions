@@ -1,28 +1,58 @@
+class TrieNode {
+  constructor() {
+    this.children = {}
+  }
+}
+
+
+
 /**
  * @param {number[]} nums
  * @return {number}
  */
 var findMaximumXOR = function(nums) {
-  let maxxor = 0
-  let mask = 0
+ const root = new TrieNode()
 
-  for(let i = 31; i >= 0; i--) {
-    mask = (mask | i << 1)
-    let prefixes = new Set()
-
-    for(let num of nums) {
-      prefixes.add(num & mask)
+  // Insert a number into the trie
+  const insert = (num) => {
+    let node = root
+    for (let i = 31; i >= 0; i--) {
+      let bit = (num >> i) & 1
+      if (!node.children[bit]) {
+        node.children[bit] = new TrieNode()
+      }
+      node = node.children[bit]
     }
+  }
 
-    let tmp = maxxor | (1 << i)
-    let found = false
-    for(let prefix of prefixes) {
-      if(prefixes.has(prefix ^ tmp)) {
-        found = true
-        break;
+  // Find max XOR partner for num
+  const query = (num) => {
+    let node = root
+    let xor = 0
+
+    for (let i = 31; i >= 0; i--) {
+      let bit = (num >> i) & 1
+      let want = bit ^ 1  // opposite bit
+
+      if (node.children[want]) {
+        xor |= (1 << i)
+        node = node.children[want]
+      } else {
+        node = node.children[bit]
       }
     }
-    if(found) maxxor = tmp
-  }  
-  return maxxor
+
+    return xor
+  }
+
+  // Build trie
+  for (let num of nums) insert(num)
+
+  // Find maximum XOR
+  let max = 0
+  for (let num of nums) {
+    max = Math.max(max, query(num))
+  }
+
+  return max
 };
