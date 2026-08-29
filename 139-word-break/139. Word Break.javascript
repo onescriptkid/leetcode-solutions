@@ -5,22 +5,23 @@
  */
 var wordBreak = function(s, wordDict) {
   let memo = {}
-
   function dfs(str) {
     if(str === '') return true
     if(memo[str] !== undefined) return memo[str]
 
-    let opts = []
+    let any = false
     for(let word of wordDict) {
-      if(str.startsWith(word)) {
+      let isPrefix = str.startsWith(word)
+      if(isPrefix) {
         let opt = dfs(str.slice(word.length))
-        opts.push(opt)
+        if(opt) {
+          any = true
+          break
+        }
       }
-    } 
-    
-    if(opts.length === 0) return memo[str] = false
+    }
 
-    return memo[str] = opts.some(v => v)
-  }
+    return memo[str] = any
+  }   
   return dfs(s)
 };
