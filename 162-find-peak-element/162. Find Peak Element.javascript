@@ -7,7 +7,7 @@ var findPeakElement = function(nums) {
   let r = nums.length - 1
 
   while(l <= r) {
-    let m = Math.floor((l + r) / 2)
+    let m = Math.floor((l + r) /2)
     let mid = nums[m]
     let n0 = nums[m-1] ?? -Infinity
     let n1 = nums[m+1] ?? -Infinity
@@ -22,5 +22,4 @@ var findPeakElement = function(nums) {
       l = m + 1
     }
   }
-  return -1
 };
