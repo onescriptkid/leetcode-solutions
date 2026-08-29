@@ -18,26 +18,21 @@ var BSTIterator = function(root) {
  * @return {number}
  */
 BSTIterator.prototype.next = function() {
-  // []   curr=7
-  // [7,3]
   let curr = this.curr
   while(curr !== null) {
     this.stack.push(curr)
     curr = curr.left
   }
-
   let out = this.stack.pop()
   this.curr = out.right
-
   return out.val
-    
 };
 
 /**
  * @return {boolean}
  */
 BSTIterator.prototype.hasNext = function() {
-  return this.stack.length !== 0 || this.curr !== null  
+  return this.stack.length !== 0 || this.curr !== null    
 };
 
 /** 
