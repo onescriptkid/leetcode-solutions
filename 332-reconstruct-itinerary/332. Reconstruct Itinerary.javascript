@@ -7,7 +7,7 @@ var findItinerary = function(tickets) {
   for(let [u,v] of tickets) {
     if(adj[u] === undefined) adj[u] = []
     if(adj[v] === undefined) adj[v] = []
-    adj[u].push(v) 
+    adj[u].push(v)
   }   
 
   for(let u in adj) {
@@ -16,13 +16,17 @@ var findItinerary = function(tickets) {
 
   let out = []
   dfs('JFK')
+
+  // console.log(adj)
   function dfs(u) {
 
     while(adj[u].length > 0) {
       let v = adj[u].pop()
       dfs(v)
     }
+
     out.push(u)
   }
+
   return out.reverse()
 };
