@@ -15,7 +15,7 @@ var findCheapestPrice = function(n, flights, src, dst, k) {
     adj[u].push([v,wt])
   }
 
-  let dist = []
+  let dist = {}
   for(let i = 0; i < n; i++) {
     dist[i] = Infinity
   }
@@ -23,8 +23,9 @@ var findCheapestPrice = function(n, flights, src, dst, k) {
 
   let queue = [[0, src, 0]]
 
+
   while(queue.length > 0) {
-    let [d, u, stops] = queue.shift()
+    let [d,u,stops] = queue.shift()
 
     if(stops > k) continue
 
@@ -35,5 +36,8 @@ var findCheapestPrice = function(n, flights, src, dst, k) {
       }
     }
   }
-  return dist[dst] === Infinity ? -1 : dist[dst]
+
+  if(dist[dst] === Infinity) return -1
+
+  return dist[dst]
 };
