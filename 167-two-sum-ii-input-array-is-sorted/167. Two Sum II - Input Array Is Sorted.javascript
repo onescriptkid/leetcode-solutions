@@ -12,14 +12,11 @@ var twoSum = function(numbers, target) {
 
     if(sum === target) {
       return [l+1, r+1]
-    }
-    if(sum < target) {
+    } else if(sum < target) {
       l++
-    }
-    if(sum > target) {
+    } else {
       r--
     }
   }
-
   return [-1,-1]
 };
