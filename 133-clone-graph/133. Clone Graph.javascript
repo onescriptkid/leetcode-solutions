@@ -12,22 +12,24 @@
  */
 var cloneGraph = function(node) {
   if(node === null) return null
-  let map = {}
-  let visited = new Set([node.val])
-  let queue = [node]
 
+  let bmap = {}
+
+  let visited = new Set([node.val])
+
+  let queue = [node]
   while(queue.length > 0) {
     let u = queue.shift()
 
-    if(map[u.val] === undefined) {
-      map[u.val] = new Node(u.val)
+    if(bmap[u.val] === undefined) {
+      bmap[u.val] = new Node(u.val)
     }
 
     for(let v of u.neighbors) {
-      if(map[v.val] === undefined) {
-        map[v.val] = new Node(v.val)
+      if(bmap[v.val] === undefined) {
+        bmap[v.val] = new Node(v.val)
       }
-      map[u.val].neighbors.push(map[v.val])
+      bmap[u.val].neighbors.push(bmap[v.val])
 
       if(visited.has(v.val)) continue
       visited.add(v.val)
@@ -35,6 +37,6 @@ var cloneGraph = function(node) {
     }
   }
 
-  return map[node.val]
-
+  return bmap[node.val]
+    
 };
