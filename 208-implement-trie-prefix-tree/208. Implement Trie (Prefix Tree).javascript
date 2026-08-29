@@ -22,7 +22,6 @@ Trie.prototype.insert = function(word) {
     curr = curr.children[c]
   }
   curr.end = true
-
 };
 
 /** 
@@ -39,7 +38,6 @@ Trie.prototype.search = function(word) {
     curr = curr.children[c]
   }
   return curr.end
-    
 };
 
 /** 
@@ -53,9 +51,8 @@ Trie.prototype.startsWith = function(prefix) {
       return false
     }
     curr = curr.children[c]
-  }
+  }    
   return true
-    
 };
 
 /** 
