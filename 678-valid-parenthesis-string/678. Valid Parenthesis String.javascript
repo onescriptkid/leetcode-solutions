@@ -19,6 +19,7 @@ var checkValidString = function(s) {
       max--
     }
     if(max < 0) return false
+
     min = Math.max(min, 0)
   }   
   return min === 0
