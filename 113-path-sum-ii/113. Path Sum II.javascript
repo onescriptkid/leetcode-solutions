@@ -13,27 +13,20 @@
  */
 var pathSum = function(root, targetSum) {
   let out = []
-  let arr = []
-
-  function dfs(curr, sum) {
-    if(curr === null) {
-      return 0
-    }
+  function dfs(curr, path, sum) {
+    if(curr === null) return
 
     if(curr.left === null && curr.right === null) {
-      if(sum+curr.val === targetSum) {
-        out.push([...arr, curr.val])
+      if(targetSum === sum + curr.val) {
+        out.push([...path, curr.val])
       }
-      return
     }
 
-    arr.push(curr.val)
-    dfs(curr.left, sum+curr.val)
-    dfs(curr.right, sum+curr.val)
-    arr.pop()
-
-  }
-  dfs(root, 0)
-
+    path.push(curr.val)
+    dfs(curr.left, path, sum+curr.val)
+    dfs(curr.right, path, sum+curr.val)
+    path.pop()
+  }  
+  dfs(root, [], 0)
   return out
 };
