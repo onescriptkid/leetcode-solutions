@@ -12,35 +12,40 @@
  * @return {_Node}
  */
 var copyRandomList = function(head) {
-           // Map
-        // { oldNode: newNode }
-        // if map.has(old) newNode.
-        let map = new Map()
-        let curr = head;
-        let prev = null
-        let newHead = null;
-        while(curr !== null) {
-            let newNode = new _Node(curr.val)
-            if(newHead === null) {
-                newHead = newNode
-            }
-            if(prev !== null) {
-              prev.next = newNode
-            }
-            map.set(curr, newNode)
-            prev = newNode
-            curr = curr.next
-        }
 
-        curr = head;
-        // console.log(map)
-        while(curr !== null) {
-            let newNode = map.get(curr)
-            console.log()
-            console.log(curr.val, curr.random && curr.random.val)
-            newNode.random = map.get(curr.random)
-            curr = curr.next
-        }
+  let curr = head    
+  let map = new Map()
 
-        return newHead 
+  let dummy = new Node()
+  let curr0 = dummy
+
+  while(curr !== null) {
+    let node = new Node(curr.val)
+    
+    curr0.next = node
+    curr0 = curr0.next
+    map.set(curr, curr0)
+    
+    curr = curr.next
+  }
+
+  // 7 13 11 10 1    curr.random
+  // c
+  
+  // 7 13 11 10 1    curr0.random
+  // 0
+
+  curr = head
+  while(curr !== null) {
+    let curr0 = map.get(curr)
+    let random = curr.random
+    let nrandom = map.get(random)
+
+    curr0.random = nrandom
+
+    curr = curr.next
+  }
+
+  return dummy.next
+  
 };
