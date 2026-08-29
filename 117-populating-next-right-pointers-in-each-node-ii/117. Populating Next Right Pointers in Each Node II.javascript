@@ -15,6 +15,7 @@
 var connect = function(root) {
 
   function getNext(curr) {
+    curr = curr.next
     while(curr !== null) {
       if(curr.left !== null) return curr.left
       if(curr.right !== null) return curr.right
@@ -24,13 +25,13 @@ var connect = function(root) {
   }   
 
   function dfs(curr) {
-    if(curr === null) return null
-    if(curr.left) {
-      curr.left.next = curr.right ? curr.right : getNext(curr.next)
-    }
+    if(curr === null) return
 
-    if(curr.right) {
-      curr.right.next = getNext(curr.next)
+    if(curr.left !== null) {
+      curr.left.next = curr.right || getNext(curr)
+    }
+    if(curr.right !== null) {
+      curr.right.next = getNext(curr)
     }
 
     dfs(curr.right)
