@@ -11,34 +11,25 @@
  * @return {number[][]}
  */
 var verticalTraversal = function(root) {
-  if(root === null) return []
   let map = {}
-  let nodes = []
   let min = 0
   let max = 0
-  //           [val, r, c]
-  function dfs(curr, r, c) {
-    // console.log('curr', curr)
-    if(curr === null) {
-      return
-    }
 
-    // nodes.push([curr.val, r, c])
+  function dfs(curr, r, c) {
+    if(curr === null) return
     if(map[c] === undefined) map[c] = []
-    map[c].push([curr.val, r,c])
+    map[c].push([curr.val, r, c])
+
     min = Math.min(min, c)
     max = Math.max(max, c)
 
-    dfs(curr.left,r+1,c-1)
-    dfs(curr.right,r+1,c+1)
-  }
-  dfs(root,0,0)
-
-  // console.log('map', map)
+    dfs(curr.left, r+1, c-1)
+    dfs(curr.right, r+1, c+1)
+  }   
+  dfs(root, 0, 0)
 
   let out = []
   for(let i = min; i <= max; i++) {
-    
     map[i].sort((a,b) => {
       if(a[1] > b[1]) {
         return 1
@@ -52,16 +43,6 @@ var verticalTraversal = function(root) {
     })
     out.push(map[i].map(v => v[0]))
   }
-  // console.log('out', out)
-  return out
 
-  ///        /\
-  //        /  \
-  //       /   /
-  //      /   /
-  //      \
-  //       \
-  //        \
-  //         \
-    
+  return out
 };
