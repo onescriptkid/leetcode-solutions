@@ -12,15 +12,13 @@
  * @return {TreeNode}
  */
 var lowestCommonAncestor = function(root, p, q) {
-
   function dfs(curr) {
-    if(curr === null) return curr
-    if(curr === p) return p
-    if(curr === q) return q
+    if(curr === null) return null
+    if(curr === p) return curr
+    if(curr === q) return curr
 
     let left = dfs(curr.left)
     let right = dfs(curr.right)
-
     if(left && right) {
       return curr
     }
