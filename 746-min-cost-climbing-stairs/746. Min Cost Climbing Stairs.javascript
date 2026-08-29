@@ -3,28 +3,16 @@
  * @return {number}
  */
 var minCostClimbingStairs = function(cost) {
+  let memo = new Array(cost.length + 1).fill(undefined)
 
-  // f(1) = cost
-  // f(1) = cost
+  function dfs(i) {
+    if(i >= cost.length) return 0
+    if(memo[i]!== undefined) return memo[i]
 
-  let memo = {}
+    let opt1 = cost[i] + dfs(i+1)
+    let opt2 = cost[i] + dfs(i+2)
 
-  function dfs(step) {
-    if(memo[step] !== undefined) {
-      return memo[step]
-    }
-    if(step >= cost.length) {
-      return 0
-    }
-
-    let opt1 = cost[step] + dfs(step + 1)
-    let opt2 = cost[step] + dfs(step + 2)
-
-    let min = Math.min(opt1, opt2)
-    memo[step] = min
-    return min
+    return memo[i] = Math.min(opt1, opt2)
   } 
-  let min = Math.min(dfs(0), dfs(1))
-  return min
-
+  return Math.min(dfs(0), dfs(1))
 };
