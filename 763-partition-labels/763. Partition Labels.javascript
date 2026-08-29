@@ -4,28 +4,22 @@
  */
 var partitionLabels = function(s) {
   let ends = {}
-
   for(let i = 0; i < s.length; i++) {
     let c = s[i]
+    if(ends[c] === undefined || ends[c] < i) ends[c] = i
+  }  
 
-    ends[c] = i
-  }
-
-  let part = ''
   let out = []
-  let end = 0
+  let upper = 0
+  let count = 0
   for(let i = 0; i < s.length; i++) {
     let c = s[i]
+    upper = Math.max(ends[c], upper)
+    count++
 
-    if(ends[c] > end) {
-      end = ends[c]
-    }
-
-    part+=c
-
-    if(i === end) {
-      out.push(part.length)
-      part = ''
+    if(i === upper) {
+      out.push(count)
+      count = 0
     }
   }
   return out
