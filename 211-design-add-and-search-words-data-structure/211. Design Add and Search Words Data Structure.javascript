@@ -14,6 +14,7 @@ var WordDictionary = function() {
  */
 WordDictionary.prototype.addWord = function(word) {
   let curr = this.root
+
   for(let c of word) {
     if(curr.children[c] === undefined) {
       curr.children[c] = new TrieNode()
@@ -31,48 +32,48 @@ WordDictionary.prototype.search = function(word) {
   let curr = this.root
   for(let i = 0; i < word.length; i++) {
     let c = word[i]
-    if(c !== '.') {
-      if(curr.children[c] === undefined) {
-        return false
-      }
-      curr = curr.children[c]
-    } else {
-      let children = Object.keys(curr.children)
+    if(c === '.') {
       let any = false
-      for(let child of children) {
-        let valid = this.searchdot(curr.children[child], word.slice(i+1))
-        if(valid) {
-          any = true
-          break;
-        }
-      }
-      return any
-    }
-  }
-  return curr.end
-};
-
-WordDictionary.prototype.searchdot = function(curr, word) {
-
-  for(let i = 0; i < word.length; i++) {
-    let c = word[i]
-
-    if(c !== '.') {
-      if(curr.children[c] === undefined) {
-        return false
-      }
-      curr = curr.children[c]
-    } else {
-      let children = Object.keys(curr.children)
-      let any = false
-      for(let child of children) {
-        let valid = this.searchdot(curr.children[child], word.slice(i+1))
+      let keys = Object.keys(curr.children)
+      for(let key of keys) {
+        let valid = this.searchdot(curr.children[key], word.slice(i+1))
         if(valid) {
           any = true
           break
         }
       }
       return any
+    } else {
+      if(curr.children[c] === undefined) {
+        return false
+      }
+      curr = curr.children[c]
+    }
+  }    
+  return curr.end
+};
+
+WordDictionary.prototype.searchdot = function(curr, word) {
+  for(let i = 0; i < word.length; i++) {
+    let c = word[i]
+
+    if(c === '.') {
+      let keys = Object.keys(curr.children)
+      let any = false
+      for(let key of keys) {
+        let valid = this.searchdot(curr.children[key], word.slice(i+1))
+        if(valid) {
+          any = true
+          break
+        }
+      }
+      return any
+
+    } else {
+      if(curr.children[c] === undefined) {
+        return false
+      }
+      curr = curr.children[c]
     }
   }
   return curr.end
