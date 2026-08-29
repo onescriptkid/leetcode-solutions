@@ -4,9 +4,8 @@
  * @return {number}
  */
 var findRadius = function(houses, heaters) {
+  houses.sort((a,b) => a > b ? 1 : -1)   
   heaters.sort((a,b) => a > b ? 1 : -1)
-  houses.sort((a,b) => a > b ? 1  :-1)
-
   let radius = 0
   for(let house of houses) {
     let l = 0
@@ -16,14 +15,14 @@ var findRadius = function(houses, heaters) {
     while(l <= r) {
       let m = Math.floor((l + r) / 2)
       let mid = heaters[m]
-
       let diff = Math.abs(mid - house)
-      min = Math.min(diff, min)
+      min = Math.min(min, diff)
 
       if(diff === 0) break;
       if(mid < house) {
         l = m + 1
-      } else {
+      }
+      if(mid > house) {
         r = m - 1
       }
     }
