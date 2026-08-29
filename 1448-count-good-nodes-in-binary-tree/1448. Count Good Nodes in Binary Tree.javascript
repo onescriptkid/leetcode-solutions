@@ -12,19 +12,19 @@
  */
 var goodNodes = function(root) {
 
+
   let count = 0
+
   function dfs(curr, max) {
-    if(curr === null) {
-      return
-    }
+    if(curr === null) return
 
-    if(max <= curr.val) {
-      count++
-    }
+    if(curr.val >= max) count++
 
-    dfs(curr.left, Math.max(max, curr.val))
-    dfs(curr.right, Math.max(max, curr.val))
+    let nmax = Math.max(max, curr.val)
+    dfs(curr.left, nmax)
+    dfs(curr.right, nmax)
   }   
-  dfs(root,root.val)
+  dfs(root, -Infinity)
+
   return count
 };
