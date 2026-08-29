@@ -7,11 +7,9 @@ var trailingZeroes = function(n) {
   for(let i = 1; i <= n; i++) {
     let tmp = i
     while(tmp % 5 === 0) {
-      fives++
       tmp = tmp / 5
+      fives++
     }
-  }
+  }    
   return fives
-  
-
 };
