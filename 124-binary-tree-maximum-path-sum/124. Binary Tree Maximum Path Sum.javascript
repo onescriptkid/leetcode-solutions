@@ -19,16 +19,18 @@ var maxPathSum = function(root) {
     let left = dfs(curr.left)
     let right = dfs(curr.right)
 
-    let opt1 = curr.val + left
-    let opt2 = curr.val + right
-    let opt3 = curr.val + left + right
-    let opt4 = curr.val
+    let opt1 = curr.val
+    let opt2 = left + curr.val
+    let opt3 = curr.val + right
+    let opt4 = left + curr.val + right
 
     let max = Math.max(opt1, opt2, opt3, opt4)
-    if(gmax === undefined || max > gmax) gmax = max
+    if(gmax === undefined || max > gmax) {
+      gmax = max
+    }
 
-    return Math.max(opt1, opt2, opt4)
-  }
+    return Math.max(opt1, opt2, opt3)
+  }   
   dfs(root)
   return gmax
 };
