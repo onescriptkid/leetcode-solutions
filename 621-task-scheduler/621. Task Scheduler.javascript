@@ -6,22 +6,25 @@
 var leastInterval = function(tasks, n) {
   let freq = {}
   let maxc
-  let maxf = 0
+  let max
   for(let task of tasks) {
     freq[task] = (freq[task] || 0) + 1
-    if(freq[task] > maxf) {
-      maxf = freq[task]
-      maxc = task 
+    if(max === undefined || freq[task] > max) {
+      max = freq[task]
+      maxc = task
     }
   }
 
-  let chunks = (maxf - 1)
+  let chunks = max - 1 
   let idle = chunks * n
 
-  for(let task of Object.keys(freq)) {
-    if(task !== maxc) idle-=Math.min(freq[task], chunks)
+  for(let key in freq) {
+    if(key === maxc) continue
+    idle-= Math.min(freq[key], chunks)
   }
 
   return idle < 0 ? tasks.length : tasks.length + idle
-
+  
+  // A _ _ A _ _ A   
+  // 0     1
 };
