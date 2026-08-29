@@ -1,7 +1,7 @@
 
 var DetectSquares = function() {
-    this.points = []
-    this.hash = {}
+  this.map = new Map()
+  this.points = []
 };
 
 /** 
@@ -9,32 +9,40 @@ var DetectSquares = function() {
  * @return {void}
  */
 DetectSquares.prototype.add = function(point) {
+  let [x,y] = point
+  let key = `${x},${y}`
+  this.map.set(key, (this.map.get(key) || 0) + 1  )
   this.points.push(point)
-  let key = `${point[0]},${point[1]}`
-  this.hash[key] = (this.hash[key] || 0) + 1
+    
 };
 
 /** 
  * @param {number[]} point
  * @return {number}
  */
-DetectSquares.prototype.count = function (point) {
-  let [ix, iy] = point
+DetectSquares.prototype.count = function(point) {
+  let [ix,iy] = point
 
   let count = 0
-  // console.log(this.points)
-  // console.log(this.hash)
-  for (let [x, y] of this.points) {
-
+  for(let [x,y] of this.points) {
     if(x === ix || y === iy) continue
-    if(Math.abs(x - ix) !== Math.abs(y - iy)) {
-      continue
-    }
+    if(Math.abs(x - ix) !== Math.abs(y - iy)) continue
+
     let a = `${x},${iy}`
     let b = `${ix},${y}`
-    count+=(this.hash[a] || 0) * (this.hash[b] || 0)
-  } 
+
+    count+=(this.map.get(a) || 0) * (this.map.get(b) || 0)
+  }
   return count
+  // [11,10] and [3,10]
+  // 
+
+
+  // [11,10]=count
+  // [3,10]
+  // [11,2]
+  // [3,2]
+    
 };
 
 /** 
