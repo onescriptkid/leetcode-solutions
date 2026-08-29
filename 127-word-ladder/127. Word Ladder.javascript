@@ -7,12 +7,12 @@
 var ladderLength = function(beginWord, endWord, wordList) {
   let adj = {}
   for(let word of wordList) {
-    for(let i = 0; i < word.length; i++) {
-      let star = word.slice(0, i) + "*" + word.slice(i+1)
-      if(adj[star] === undefined) adj[star] = []
-      adj[star].push(word) 
+    for (let i = 0; i < word.length; i++) {
+      let star = word.slice(0, i) + '*' + word.slice(i + 1)
+      if (adj[star] === undefined) adj[star] = []
+      adj[star].push(word)
     }
-  }
+  }   
 
   let queue = [beginWord]
   let visited = new Set()
@@ -22,7 +22,6 @@ var ladderLength = function(beginWord, endWord, wordList) {
     let length = queue.length
     for(let i = 0; i < length; i++) {
       let curr = queue.shift()
-      console.log('curr', curr)
 
       let stars = []
       for(let i = 0; i < curr.length; i++) {
@@ -33,7 +32,7 @@ var ladderLength = function(beginWord, endWord, wordList) {
       for(let star of stars) {
         if(adj[star] === undefined) continue
         for(let word of adj[star]) {
-          if(word === endWord) return level + 1
+          if(word === endWord) return level+1
           if(visited.has(word)) continue
           visited.add(word)
           queue.push(word)
@@ -42,6 +41,5 @@ var ladderLength = function(beginWord, endWord, wordList) {
     }
     level++
   }
-
   return 0
 };
