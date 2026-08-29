@@ -12,14 +12,16 @@
  */
 var levelOrder = function(root) {
   if(root === null) return []
-  let queue = [root]   
+  let queue = [root]
   let out = []
+
   while(queue.length > 0) {
-    let level = []
     let length = queue.length
 
+    let level = []
     for(let i = 0; i < length; i++) {
       let curr = queue.shift()
+
       level.push(curr.val)
 
       if(curr.left !== null) {
