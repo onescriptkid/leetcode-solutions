@@ -4,32 +4,22 @@
  * @return {number}
  */
 var findTargetSumWays = function(nums, target) {
-
-  let memo = {}
+  let max = 0
+  for(let num of nums) max+=num
+  let memo = new Array(nums.length).fill(undefined).map(v => new Array(max).fill(undefined))   
 
   function dfs(i, sum) {
-    let key = `${i},${sum}`
-    // console.log('key', key)
-    if(memo[key] !== undefined) {
-      return memo[key]
-    }
-    // if(sum === target) {
-    //   return 1
-    // }
-    // console.log('i', i, 'nums.length', nums.length, i >= nums.length)
+    // if(i === nums.length - 1 && sum === target) return 1
     if(i >= nums.length) {
-      if(sum === target) {
-        return 1
-      } else {
-        return 0
-      }
+      if(sum === target) return 1
+      return 0
     }
+    if(memo[i][sum] !== undefined) return memo[i][sum]
 
-    let opt1 = dfs(i+1, sum+nums[i])
-    let opt2 = dfs(i+1, sum-nums[i])
-    // console.log('  ', key, 'opt1', opt1, 'opt2', opt2, '-', str)
-    memo[key]=opt1+opt2
-    return memo[key]
-  } 
-  return dfs(0,0)
+    let opt1 = dfs(i+1, nums[i] + sum)
+    let opt2 = dfs(i+1, -nums[i] + sum)
+
+    return memo[i][sum] = opt1 + opt2
+  }
+  return dfs(0, 0)
 };
