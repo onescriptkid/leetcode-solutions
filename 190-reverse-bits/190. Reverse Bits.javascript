@@ -3,14 +3,13 @@
  * @return {number}
  */
 var reverseBits = function(n) {
-  let out = 0
+  let rev = 0
+
   for(let i = 0; i < 32; i++) {
-    let bit = n % 2
-    
-    out = out + bit * 2**(31-i)
+    let bit = (n >> i) & 1
+    let rbit = bit << (31-i)
 
-    n = Math.floor(n / 2)
-  }
-
-  return out
+    rev = rev | rbit
+  }   
+  return rev
 };
