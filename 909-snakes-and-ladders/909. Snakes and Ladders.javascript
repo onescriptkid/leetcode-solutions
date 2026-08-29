@@ -3,62 +3,49 @@
  * @return {number}
  */
 var snakesAndLadders = function(board) {
-  // 0 [1, 6 | ladder]
-  let rolls = 0
-  let rows = board.length
-  let cols = board[0].length
-  // let queue = [[rows.length - 1,0]]
-  let queue = [1]
-  //     0  1  2  3  4  5
+  // - - - - - -  0 left   
+  // - - - - - -  1 right   
+  // - - - - - -  2 left   
+  // - - - - - -  3 right   
+  // - - - - - -  4 left   
+  // - - - - - -  5 right   
 
-  // 0  -1 -1 -1 -1 -1 -1
-  // 1  -1 -1 -1 -1 -1 -1
-  // 2  -1 -1 -1 -1 -1 -1
-  // 3  -1 -1 -1 -1 13 -1
-  // 4  -1 -1 -1 -1 -1 -1
-  // 5  -x 15 -1 -1 -1 -1
+  // 1 => 5,0
+  // 6 => 5,5
+  // 7 => 4,5
+  // 36=> 0,0
+  let n = board.length 
+  function numTorc(num) {
+    let or = Math.floor((num-1) / n)
+    let r = n-1-or
 
-  function numtorc(num) {
-    let i = Math.floor((num-1) / rows) // 12-1/6 => 11/6 => 1
-    let r = rows -1 - i
-
-    let j = 0
-    let c = 0
-    if(i % 2 === 0) {
-      j = (num-1) % cols    // 17 => 
-      c = j
-    } else {
-      j = (num-1) %cols
-      c = cols - 1 - j
+    let dir = (n-1-r) % 2 === 0 ? 'right' : 'left'
+    let c = (num-1) % n
+    if(dir === 'left') {
+      c = n-1-c
     }
     return [r,c]
   }
 
   let visited = new Set([1])
+  let queue = [[1,0]]
 
   while(queue.length > 0) {
-    let length = queue.length
+    let [u, steps] = queue.shift()
 
-    for(let i = 0; i < length; i++) {
-      let curr = queue.shift()
+    for(let i = 1; i <= 6; i++) {
+      let next = u + i
+      if(next > n * n) continue
 
-      let opts = []
-      for(let j = 1; j <= 6; j++) {
-
-        let next = curr + j
-        if(next > rows*cols) continue;
-        let [r,c] = numtorc(next)
-        if(board[r][c] !== -1) next = board[r][c]
-
-        if(next === rows*cols) return rolls + 1
-        if(visited.has(next)) continue
-        visited.add(next)
-        queue.push(next)
+      let [r,c] = numTorc(next)
+      if(board[r][c] !== -1) {
+        next = board[r][c]
       }
+      if(next === n*n) return steps + 1
+      if(visited.has(next)) continue
+      visited.add(next)
+      queue.push([next, steps+1])
     }
-    rolls++
   }
-
   return -1
-    
 };
